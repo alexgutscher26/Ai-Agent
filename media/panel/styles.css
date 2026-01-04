@@ -92,7 +92,7 @@
   --color-text-primary: var(--vscode-foreground, var(--vscode-editor-foreground, #ffffff));
   --color-text-secondary: var(--vscode-descriptionForeground, var(--vscode-textPreformat-foreground, #b3b3b3));
   --color-text-muted: var(--vscode-disabledForeground, var(--vscode-textSeparator-foreground, #888888));
-  --color-text-inverse: var(--vscode-button-foreground, var(--vscode-list-activeSelectionForeground, #000000));
+  --color-text-inverse: var(--vscode-button-foreground, var(--vscode-list-activeSelectionForeground, #ffffff));
   --color-text-link: var(--vscode-textLink-foreground, #4fc3f7);
   --color-text-code: var(--vscode-textPreformat-foreground, var(--vscode-editor-foreground, #ffffff));
   
@@ -119,7 +119,7 @@
   /* Interactive Colors - Complete button and input system */
   --color-button-bg: var(--vscode-button-background, #4fc3f7);
   --color-button-hover: var(--vscode-button-hoverBackground, #6dd5ff);
-  --color-button-text: var(--vscode-button-foreground, #000000);
+  --color-button-text: var(--vscode-button-foreground, #ffffff);
   --color-button-border: var(--vscode-button-border, transparent);
   --color-button-secondary-bg: var(--vscode-button-secondaryBackground, #1a1a1a);
   --color-button-secondary-hover: var(--vscode-button-secondaryHoverBackground, var(--vscode-toolbar-hoverBackground, #2a2a2a));
@@ -1217,12 +1217,12 @@ body[data-vscode-theme-name*="tomorrow"] .modern-text--secondary {
   align-items: center;
   gap: var(--spacing-sm);
   margin-bottom: var(--spacing-md);
-  color: var(--color-error);
   font-weight: var(--font-semibold);
 }
 
 .modern-card--error .card-icon {
   font-size: var(--text-lg);
+  color: var(--color-error);
 }
 
 /* Warning Card Variant */
@@ -1253,8 +1253,11 @@ body[data-vscode-theme-name*="tomorrow"] .modern-text--secondary {
   align-items: center;
   gap: var(--spacing-sm);
   margin-bottom: var(--spacing-md);
-  color: var(--color-warning);
   font-weight: var(--font-semibold);
+}
+
+.modern-card--warning .card-icon {
+  color: var(--color-warning);
 }
 
 /* Success Card Variant */
@@ -1285,8 +1288,11 @@ body[data-vscode-theme-name*="tomorrow"] .modern-text--secondary {
   align-items: center;
   gap: var(--spacing-sm);
   margin-bottom: var(--spacing-md);
-  color: var(--color-success);
   font-weight: var(--font-semibold);
+}
+
+.modern-card--success .card-icon {
+  color: var(--color-success);
 }
 
 /* Info Card Variant */
@@ -1317,8 +1323,11 @@ body[data-vscode-theme-name*="tomorrow"] .modern-text--secondary {
   align-items: center;
   gap: var(--spacing-sm);
   margin-bottom: var(--spacing-md);
-  color: var(--color-info);
   font-weight: var(--font-semibold);
+}
+
+.modern-card--info .card-icon {
+  color: var(--color-info);
 }
 
 /* Feedback Card - Interactive elements for user input */
@@ -2277,7 +2286,7 @@ body[data-vscode-theme-name*="tomorrow"] .modern-text--secondary {
     min-width: 0;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    background: #000000;
+    background: var(--color-surface);
 }
 
 .content::-webkit-scrollbar {
@@ -2608,6 +2617,7 @@ body[data-vscode-theme-name*="tomorrow"] .modern-text--secondary {
     background: var(--color-surface-elevated);
     border-radius: var(--radius-md);
     line-height: var(--leading-relaxed);
+    color: var(--color-text-primary);
 }
 
 .pitfalls-section {
