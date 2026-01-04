@@ -1,6 +1,6 @@
-# Code Coach Demo Setup
+# FlowPilot Demo Setup
 
-This guide shows how to set up and test the Code Coach extension without needing an API key.
+This guide shows how to set up and test the FlowPilot extension without needing an API key.
 
 ## Quick Setup
 
@@ -9,12 +9,12 @@ This guide shows how to set up and test the Code Coach extension without needing
 
 2. **Enable Demo Mode**
    - Open VS Code Settings (`Ctrl+,` or `Cmd+,`)
-   - Search for "Code Coach"
+   - Search for "FlowPilot"
    - Check the box for "Demo Mode" (`codeCoach.demoMode`)
 
-3. **Open Code Coach Sidebar**
+3. **Open FlowPilot Sidebar**
    - Look for the 🎓 (graduation cap) icon in the Activity Bar (left sidebar)
-   - Click it to open the Code Coach panel
+   - Click it to open the FlowPilot panel
 
 4. **Test the Extension**
    - Create a new Python file (`.py` extension)
@@ -36,8 +36,8 @@ print(f"Area: {result}")
 
 **To test:**
 1. Select the code above
-2. Right-click → "Code Coach: Explain Selected Code"
-3. View the explanation in the Code Coach sidebar panel
+2. Right-click → "FlowPilot: Explain Selected Code"
+3. View the explanation in the FlowPilot sidebar panel
 
 ### 2. Code Review
 ```python
@@ -51,7 +51,7 @@ print(total)
 
 **To test:**
 1. Select the code above
-2. Command Palette (`Ctrl+Shift+P`) → "Code Coach: Review Selected Code"
+2. Command Palette (`Ctrl+Shift+P`) → "FlowPilot: Review Selected Code"
 3. See suggestions for improvements
 
 ### 3. Error Explanation
@@ -66,7 +66,7 @@ greet()  # Missing required argument
 **To test:**
 1. Copy the code above into a Python file
 2. Notice the error underline
-3. Click the lightbulb icon or use Command Palette → "Code Coach: Explain This Error"
+3. Click the lightbulb icon or use Command Palette → "FlowPilot: Explain This Error"
 4. Learn about the error and how to fix it
 
 ## Demo Mode Features
@@ -81,8 +81,8 @@ When demo mode is enabled:
 
 ## Switching to Production
 
-When you're ready to use the real Code Coach service:
-1. Get an API key from [Code Coach Dashboard](https://dashboard.codecoach.dev)
+When you're ready to use the real FlowPilot service:
+1. Get an API key from [FlowPilot Dashboard](https://dashboard.codecoach.dev)
 2. Disable Demo Mode (`codeCoach.demoMode: false`)
 3. Set your API key (`codeCoach.apiKey`)
 4. Enjoy enhanced explanations powered by the full AI service!
@@ -92,11 +92,11 @@ When you're ready to use the real Code Coach service:
 **Extension not working?**
 - Make sure you're in a Python file (`.py` extension)
 - Check that Demo Mode is enabled in settings
-- Ensure the Code Coach sidebar is open (🎓 icon in Activity Bar)
+- Ensure the FlowPilot sidebar is open (🎓 icon in Activity Bar)
 - Try reloading VS Code (`Ctrl+Shift+P` → "Developer: Reload Window")
 
 **No explanations showing?**
-- Ensure the Code Coach sidebar panel is visible (🎓 icon in Activity Bar)
+- Ensure the FlowPilot sidebar panel is visible (🎓 icon in Activity Bar)
 - Check the VS Code Developer Console for errors (`Help` → `Toggle Developer Tools`)
 
 **Sidebar not loading?**

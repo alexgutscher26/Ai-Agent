@@ -1,7 +1,7 @@
 {
   "name": "flowpilot-agent",
   "displayName": "FlowPilot Agent",
-  "description": "Teaching-first AI code coach for Python in VS Code",
+  "description": "Teaching-first AI FlowPilot for Python in VS Code",
   "version": "1.2.0",
   "publisher": "ChromaCraft",
   "engines": {
@@ -27,30 +27,30 @@
       {
         "command": "codeCoach.explainSelection",
         "title": "Explain Selected Code",
-        "category": "Code Coach",
+        "category": "FlowPilot",
         "icon": "$(mortar-board)"
       },
       {
         "command": "codeCoach.reviewSelection",
         "title": "Review Selected Code",
-        "category": "Code Coach",
+        "category": "FlowPilot",
         "icon": "$(checklist)"
       },
       {
         "command": "codeCoach.explainError",
         "title": "Explain This Error",
-        "category": "Code Coach",
+        "category": "FlowPilot",
         "icon": "$(question)"
       },
       {
         "command": "codeCoach.explainErrorAtPosition",
         "title": "Explain Error at Position",
-        "category": "Code Coach"
+        "category": "FlowPilot"
       },
       {
         "command": "codeCoach.explainAllErrorsAtPosition",
         "title": "Explain All Errors at Position",
-        "category": "Code Coach"
+        "category": "FlowPilot"
       }
     ],
     "menus": {
@@ -108,7 +108,7 @@
       "activitybar": [
         {
           "id": "codeCoach",
-          "title": "Code Coach",
+          "title": "FlowPilot",
           "icon": "$(mortar-board)"
         }
       ]
@@ -117,24 +117,24 @@
       "codeCoach": [
         {
           "id": "codeCoachPanel",
-          "name": "Code Coach",
+          "name": "FlowPilot",
           "type": "webview"
         }
       ]
     },
     "configuration": {
-      "title": "Code Coach",
+      "title": "FlowPilot",
       "properties": {
         "codeCoach.apiBaseUrl": {
           "type": "string",
           "default": "https://api.codecoach.dev",
-          "description": "Base URL for the Code Coach API service",
+          "description": "Base URL for the FlowPilot API service",
           "order": 1
         },
         "codeCoach.apiKey": {
           "type": "string",
           "default": "",
-          "description": "API key for authentication with Code Coach service",
+          "description": "API key for authentication with FlowPilot service",
           "order": 2
         },
         "codeCoach.telemetryEnabled": {
@@ -156,7 +156,7 @@
         "codeCoach.proactiveSuggestions": {
           "type": "boolean",
           "default": true,
-          "description": "Enable proactive suggestions when Code Coach detects confusion",
+          "description": "Enable proactive suggestions when FlowPilot detects confusion",
           "order": 5
         },
         "codeCoach.demoMode": {

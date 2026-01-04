@@ -25,10 +25,9 @@ export class ConfusionDetector implements vscode.Disposable {
     private telemetry?: Telemetry;
 
     constructor(
-        private context: vscode.ExtensionContext,
         private configurationManager: ConfigurationManager
     ) {
-        this.statusBarNotificationManager = new StatusBarNotificationManager(configurationManager);
+        this.statusBarNotificationManager = new StatusBarNotificationManager();
         this.disposables.push(this.statusBarNotificationManager);
         
         this.setupEventListeners();

@@ -1,4 +1,4 @@
-// Main script for the Code Coach webview panel
+// Main script for the FlowPilot webview panel
 // Get VS Code API
 const vscode = acquireVsCodeApi();
 // State management
@@ -6,7 +6,7 @@ let currentExplanation = null;
 let feedbackSubmitted = false;
 // Initialize the webview
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Code Coach webview loaded');
+    console.log('FlowPilot webview loaded');
     // Initialize theme detection and monitoring
     initializeThemeDetection();
     // Initialize animation system
@@ -713,7 +713,7 @@ function showError(error) {
                 </div>
                 <div class="card-body">
                     <p>${error.message || 'An unexpected error occurred.'}</p>
-                    <p><em>Please try again or check your Code Coach configuration.</em></p>
+                    <p><em>Please try again or check your FlowPilot configuration.</em></p>
                 </div>
             </div>
         `;

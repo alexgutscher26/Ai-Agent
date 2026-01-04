@@ -288,32 +288,32 @@ describe('File Modification Safety Properties', () => {
                 // Mock file system operations to track calls
                 mockWorkspace.fs.writeFile = jest.fn((...args) => {
                     fileSystemCalls.push('writeFile');
-                    throw new Error('Code Coach Safety Violation: File modification attempted');
+                    throw new Error('FlowPilot Safety Violation: File modification attempted');
                 });
                 
                 mockWorkspace.fs.createDirectory = jest.fn((...args) => {
                     fileSystemCalls.push('createDirectory');
-                    throw new Error('Code Coach Safety Violation: Directory creation attempted');
+                    throw new Error('FlowPilot Safety Violation: Directory creation attempted');
                 });
                 
                 mockWorkspace.fs.delete = jest.fn((...args) => {
                     fileSystemCalls.push('delete');
-                    throw new Error('Code Coach Safety Violation: File deletion attempted');
+                    throw new Error('FlowPilot Safety Violation: File deletion attempted');
                 });
                 
                 mockWorkspace.fs.rename = jest.fn((...args) => {
                     fileSystemCalls.push('rename');
-                    throw new Error('Code Coach Safety Violation: File rename attempted');
+                    throw new Error('FlowPilot Safety Violation: File rename attempted');
                 });
                 
                 mockWorkspace.fs.copy = jest.fn((...args) => {
                     fileSystemCalls.push('copy');
-                    throw new Error('Code Coach Safety Violation: File copy attempted');
+                    throw new Error('FlowPilot Safety Violation: File copy attempted');
                 });
 
                 mockWorkspace.applyEdit = jest.fn((edit: vscode.WorkspaceEdit) => {
                     fileSystemCalls.push('applyEdit');
-                    throw new Error('Code Coach Safety Violation: Workspace edit attempted');
+                    throw new Error('FlowPilot Safety Violation: Workspace edit attempted');
                 });
 
                 // Test the operation based on type
@@ -404,7 +404,7 @@ describe('File Modification Safety Properties', () => {
                 // Property: Operations should complete without file modification errors
                 if (operationError) {
                     // If there's an error, it should NOT be a file modification error
-                    expect(operationError.message).not.toContain('Code Coach Safety Violation');
+                    expect(operationError.message).not.toContain('FlowPilot Safety Violation');
                 }
 
                 // Property: Read operations should be allowed
@@ -462,7 +462,7 @@ describe('File Modification Safety Properties', () => {
                     safetyGuard.preventFileModification(scenario.operation, scenario.filePath);
                     fail('Expected safety violation error');
                 } catch (error) {
-                    expect((error as Error).message).toContain('Code Coach Safety Violation');
+                    expect((error as Error).message).toContain('FlowPilot Safety Violation');
                     expect((error as Error).message).toContain(scenario.operation);
                     expect((error as Error).message).toContain(scenario.filePath);
                     expect((error as Error).message).toContain('read-only');
@@ -594,7 +594,7 @@ describe('File Modification Safety Properties', () => {
                         safetyGuard.validateReadOnlyEditor(mockEditor, scenario.operation);
                         fail('Expected safety violation error');
                     } catch (error) {
-                        expect((error as Error).message).toContain('Code Coach Safety Violation');
+                        expect((error as Error).message).toContain('FlowPilot Safety Violation');
                         expect((error as Error).message).toContain(scenario.operation);
                         expect((error as Error).message).toContain('read-only');
                     }
@@ -636,7 +636,7 @@ describe('File Modification Safety Properties', () => {
                         safetyGuard.validateNoEdits(mockEdit as any);
                         fail('Expected safety violation error');
                     } catch (error) {
-                        expect((error as Error).message).toContain('Code Coach Safety Violation');
+                        expect((error as Error).message).toContain('FlowPilot Safety Violation');
                         expect((error as Error).message).toContain('workspace edits');
                         expect((error as Error).message).toContain('read-only');
                     }

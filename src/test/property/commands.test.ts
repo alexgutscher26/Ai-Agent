@@ -204,7 +204,7 @@ describe('Command Registration Properties', () => {
                     // Should show warning for non-Python files
                     if (commandCallback) {
                         commandCallback();
-                        expect(mockWindow.showWarningMessage).toHaveBeenCalledWith('Code Coach currently only supports Python files');
+                        expect(mockWindow.showWarningMessage).toHaveBeenCalledWith('FlowPilot currently only supports Python files');
                     }
                 }
             }

@@ -1,5 +1,5 @@
 /**
- * Core type definitions for the Code Coach extension
+ * Core type definitions for the FlowPilot extension
  */
 
 import * as vscode from 'vscode';

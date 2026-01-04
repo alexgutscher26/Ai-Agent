@@ -1,6 +1,6 @@
 /**
  * Jest test setup file
- * Configures the testing environment for the Code Coach extension
+ * Configures the testing environment for the FlowPilot extension
  */
 
 import * as fc from 'fast-check';

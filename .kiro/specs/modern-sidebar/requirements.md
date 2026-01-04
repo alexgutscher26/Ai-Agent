@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Modern Sidebar feature enhances the existing Code Coach VS Code extension with a contemporary, intuitive, and visually appealing sidebar interface. This modernization focuses on improving user experience through better visual hierarchy, responsive design, smooth animations, and accessibility while maintaining the core teaching functionality of the extension.
+The Modern Sidebar feature enhances the existing FlowPilot VS Code extension with a contemporary, intuitive, and visually appealing sidebar interface. This modernization focuses on improving user experience through better visual hierarchy, responsive design, smooth animations, and accessibility while maintaining the core teaching functionality of the extension.
 
 ## Glossary
 
@@ -19,7 +19,7 @@ The Modern Sidebar feature enhances the existing Code Coach VS Code extension wi
 
 ### Requirement 1: Modern Visual Design System
 
-**User Story:** As a VS Code user, I want the Code Coach sidebar to have a modern, professional appearance that feels native to VS Code, so that it integrates seamlessly with my development environment.
+**User Story:** As a VS Code user, I want the FlowPilot sidebar to have a modern, professional appearance that feels native to VS Code, so that it integrates seamlessly with my development environment.
 
 #### Acceptance Criteria
 
@@ -31,7 +31,7 @@ The Modern Sidebar feature enhances the existing Code Coach VS Code extension wi
 
 ### Requirement 2: Responsive and Adaptive Layout
 
-**User Story:** As a developer who adjusts my sidebar width frequently, I want the Code Coach interface to adapt gracefully to different sizes, so that content remains readable and functional at any width.
+**User Story:** As a developer who adjusts my sidebar width frequently, I want the FlowPilot interface to adapt gracefully to different sizes, so that content remains readable and functional at any width.
 
 #### Acceptance Criteria
 

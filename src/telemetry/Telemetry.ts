@@ -1,10 +1,9 @@
 /**
- * Telemetry system for Code Coach extension
+ * Telemetry system for FlowPilot extension
  * Provides privacy-compliant anonymous event tracking with user consent
  */
 
 import * as vscode from 'vscode';
-import { TelemetryEvent, FeedbackEvent } from '../types';
 import { ConfigurationManager } from '../config/ConfigurationManager';
 
 export interface TelemetryEventData {

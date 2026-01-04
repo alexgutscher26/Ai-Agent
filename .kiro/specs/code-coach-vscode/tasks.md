@@ -1,8 +1,8 @@
-# Implementation Plan: Code Coach VS Code Extension
+# Implementation Plan: FlowPilot VS Code Extension
 
 ## Overview
 
-This implementation plan breaks down the Code Coach VS Code extension into discrete, manageable coding tasks. Each task builds incrementally toward a complete teaching-focused extension that explains code, analyzes errors, and provides code quality reviews. The implementation follows a modular architecture with clear separation between VS Code integration, API communication, UI rendering, and user interaction detection.
+This implementation plan breaks down the FlowPilot VS Code extension into discrete, manageable coding tasks. Each task builds incrementally toward a complete teaching-focused extension that explains code, analyzes errors, and provides code quality reviews. The implementation follows a modular architecture with clear separation between VS Code integration, API communication, UI rendering, and user interaction detection.
 
 ## Tasks
 

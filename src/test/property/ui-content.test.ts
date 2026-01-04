@@ -52,7 +52,7 @@ const mockWebview = {
 
 const mockWebviewPanel = {
     viewType: 'codeCoachPanel',
-    title: 'Code Coach',
+    title: 'FlowPilot',
     webview: mockWebview,
     options: {},
     viewColumn: 1,

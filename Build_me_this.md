@@ -5,14 +5,14 @@ Account
 
 Upgrade
 Install
-Build me a mvp for an Code Coach - AI That Writes Your Code While Teaching You How It Works
+Build me a mvp for an FlowPilot - AI That Writes Your Code While Teaching You How It Works
 ⏰Perfect Timing
 🚀10x Better
 ⚡Unfair Advantage
 +14 More
 A hundred tutorials watched. Every concept explained. But when the cursor blinks on an empty file, nothing comes. The gap between following along and knowing how to code is wider than any YouTube video can fix.
 
-AI tools made shipping easier. They also made learning optional. The code gets written. The understanding doesn't. Autocomplete becomes a crutch. The crutch becomes permanent. Code Coach doesn't write code. It teaches it. Lives in the editor. Explains what code does line by line. When something breaks, it shows why. When the logic gets confusing, it walks through the thinking. Not just the fix. The reason behind it.
+AI tools made shipping easier. They also made learning optional. The code gets written. The understanding doesn't. Autocomplete becomes a crutch. The crutch becomes permanent. FlowPilot doesn't write code. It teaches it. Lives in the editor. Explains what code does line by line. When something breaks, it shows why. When the logic gets confusing, it walks through the thinking. Not just the fix. The reason behind it.
 
 Highlight a function you don't understand. Get a plain-English breakdown. Hover over an error. See what caused it and how to fix it. Write a loop that works but feels wrong. Learn why it's inefficient and what's better. The teaching happens inside the work, not in a separate tab.
 
@@ -26,7 +26,7 @@ VS Code's AI Toolkit: Fine-Tune Models, Build Agents ... trailer
 VS Code's AI Toolkit: Fine-Tune Models, Build Agents ...
 Roo Code is AMAZING - AI VSCode Extension (better than ... trailer
 Roo Code is AMAZING - AI VSCode Extension (better than ...
-Code Coach can launch as a focused VS Code extension that explains code inline, reacts to errors and “stuck” moments, and logs what users struggle with, using an LLM behind the scenes and starting with Python only.
+FlowPilot can launch as a focused VS Code extension that explains code inline, reacts to errors and “stuck” moments, and logs what users struggle with, using an LLM behind the scenes and starting with Python only.
 ​
 
 Below is a concrete, buildable MVP plan tailored to your pitch.
@@ -68,7 +68,7 @@ Key flows:
 
 Highlight a function → explanation panel
 
-Command palette: “Code Coach: Explain Selection”.
+Command palette: “FlowPilot: Explain Selection”.
 
 Behavior:
 
@@ -86,7 +86,7 @@ Render in a right-side panel with sections:
 
 Hover over an error → root-cause + fix
 
-On diagnostic event (from Python extension / language server), add Code Coach code action: “Explain this error”.
+On diagnostic event (from Python extension / language server), add FlowPilot code action: “Explain this error”.
 
 Request:
 
@@ -102,7 +102,7 @@ Response sections:
 
 Ask ‘Is this good code?’ → refactor with rationale
 
-Command: “Code Coach: Review Selection”.
+Command: “FlowPilot: Review Selection”.
 
 Output:
 
@@ -145,7 +145,7 @@ codeCoach.explainError (invoked via code action on diagnostic)
 
 UI
 
-Single Webview / Sidebar view: “Code Coach”.
+Single Webview / Sidebar view: “FlowPilot”.
 
 Shows last interaction: code snippet, question, explanation.
 
@@ -154,7 +154,7 @@ You can stub this with simple heuristics before doing hard telemetry:
 
 Timer-based:
 
-If cursor stays on same line for N seconds while there is an error, show a subtle status bar hint: “Need help understanding this error? Code Coach can explain.”
+If cursor stays on same line for N seconds while there is an error, show a subtle status bar hint: “Need help understanding this error? FlowPilot can explain.”
 
 Error-based:
 
@@ -259,7 +259,7 @@ r/learnprogramming, r/cscareerquestions, r/Python, r/vscode:
 
 YouTube/shorts:
 
-Partner with Python YouTubers: “Live coding with Code Coach: every bug becomes a lesson.”
+Partner with Python YouTubers: “Live coding with FlowPilot: every bug becomes a lesson.”
 
 Bootcamps:
 
@@ -280,7 +280,7 @@ Week 1–2: Foundation
 
 Week 2–3: Error explanations + review
 
- Listen to diagnostics for Python; add code action “Explain with Code Coach”.
+ Listen to diagnostics for Python; add code action “Explain with FlowPilot”.
 
  Implement /error endpoint with specialized prompt.
 
@@ -335,25 +335,25 @@ onCommand:codeCoach.explainError
 
 contributes.commands:
 
-codeCoach.explainSelection – “Code Coach: Explain Selected Code”
+codeCoach.explainSelection – “FlowPilot: Explain Selected Code”
 
-codeCoach.reviewSelection – “Code Coach: Review Selected Code”
+codeCoach.reviewSelection – “FlowPilot: Review Selected Code”
 
-codeCoach.explainError – “Code Coach: Explain This Error”
+codeCoach.explainError – “FlowPilot: Explain This Error”
 
 contributes.menus:
 
 editor/context: add explain/review when a Python file is active.
 
-editor/title: a small Code Coach icon button.
+editor/title: a small FlowPilot icon button.
 
 editor/codeAction:
 
-Quick fix: Explain error with Code Coach on diagnostics.
+Quick fix: Explain error with FlowPilot on diagnostics.
 
 contributes.viewsContainers / views:
 
-Sidebar view container codeCoach with a single view: “Code Coach Panel”.
+Sidebar view container codeCoach with a single view: “FlowPilot Panel”.
 ​
 
 This ensures the extension activates only when needed (Python or explicit commands).
@@ -472,7 +472,7 @@ Listen on languages.onDidChangeDiagnostics.
 
 When diagnostics appear for a Python file:
 
-Optionally set a LanguageStatusItem (“Code Coach available for explaining this error”).
+Optionally set a LanguageStatusItem (“FlowPilot available for explaining this error”).
 ​
 
 ConfusionDetector
@@ -493,7 +493,7 @@ When threshold hit:
 
 Show non-intrusive status bar item:
 
-Text: “Stuck? Explain this with Code Coach”.
+Text: “Stuck? Explain this with FlowPilot”.
 
 Command: codeCoach.explainError.
 
@@ -595,7 +595,7 @@ Craft and build a highly detailed prompt for an ide to build this
 Use the following prompt as the “master spec” for your IDE / agent. It’s written so you can paste it into a “build me this project” workflow and let it scaffold + implement the VS Code extension.
 
 System / High‑Level Role
-You are an expert TypeScript + Node.js engineer who specializes in building high‑quality VS Code extensions. You will design and implement a VS Code extension called “Code Coach” that explains code, errors, and code quality inside the editor, with a teaching‑first UX (no auto‑completion or full code generation).
+You are an expert TypeScript + Node.js engineer who specializes in building high‑quality VS Code extensions. You will design and implement a VS Code extension called “FlowPilot” that explains code, errors, and code quality inside the editor, with a teaching‑first UX (no auto‑completion or full code generation).
 
 Your job is to:
 
@@ -608,7 +608,7 @@ Keep the design modular and easy to iterate on.
 Do not generate filler boilerplate; generate production‑ready, idiomatic code and configuration.
 
 Product Concept
-Code Coach – AI That Writes Your Understanding (Not Your Code)
+FlowPilot – AI That Writes Your Understanding (Not Your Code)
 
 Target users: self‑taught developers and bootcamp grads who can make code work but struggle to explain it.
 
@@ -637,7 +637,7 @@ The extension should still activate only when useful (Python or explicit command
 Commands (Editor UX)
 Implement the following commands:
 
-codeCoach.explainSelection – “Code Coach: Explain Selected Code”
+codeCoach.explainSelection – “FlowPilot: Explain Selected Code”
 
 Trigger:
 
@@ -669,7 +669,7 @@ Call backend endpoint:
 
 POST /explain with a JSON body.
 
-Display response in the Code Coach panel (sidebar) with:
+Display response in the FlowPilot panel (sidebar) with:
 
 Line‑by‑line explanation.
 
@@ -679,7 +679,7 @@ Pitfalls / gotchas.
 
 Small “Try it yourself” suggestion (if provided by backend).
 
-codeCoach.reviewSelection – “Code Coach: Review Selected Code”
+codeCoach.reviewSelection – “FlowPilot: Review Selected Code”
 
 Trigger:
 
@@ -707,7 +707,7 @@ Explanation of why the suggested version is better.
 
 Never auto‑apply the suggested code; just show it.
 
-codeCoach.explainError – “Code Coach: Explain This Error”
+codeCoach.explainError – “FlowPilot: Explain This Error”
 
 Trigger:
 
@@ -758,7 +758,7 @@ When a threshold is met:
 
 Show a status bar item:
 
-Text like: Stuck on an error? Ask Code Coach.
+Text like: Stuck on an error? Ask FlowPilot.
 
 Clicking it triggers codeCoach.explainError.
 
@@ -815,9 +815,9 @@ Define at least:
 
 name: code-coach
 
-displayName: Code Coach
+displayName: FlowPilot
 
-description: Teaching‑first AI code coach for Python in VS Code.
+description: Teaching‑first AI FlowPilot for Python in VS Code.
 
 publisher: Use a placeholder like your-name (can be changed later).
 
@@ -847,11 +847,11 @@ Show explain/review commands when resourceLangId == python.
 
 editor/codeAction:
 
-Show “Explain error with Code Coach” when there is a diagnostic on that range.
+Show “Explain error with FlowPilot” when there is a diagnostic on that range.
 
 contributes.viewsContainers and views:
 
-Sidebar container codeCoach with view id codeCoachPanel, name “Code Coach”.
+Sidebar container codeCoach with view id codeCoachPanel, name “FlowPilot”.
 
 contributes.configuration:
 

@@ -10,7 +10,7 @@ import { FileSafetyGuard } from '../safety/FileSafetyGuard';
 import { PerformanceMonitor } from '../performance/PerformanceMonitor';
 
 /**
- * Command Manager for Code Coach extension
+ * Command Manager for FlowPilot extension
  * Handles registration and execution of VS Code commands
  * Ensures all operations are read-only, safe, and non-blocking
  */
@@ -125,7 +125,7 @@ export class CommandManager {
             if (this.configManager.isDemoModeEnabled()) {
                 vscode.window.showErrorMessage('Demo mode is enabled but mock API client failed to initialize.');
             } else {
-                vscode.window.showErrorMessage('Code Coach API client is not initialized. Please check your configuration.');
+                vscode.window.showErrorMessage('FlowPilot API client is not initialized. Please check your configuration.');
             }
             return false;
         }
@@ -165,7 +165,7 @@ export class CommandManager {
 
             // Check if this is a Python file (Requirement 1.5)
             if (!this.configManager.shouldActivateForDocument(editor.document)) {
-                vscode.window.showWarningMessage('Code Coach currently only supports Python files');
+                vscode.window.showWarningMessage('FlowPilot currently only supports Python files');
                 return;
             }
 
@@ -178,7 +178,7 @@ export class CommandManager {
                 // Show progress indicator
                 await vscode.window.withProgress({
                     location: vscode.ProgressLocation.Notification,
-                    title: "Code Coach",
+                    title: "FlowPilot",
                     cancellable: false
                 }, async (progress) => {
                     progress.report({ message: "Analyzing your code..." });
@@ -203,7 +203,7 @@ export class CommandManager {
                         surroundingContext: surroundingContext
                     };
 
-                    progress.report({ message: "Getting explanation from Code Coach..." });
+                    progress.report({ message: "Getting explanation from FlowPilot..." });
 
                     // Call API to get explanation with performance monitoring and timeout
                     const explanation = await this.performanceMonitor.withTimeout(
@@ -216,7 +216,7 @@ export class CommandManager {
                     if (this.viewProvider) {
                         this.viewProvider.showExplanation(explanation);
                     } else {
-                        vscode.window.showErrorMessage('Code Coach view is not available. Please try reloading the window.');
+                        vscode.window.showErrorMessage('FlowPilot view is not available. Please try reloading the window.');
                     }
 
                     // Track telemetry event
@@ -272,7 +272,7 @@ export class CommandManager {
 
             // Check if this is a Python file
             if (!this.configManager.shouldActivateForDocument(editor.document)) {
-                vscode.window.showWarningMessage('Code Coach currently only supports Python files');
+                vscode.window.showWarningMessage('FlowPilot currently only supports Python files');
                 return;
             }
 
@@ -285,7 +285,7 @@ export class CommandManager {
                 // Show progress indicator
                 await vscode.window.withProgress({
                     location: vscode.ProgressLocation.Notification,
-                    title: "Code Coach",
+                    title: "FlowPilot",
                     cancellable: false
                 }, async (progress) => {
                     progress.report({ message: "Analyzing your code for quality and style..." });
@@ -307,7 +307,7 @@ export class CommandManager {
                         reviewType: 'quality' // Default to quality review, could be configurable
                     };
 
-                    progress.report({ message: "Getting code review from Code Coach..." });
+                    progress.report({ message: "Getting code review from FlowPilot..." });
 
                     // Call API to get code review with performance monitoring and timeout
                     const review = await this.performanceMonitor.withTimeout(
@@ -320,7 +320,7 @@ export class CommandManager {
                     if (this.viewProvider) {
                         this.viewProvider.showReview(review);
                     } else {
-                        vscode.window.showErrorMessage('Code Coach view is not available. Please try reloading the window.');
+                        vscode.window.showErrorMessage('FlowPilot view is not available. Please try reloading the window.');
                     }
 
                     // Track telemetry event
@@ -378,7 +378,7 @@ export class CommandManager {
 
             // Check if this is a Python file
             if (!this.configManager.shouldActivateForDocument(editor.document)) {
-                vscode.window.showWarningMessage('Code Coach currently only supports Python files');
+                vscode.window.showWarningMessage('FlowPilot currently only supports Python files');
                 return;
             }
 
@@ -391,7 +391,7 @@ export class CommandManager {
                 // Show progress indicator
                 await vscode.window.withProgress({
                     location: vscode.ProgressLocation.Notification,
-                    title: "Code Coach",
+                    title: "FlowPilot",
                     cancellable: false
                 }, async (progress) => {
                     progress.report({ message: "Analyzing error..." });
@@ -427,7 +427,7 @@ export class CommandManager {
                         languageId: editor.document.languageId
                     };
 
-                    progress.report({ message: "Getting error explanation from Code Coach..." });
+                    progress.report({ message: "Getting error explanation from FlowPilot..." });
 
                     // Call API to get error explanation with performance monitoring and timeout
                     const errorExplanation = await this.performanceMonitor.withTimeout(
@@ -440,7 +440,7 @@ export class CommandManager {
                     if (this.viewProvider) {
                         this.viewProvider.showError(errorExplanation);
                     } else {
-                        vscode.window.showErrorMessage('Code Coach view is not available. Please try reloading the window.');
+                        vscode.window.showErrorMessage('FlowPilot view is not available. Please try reloading the window.');
                     }
 
                     // Track telemetry event
@@ -513,7 +513,7 @@ export class CommandManager {
             // Show progress indicator
             await vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
-                title: "Code Coach",
+                title: "FlowPilot",
                 cancellable: false
             }, async (progress) => {
                 progress.report({ message: `Analyzing ${diagnostics.length} errors...` });
@@ -563,7 +563,7 @@ export class CommandManager {
                 if (this.viewProvider) {
                     this.viewProvider.showError(combinedResponse);
                 } else {
-                    vscode.window.showErrorMessage('Code Coach view is not available. Please try reloading the window.');
+                    vscode.window.showErrorMessage('FlowPilot view is not available. Please try reloading the window.');
                 }
 
                 // Log telemetry event

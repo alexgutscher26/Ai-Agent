@@ -3,7 +3,6 @@
  */
 
 import * as vscode from 'vscode';
-import * as path from 'path';
 import {
     ExplanationResponse,
     ReviewResponse,
@@ -65,7 +64,7 @@ export class CodeCoachPanel {
         // Otherwise, create a new panel
         const panel = vscode.window.createWebviewPanel(
             CodeCoachPanel.viewType,
-            'Code Coach',
+            'FlowPilot',
             column || vscode.ViewColumn.One,
             {
                 // Enable javascript in the webview
@@ -167,7 +166,7 @@ export class CodeCoachPanel {
                 break;
             case 'error':
                 console.error('Webview error:', message.data);
-                vscode.window.showErrorMessage(`Code Coach webview error: ${message.data?.message || 'Unknown error'}`);
+                vscode.window.showErrorMessage(`FlowPilot webview error: ${message.data?.message || 'Unknown error'}`);
                 break;
         }
     }
@@ -264,14 +263,14 @@ export class CodeCoachPanel {
                 <link href="${styleResetUri}" rel="stylesheet">
                 <link href="${styleVSCodeUri}" rel="stylesheet">
                 <link href="${styleMainUri}" rel="stylesheet">
-                <title>Code Coach</title>
+                <title>FlowPilot</title>
             </head>
             <body class="${themeClass}" ${themeDataAttribute}>
                 <div class="container">
                     <header class="header">
                         <h1 class="title">
                             <span class="icon">🎓</span>
-                            Code Coach
+                            FlowPilot
                         </h1>
                         <p class="subtitle">Understanding your code, one explanation at a time</p>
                     </header>
@@ -281,7 +280,7 @@ export class CodeCoachPanel {
                             <div class="card-header">
                                 <span class="card-icon">📚</span>
                                 <div>
-                                    <h2 class="card-title">Welcome to Code Coach!</h2>
+                                    <h2 class="card-title">Welcome to FlowPilot!</h2>
                                     <p class="card-subtitle">Understanding your code, one explanation at a time</p>
                                 </div>
                             </div>
@@ -294,7 +293,7 @@ export class CodeCoachPanel {
                                 </ul>
                             </div>
                             <div class="card-footer">
-                                <p class="tip">💡 <em>Tip: Right-click on selected code to access Code Coach commands quickly!</em></p>
+                                <p class="tip">💡 <em>Tip: Right-click on selected code to access FlowPilot commands quickly!</em></p>
                             </div>
                         </div>
 

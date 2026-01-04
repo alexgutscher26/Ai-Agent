@@ -1,5 +1,5 @@
 /**
- * Performance Monitor for Code Coach extension
+ * Performance Monitor for FlowPilot extension
  * Ensures API calls don't block VS Code editor and monitors performance
  * Requirements: 5.5 - Maintain responsive performance and not block editor
  */
@@ -171,7 +171,7 @@ export class PerformanceMonitor {
             
             // Show user notification for critical performance issues
             vscode.window.showWarningMessage(
-                `Code Coach: Operation "${metrics.operationName}" is running slowly. This may affect VS Code performance.`
+                `FlowPilot: Operation "${metrics.operationName}" is running slowly. This may affect VS Code performance.`
             );
         } else if (metrics.duration > this.thresholds.warning) {
             console.warn(`⚠️ Performance Monitor: WARNING - Operation "${metrics.operationName}" took ${metrics.duration.toFixed(2)}ms (threshold: ${this.thresholds.warning}ms)`);

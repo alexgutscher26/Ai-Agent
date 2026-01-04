@@ -1,8 +1,8 @@
-# Design Document: Modern Sidebar for Code Coach
+# Design Document: Modern Sidebar for FlowPilot
 
 ## Overview
 
-The Modern Sidebar transforms the existing Code Coach webview panel into a contemporary, polished interface that feels native to VS Code while enhancing user experience through thoughtful design patterns. The design emphasizes visual hierarchy, smooth interactions, and accessibility while maintaining the core teaching functionality.
+The Modern Sidebar transforms the existing FlowPilot webview panel into a contemporary, polished interface that feels native to VS Code while enhancing user experience through thoughtful design patterns. The design emphasizes visual hierarchy, smooth interactions, and accessibility while maintaining the core teaching functionality.
 
 The modernization focuses on creating a cohesive design system with consistent components, implementing responsive layouts that adapt to different sidebar widths, adding subtle animations and micro-interactions, and ensuring full accessibility compliance. The design leverages VS Code's native CSS variables and design language to create seamless integration.
 

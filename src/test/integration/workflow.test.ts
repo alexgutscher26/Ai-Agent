@@ -1,20 +1,18 @@
 /**
- * Integration tests for complete Code Coach workflows
+ * Integration tests for complete FlowPilot workflows
  * Tests end-to-end explain, review, and error analysis flows
  * Verifies component interactions and data flow
  */
 
 import * as vscode from 'vscode';
-import * as assert from 'assert';
 import { CommandManager } from '../../commands/CommandManager';
 import { CodeCoachViewProvider } from '../../panel/CodeCoachViewProvider';
 import { ConfigurationManager } from '../../config/ConfigurationManager';
 import { Telemetry } from '../../telemetry/Telemetry';
 import { ConfusionDetector } from '../../confusion/ConfusionDetector';
-import { MockApiClient } from '../../api/MockApiClient';
 import { ExplanationResponse, ReviewResponse, ErrorResponse } from '../../types';
 
-describe('Code Coach Integration Tests', () => {
+describe('FlowPilot Integration Tests', () => {
     let context: vscode.ExtensionContext;
     let configManager: ConfigurationManager;
     let commandManager: CommandManager;

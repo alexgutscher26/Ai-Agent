@@ -6,7 +6,7 @@
 
 import * as fc from 'fast-check';
 import * as vscode from 'vscode';
-import { Telemetry, TelemetryEventData } from '../../telemetry/Telemetry';
+import { Telemetry } from '../../telemetry/Telemetry';
 import { ConfigurationManager } from '../../config/ConfigurationManager';
 
 // Mock VS Code API

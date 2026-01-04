@@ -1,5 +1,5 @@
 /**
- * File Safety Guard for Code Coach extension
+ * File Safety Guard for FlowPilot extension
  * Ensures all operations are read-only and prevents any file modifications
  * Requirements: 2.4, 3.5 - Never modify user code, only provide explanations
  */
@@ -186,8 +186,8 @@ export class FileSafetyGuard {
      * @throws Error if modification is attempted
      */
     public preventFileModification(operationName: string, filePath: string, context?: any): never {
-        const errorMessage = `Code Coach Safety Violation: Attempted to ${operationName} file "${filePath}". ` +
-                           'Code Coach is designed to be read-only and never modifies user files.';
+        const errorMessage = `FlowPilot Safety Violation: Attempted to ${operationName} file "${filePath}". ` +
+                           'FlowPilot is designed to be read-only and never modifies user files.';
         
         this.logSafetyViolation(operationName, errorMessage, { filePath, context });
         
@@ -201,8 +201,8 @@ export class FileSafetyGuard {
      */
     public validateNoEdits(edit: vscode.WorkspaceEdit): void {
         if (edit.size > 0) {
-            const errorMessage = 'Code Coach Safety Violation: Attempted to apply workspace edits. ' +
-                               'Code Coach is designed to be read-only and never modifies user files.';
+            const errorMessage = 'FlowPilot Safety Violation: Attempted to apply workspace edits. ' +
+                               'FlowPilot is designed to be read-only and never modifies user files.';
             
             this.logSafetyViolation('applyEdit', errorMessage, { editSize: edit.size });
             throw new Error(errorMessage);
@@ -219,8 +219,8 @@ export class FileSafetyGuard {
         if (operationName.includes('edit') || operationName.includes('insert') || 
             operationName.includes('replace') || operationName.includes('delete')) {
             
-            const errorMessage = `Code Coach Safety Violation: Attempted to ${operationName} in text editor. ` +
-                               'Code Coach is designed to be read-only and never modifies user files.';
+            const errorMessage = `FlowPilot Safety Violation: Attempted to ${operationName} in text editor. ` +
+                               'FlowPilot is designed to be read-only and never modifies user files.';
             
             this.logSafetyViolation(operationName, errorMessage, { 
                 documentUri: editor.document.uri.toString(),
@@ -249,7 +249,7 @@ export class FileSafetyGuard {
      * Log a safety violation (blocked operation)
      */
     private logSafetyViolation(operation: string, message: string, context?: any): void {
-        console.error('🚨 Code Coach Safety Violation:', {
+        console.error('🚨 FlowPilot Safety Violation:', {
             operation,
             message,
             context,
@@ -258,7 +258,7 @@ export class FileSafetyGuard {
 
         // Show user-friendly error message
         vscode.window.showErrorMessage(
-            `Code Coach Safety: ${message.split('.')[0]}. Code Coach only reads your code and never modifies files.`
+            `FlowPilot Safety: ${message.split('.')[0]}. FlowPilot only reads your code and never modifies files.`
         );
     }
 
@@ -266,7 +266,7 @@ export class FileSafetyGuard {
      * Log a safety warning (unknown or potentially unsafe operation)
      */
     private logSafetyWarning(operation: string, message: string, context?: any): void {
-        console.warn('⚠️ Code Coach Safety Warning:', {
+        console.warn('⚠️ FlowPilot Safety Warning:', {
             operation,
             message,
             context,

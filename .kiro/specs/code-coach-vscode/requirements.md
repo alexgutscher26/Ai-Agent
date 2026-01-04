@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Code Coach is a VS Code extension designed to help self-taught developers and bootcamp graduates understand the code they write, rather than just making it work. The extension provides in-editor explanations, error analysis, and code quality reviews with a teaching-first approach, focusing on comprehension over code generation.
+FlowPilot is a VS Code extension designed to help self-taught developers and bootcamp graduates understand the code they write, rather than just making it work. The extension provides in-editor explanations, error analysis, and code quality reviews with a teaching-first approach, focusing on comprehension over code generation.
 
 ## Glossary
 
@@ -60,14 +60,14 @@ Code Coach is a VS Code extension designed to help self-taught developers and bo
 #### Acceptance Criteria
 
 1. WHEN a user's cursor remains on a line with diagnostics for more than 15 seconds, THE Confusion_Detector SHALL offer help via status bar notification
-2. WHEN the same diagnostic appears repeatedly in the same location, THE Confusion_Detector SHALL suggest using Code Coach to understand the error
+2. WHEN the same diagnostic appears repeatedly in the same location, THE Confusion_Detector SHALL suggest using FlowPilot to understand the error
 3. WHEN offering help, THE Extension SHALL use non-intrusive notifications that don't interrupt the coding flow
 4. THE Confusion_Detector SHALL implement cooldown periods to prevent notification spam
 5. THE Extension SHALL respect user preferences for enabling or disabling proactive suggestions
 
 ### Requirement 5: User Interface and Experience
 
-**User Story:** As a VS Code user, I want the Code Coach interface to be intuitive and integrated into my existing workflow, so that learning doesn't disrupt my development process.
+**User Story:** As a VS Code user, I want the FlowPilot interface to be intuitive and integrated into my existing workflow, so that learning doesn't disrupt my development process.
 
 #### Acceptance Criteria
 

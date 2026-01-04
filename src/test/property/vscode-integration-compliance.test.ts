@@ -25,13 +25,13 @@ jest.mock('vscode', () => {
 
     class MockRange {
         constructor(public start: any, public end: any) {}
-        intersection(other: any) { return this; }
-        isEqual(other: any) { return false; }
+        intersection(_other: any) { return this; }
+        isEqual(_other: any) { return false; }
     }
 
     class MockPosition {
         constructor(public line: number, public character: number) {}
-        compareTo(other: any) { return 0; }
+        compareTo(_other: any) { return 0; }
     }
 
     class MockSelection {
@@ -95,7 +95,7 @@ jest.mock('vscode', () => {
         },
         workspace: {
             getConfiguration: jest.fn(() => ({
-                get: jest.fn((key: string, defaultValue: any = undefined) => defaultValue)
+                get: jest.fn((_key: string, defaultValue: any = undefined) => defaultValue)
             })),
             onDidChangeConfiguration: jest.fn(() => ({ dispose: jest.fn() })),
             onDidChangeWorkspaceFolders: jest.fn(() => ({ dispose: jest.fn() })),
@@ -342,12 +342,12 @@ describe('VS Code Integration Compliance Properties', () => {
                 const registrations: string[] = [];
                 
                 // Mock registration functions to track calls
-                (vscode.commands.registerCommand as jest.Mock).mockImplementation((command: string, callback: any) => {
+                (vscode.commands.registerCommand as jest.Mock).mockImplementation((command: string, _callback: any) => {
                     registrations.push(`command:${command}`);
                     return { dispose: jest.fn() };
                 });
 
-                (vscode.languages.registerCodeActionsProvider as jest.Mock).mockImplementation((selector: any, provider: any, metadata?: any) => {
+                (vscode.languages.registerCodeActionsProvider as jest.Mock).mockImplementation((selector: any, _provider: any, _metadata?: any) => {
                     registrations.push(`codeAction:${JSON.stringify(selector)}`);
                     return { dispose: jest.fn() };
                 });

@@ -1,6 +1,6 @@
-# Code Coach - VS Code Extension
+# FlowPilot - VS Code Extension
 
-A teaching-first AI code coach that helps developers understand their code rather than just making it work. Code Coach provides in-editor explanations, error analysis, and code quality reviews with a focus on learning and comprehension.
+A teaching-first AI FlowPilot that helps developers understand their code rather than just making it work. FlowPilot provides in-editor explanations, error analysis, and code quality reviews with a focus on learning and comprehension.
 
 ## Features
 
@@ -14,24 +14,24 @@ A teaching-first AI code coach that helps developers understand their code rathe
 
 - VS Code 1.90.0 or higher
 - Python files (initial scope)
-- Code Coach API access (API key required) OR Demo Mode for testing
+- FlowPilot API access (API key required) OR Demo Mode for testing
 
 ## Getting Started
 
 ### Option 1: Demo Mode (No API Key Required)
-Perfect for trying out Code Coach without setting up an API key:
+Perfect for trying out FlowPilot without setting up an API key:
 
 1. Install the extension from the VS Code Marketplace
 2. Open VS Code Settings (`Ctrl+,` or `Cmd+,`)
-3. Search for "Code Coach"
+3. Search for "FlowPilot"
 4. Enable "Demo Mode" (`codeCoach.demoMode: true`)
-5. Start using Code Coach with realistic mock responses!
+5. Start using FlowPilot with realistic mock responses!
 
 ### Option 2: Full API Access
-For production use with the real Code Coach service:
+For production use with the real FlowPilot service:
 
 1. Install the extension from the VS Code Marketplace
-2. Get your API key from [Code Coach Dashboard](https://dashboard.codecoach.dev)
+2. Get your API key from [FlowPilot Dashboard](https://dashboard.codecoach.dev)
 3. Configure your API key in VS Code settings (`codeCoach.apiKey`)
 4. Set your experience level (`codeCoach.userLevel`)
 5. Start learning!
@@ -40,17 +40,17 @@ For production use with the real Code Coach service:
 
 ### Explain Code
 1. Select Python code in the editor
-2. Right-click and choose "Code Coach: Explain Selected Code"
-3. View the explanation in the Code Coach panel
+2. Right-click and choose "FlowPilot: Explain Selected Code"
+3. View the explanation in the FlowPilot panel
 
 ### Review Code Quality
 1. Select Python code you want to review
-2. Use Command Palette: "Code Coach: Review Selected Code"
+2. Use Command Palette: "FlowPilot: Review Selected Code"
 3. See suggestions for improvements with explanations
 
 ### Understand Errors
 1. When you have Python errors, click the lightbulb icon
-2. Choose "Code Coach: Explain This Error"
+2. Choose "FlowPilot: Explain This Error"
 3. Learn what the error means and how to fix it
 
 ## Configuration
@@ -135,7 +135,7 @@ The extension follows a modular architecture:
 
 ## Privacy
 
-Code Coach respects your privacy:
+FlowPilot respects your privacy:
 - Telemetry is opt-in and anonymous
 - No code content is stored or transmitted in telemetry
 - API communication is encrypted

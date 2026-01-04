@@ -1,5 +1,5 @@
 /**
- * Code Action Provider for Code Coach extension
+ * Code Action Provider for FlowPilot extension
  * Provides code actions for explaining errors and diagnostics
  * Requirements: 2.3, 2.5
  * Safety: 2.4, 3.5 - Only provides explanations, never modifies files

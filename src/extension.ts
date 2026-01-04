@@ -22,16 +22,16 @@ let performanceMonitor: PerformanceMonitor | undefined;
  * Requirements: 5.4 - Proper VS Code API integration
  */
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Code Coach extension is now active');
+    console.log('FlowPilot extension is now active');
 
     try {
         // Initialize safety guard first to ensure all operations are monitored
         safetyGuard = FileSafetyGuard.getInstance();
-        console.log('Code Coach Safety Guard initialized');
+        console.log('FlowPilot Safety Guard initialized');
 
         // Initialize performance monitor to ensure non-blocking operations
         performanceMonitor = PerformanceMonitor.getInstance();
-        console.log('Code Coach Performance Monitor initialized');
+        console.log('FlowPilot Performance Monitor initialized');
 
         // Initialize configuration manager
         configurationManager = new ConfigurationManager(context);
@@ -78,9 +78,18 @@ export function activate(context: vscode.ExtensionContext) {
 
         // Wire confusion detector to command manager for proactive help
         confusionDetector.onHelpOfferedCallback((diagnostic, reason) => {
-            // When confusion is detected, we could automatically trigger help
-            // For now, we just log the event - the status bar notification handles user interaction
-            console.log(`Code Coach: Confusion detected (${reason}) for diagnostic: ${diagnostic.message}`);
+            console.log(`FlowPilot: Confusion detected (${reason}) for diagnostic: ${diagnostic.message}`);
+            
+            if (configurationManager?.areProactiveSuggestionsEnabled()) {
+                const editor = vscode.window.activeTextEditor;
+                if (editor && configurationManager.shouldActivateForDocument(editor.document)) {
+                    vscode.commands.executeCommand(
+                        'codeCoach.explainErrorAtPosition',
+                        editor.document.uri,
+                        diagnostic.range.start
+                    );
+                }
+            }
             
             // Track confusion detection in telemetry
             if (telemetry && configurationManager) {
@@ -113,7 +122,7 @@ export function activate(context: vscode.ExtensionContext) {
         registerDiagnosticHandlers(context);
 
         // Log successful activation
-        console.log('Code Coach extension activated successfully');
+        console.log('FlowPilot extension activated successfully');
         
         // Show welcome message for first-time users
         const hasShownWelcome = context.globalState.get<boolean>('hasShownWelcome', false);
@@ -122,8 +131,8 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
     } catch (error) {
-        console.error('Failed to activate Code Coach extension:', error);
-        vscode.window.showErrorMessage(`Code Coach activation failed: ${error}`);
+        console.error('Failed to activate FlowPilot extension:', error);
+        vscode.window.showErrorMessage(`FlowPilot activation failed: ${error}`);
         
         // Ensure partial cleanup on activation failure
         deactivate();
@@ -135,7 +144,7 @@ export function activate(context: vscode.ExtensionContext) {
  * Called when the extension is deactivated
  */
 export function deactivate() {
-    console.log('Code Coach extension is being deactivated');
+    console.log('FlowPilot extension is being deactivated');
     
     try {
         // Clean up resources
@@ -176,9 +185,9 @@ export function deactivate() {
         // Clean up view provider
         viewProvider = undefined;
 
-        console.log('Code Coach extension deactivated successfully');
+        console.log('FlowPilot extension deactivated successfully');
     } catch (error) {
-        console.error('Error during Code Coach deactivation:', error);
+        console.error('Error during FlowPilot deactivation:', error);
     }
 }
 
@@ -199,35 +208,30 @@ interface ComponentWiring {
 function wireComponentsForIntegration(context: vscode.ExtensionContext, components: ComponentWiring): void {
     const {
         configurationManager,
-        commandManager,
-        viewProvider,
-        telemetry,
         confusionDetector,
-        safetyGuard,
-        performanceMonitor
-    } = components;
+        safetyGuard    } = components;
 
     // Ensure all components have proper cross-references
-    console.log('Code Coach: Wiring components for complete integration...');
+    console.log('FlowPilot: Wiring components for complete integration...');
 
     // Wire configuration changes to all components
     const configChangeListener = vscode.workspace.onDidChangeConfiguration(e => {
         if (e.affectsConfiguration('codeCoach')) {
-            console.log('Code Coach: Configuration changed, updating all components');
+            console.log('FlowPilot: Configuration changed, updating all components');
             
             // Notify all components of configuration changes
             if (e.affectsConfiguration('codeCoach.proactiveSuggestions')) {
                 // Confusion detector will handle this automatically via its own listener
-                console.log('Code Coach: Proactive suggestions setting changed');
+                console.log('FlowPilot: Proactive suggestions setting changed');
             }
             
             if (e.affectsConfiguration('codeCoach.telemetryEnabled')) {
-                console.log('Code Coach: Telemetry setting changed');
+                console.log('FlowPilot: Telemetry setting changed');
                 // Telemetry component handles this automatically
             }
             
             if (e.affectsConfiguration('codeCoach.userLevel')) {
-                console.log('Code Coach: User level setting changed');
+                console.log('FlowPilot: User level setting changed');
                 // All components will get updated user level via configuration manager
             }
         }
@@ -237,7 +241,7 @@ function wireComponentsForIntegration(context: vscode.ExtensionContext, componen
     // Wire document lifecycle events to maintain component state
     const documentOpenListener = vscode.workspace.onDidOpenTextDocument(document => {
         if (configurationManager.shouldActivateForDocument(document)) {
-            console.log('Code Coach: Python document opened, ensuring components are ready');
+            console.log('FlowPilot: Python document opened, ensuring components are ready');
             
             // Ensure confusion detector is tracking this document
             // (It will automatically start tracking when cursor moves to it)
@@ -250,7 +254,7 @@ function wireComponentsForIntegration(context: vscode.ExtensionContext, componen
 
     const documentCloseListener = vscode.workspace.onDidCloseTextDocument(document => {
         if (configurationManager.shouldActivateForDocument(document)) {
-            console.log('Code Coach: Python document closed, cleaning up component state');
+            console.log('FlowPilot: Python document closed, cleaning up component state');
             
             // Clean up confusion detector state for closed document
             confusionDetector.resetMetrics(document);
@@ -261,10 +265,10 @@ function wireComponentsForIntegration(context: vscode.ExtensionContext, componen
     // Wire window state changes for proper component lifecycle
     const windowStateListener = vscode.window.onDidChangeWindowState(state => {
         if (!state.focused) {
-            console.log('Code Coach: Window lost focus, pausing active monitoring');
+            console.log('FlowPilot: Window lost focus, pausing active monitoring');
             // Components will naturally pause when window is not focused
         } else {
-            console.log('Code Coach: Window gained focus, resuming active monitoring');
+            console.log('FlowPilot: Window gained focus, resuming active monitoring');
             // Components will naturally resume when window gains focus
         }
     });
@@ -272,7 +276,7 @@ function wireComponentsForIntegration(context: vscode.ExtensionContext, componen
 
     // Wire extension host lifecycle for proper cleanup
     const extensionChangeListener = vscode.extensions.onDidChange(() => {
-        console.log('Code Coach: Extension environment changed, validating component state');
+        console.log('FlowPilot: Extension environment changed, validating component state');
         
         // Ensure our components are still properly integrated
         // This helps with compatibility when other extensions are installed/uninstalled
@@ -291,7 +295,7 @@ function wireComponentsForIntegration(context: vscode.ExtensionContext, componen
         }
     });
 
-    console.log('Code Coach: Component wiring completed successfully');
+    console.log('FlowPilot: Component wiring completed successfully');
 }
 
 /**
@@ -300,10 +304,8 @@ function wireComponentsForIntegration(context: vscode.ExtensionContext, componen
 function validateComponentIntegration(components: ComponentWiring): void {
     const {
         configurationManager,
-        commandManager,
         viewProvider,
         telemetry,
-        confusionDetector,
         safetyGuard,
         performanceMonitor
     } = components;
@@ -312,13 +314,13 @@ function validateComponentIntegration(components: ComponentWiring): void {
         // Validate configuration manager
         const configValidation = configurationManager.validateConfiguration();
         if (!configValidation.isValid && !configurationManager.isDemoModeEnabled()) {
-            console.warn('Code Coach: Configuration validation failed during health check');
+            console.warn('FlowPilot: Configuration validation failed during health check');
         }
 
         // Validate view provider state
         const viewState = viewProvider.getState();
         if (viewState) {
-            console.log(`Code Coach: View provider healthy - ${viewState.history.length} items in history`);
+            console.log(`FlowPilot: View provider healthy - ${viewState.history.length} items in history`);
         }
 
         // Validate safety guard
@@ -327,12 +329,12 @@ function validateComponentIntegration(components: ComponentWiring): void {
         // Validate performance monitor
         const perfStats = performanceMonitor.getStats();
         if (perfStats) {
-            console.log('Code Coach: Performance monitor healthy - tracking operations');
+            console.log('FlowPilot: Performance monitor healthy - tracking operations');
         }
 
-        console.log('Code Coach: Component integration health check passed');
+        console.log('FlowPilot: Component integration health check passed');
     } catch (error) {
-        console.error('Code Coach: Component integration health check failed:', error);
+        console.error('FlowPilot: Component integration health check failed:', error);
         
         // Track integration issues in telemetry
         if (telemetry) {
@@ -351,7 +353,7 @@ function validateComponentIntegration(components: ComponentWiring): void {
  */
 async function showWelcomeMessage(context: vscode.ExtensionContext): Promise<void> {
     const action = await vscode.window.showInformationMessage(
-        'Welcome to Code Coach! 🎓 Start learning by selecting Python code and using the context menu.',
+        'Welcome to FlowPilot! 🎓 Start learning by selecting Python code and using the context menu.',
         'Open Settings',
         'Got it'
     );
@@ -372,9 +374,9 @@ function registerExtensionCompatibilityHandlers(context: vscode.ExtensionContext
     // Listen for other extensions that might affect diagnostics
     const diagnosticChangeListener = vscode.languages.onDidChangeDiagnostics(e => {
         // Handle diagnostic changes from other extensions gracefully
-        // This ensures Code Coach works well with linters, type checkers, etc.
+        // This ensures FlowPilot works well with linters, type checkers, etc.
         if (e.uris.length > 0) {
-            console.log(`Code Coach: Diagnostics changed for ${e.uris.length} files`);
+            console.log(`FlowPilot: Diagnostics changed for ${e.uris.length} files`);
             // Refresh confusion detector state if needed
             if (confusionDetector) {
                 confusionDetector.handleDiagnosticChanges(e.uris);
@@ -387,16 +389,16 @@ function registerExtensionCompatibilityHandlers(context: vscode.ExtensionContext
     // Listen for active editor changes to ensure proper integration
     const editorChangeListener = vscode.window.onDidChangeActiveTextEditor(editor => {
         if (editor && configurationManager?.shouldActivateForDocument(editor.document)) {
-            // Ensure Code Coach is ready for the new Python file
-            console.log('Code Coach: Active editor changed to Python file');
+            // Ensure FlowPilot is ready for the new Python file
+            console.log('FlowPilot: Active editor changed to Python file');
         }
     });
     
     context.subscriptions.push(editorChangeListener);
 
     // Listen for workspace folder changes
-    const workspaceChangeListener = vscode.workspace.onDidChangeWorkspaceFolders(e => {
-        console.log('Code Coach: Workspace folders changed');
+    const workspaceChangeListener = vscode.workspace.onDidChangeWorkspaceFolders(() => {
+        console.log('FlowPilot: Workspace folders changed');
         // Handle workspace changes gracefully
         if (configurationManager) {
             configurationManager.handleWorkspaceChange();

@@ -1,8 +1,8 @@
-# Design Document: Code Coach VS Code Extension
+# Design Document: FlowPilot VS Code Extension
 
 ## Overview
 
-Code Coach is a VS Code extension that transforms the coding experience from "making it work" to "understanding how it works." The extension integrates seamlessly into the VS Code editor, providing contextual explanations, error analysis, and code quality reviews through an AI-powered backend service.
+FlowPilot is a VS Code extension that transforms the coding experience from "making it work" to "understanding how it works." The extension integrates seamlessly into the VS Code editor, providing contextual explanations, error analysis, and code quality reviews through an AI-powered backend service.
 
 The architecture follows a clean separation between the VS Code client (handling UI, events, and user interactions) and a backend API service (processing code and generating explanations). The extension uses VS Code's webview API for rich teaching interfaces and integrates with the existing diagnostic and code action systems.
 
@@ -279,7 +279,7 @@ interface Improvement {
 **Validates: Requirements 4.1, 4.4**
 
 ### Property 9: Repeated Error Detection
-*For any* diagnostic that appears repeatedly in the same location within a short time period, the Confusion Detector should suggest using Code Coach to understand the error.
+*For any* diagnostic that appears repeatedly in the same location within a short time period, the Confusion Detector should suggest using FlowPilot to understand the error.
 **Validates: Requirements 4.2**
 
 ### Property 10: Configuration Respect

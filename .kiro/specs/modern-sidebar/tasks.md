@@ -3,7 +3,7 @@
 
 ## Overview
 
-This implementation plan transforms the existing Code Coach sidebar into a modern, polished interface through systematic updates to the CSS, HTML structure, and component architecture. The approach focuses on implementing a cohesive design system, responsive layouts, smooth animations, and accessibility features while maintaining compatibility with the existing VS Code extension functionality.
+This implementation plan transforms the existing FlowPilot sidebar into a modern, polished interface through systematic updates to the CSS, HTML structure, and component architecture. The approach focuses on implementing a cohesive design system, responsive layouts, smooth animations, and accessibility features while maintaining compatibility with the existing VS Code extension functionality.
 
 ## Tasks
 
@@ -172,4 +172,4 @@ This implementation plan transforms the existing Code Coach sidebar into a moder
 - Checkpoints ensure incremental validation
 - Property tests validate universal correctness properties
 - Unit tests validate specific examples and edge cases
-- The implementation maintains compatibility with existing Code Coach functionality while modernizing the UI
+- The implementation maintains compatibility with existing FlowPilot functionality while modernizing the UI

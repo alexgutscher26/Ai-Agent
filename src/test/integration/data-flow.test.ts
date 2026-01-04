@@ -1,20 +1,18 @@
 /**
- * Integration tests for data flow between Code Coach components
+ * Integration tests for data flow between FlowPilot components
  * Verifies that data flows correctly through the entire system
  */
 
 import * as vscode from 'vscode';
-import * as assert from 'assert';
 import { CommandManager } from '../../commands/CommandManager';
 import { CodeCoachViewProvider } from '../../panel/CodeCoachViewProvider';
 import { ConfigurationManager } from '../../config/ConfigurationManager';
 import { Telemetry } from '../../telemetry/Telemetry';
 import { ConfusionDetector } from '../../confusion/ConfusionDetector';
-import { MockApiClient } from '../../api/MockApiClient';
 import { FileSafetyGuard } from '../../safety/FileSafetyGuard';
 import { PerformanceMonitor } from '../../performance/PerformanceMonitor';
 
-describe('Code Coach Data Flow Integration Tests', () => {
+describe('FlowPilot Data Flow Integration Tests', () => {
     let context: vscode.ExtensionContext;
     let configManager: ConfigurationManager;
     let commandManager: CommandManager;

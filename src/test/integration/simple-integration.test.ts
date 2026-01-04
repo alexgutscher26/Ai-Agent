@@ -1,5 +1,5 @@
 /**
- * Simple integration tests for Code Coach component wiring
+ * Simple integration tests for FlowPilot component wiring
  * Tests basic component integration without complex VS Code API mocking
  */
 
@@ -10,7 +10,7 @@ import { ConfusionDetector } from '../../confusion/ConfusionDetector';
 import { FileSafetyGuard } from '../../safety/FileSafetyGuard';
 import { PerformanceMonitor } from '../../performance/PerformanceMonitor';
 
-describe('Code Coach Simple Integration Tests', () => {
+describe('FlowPilot Simple Integration Tests', () => {
     let mockContext: any;
 
     beforeEach(() => {

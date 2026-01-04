@@ -19,7 +19,7 @@ const mockExtensionUri = vscode.Uri.file('/test/extension');
 // Mock webview panel for testing
 class MockWebviewPanel implements vscode.WebviewPanel {
     readonly viewType = 'codeCoachPanel';
-    readonly title = 'Code Coach';
+    readonly title = 'FlowPilot';
     readonly webview: vscode.Webview;
     readonly options = {};
     readonly viewColumn = vscode.ViewColumn.One;

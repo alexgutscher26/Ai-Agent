@@ -4,7 +4,6 @@
  */
 
 import * as fc from 'fast-check';
-import * as vscode from 'vscode';
 import { ConfigurationManager } from '../../config/ConfigurationManager';
 
 // Mock VS Code API

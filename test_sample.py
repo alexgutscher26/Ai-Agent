@@ -1,4 +1,4 @@
-# Sample Python code for testing Code Coach extension
+# Sample Python code for testing FlowPilot extension
 
 def calculate_fibonacci(n):
     """Calculate the nth Fibonacci number."""

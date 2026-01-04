@@ -1,5 +1,5 @@
 /**
- * Configuration Manager for Code Coach extension
+ * Configuration Manager for FlowPilot extension
  * Handles VS Code settings integration and validation
  */
 
@@ -70,11 +70,11 @@ export class ConfigurationManager {
         // Validate API Key (skip validation in demo mode)
         if (!config.demoMode) {
             if (!config.apiKey) {
-                errors.push('API Key is required. Please configure your Code Coach API key in settings, or enable Demo Mode for testing.');
+                errors.push('API Key is required. Please configure your FlowPilot API key in settings, or enable Demo Mode for testing.');
             } else if (config.apiKey.length < 10) {
-                errors.push('API Key appears to be too short. Please check your Code Coach API key.');
+                errors.push('API Key appears to be too short. Please check your FlowPilot API key.');
             } else if (config.apiKey.includes(' ')) {
-                errors.push('API Key should not contain spaces. Please check your Code Coach API key.');
+                errors.push('API Key should not contain spaces. Please check your FlowPilot API key.');
             }
         } else {
             warnings.push('Demo Mode is enabled. The extension will use mock responses instead of the real API.');
@@ -111,7 +111,7 @@ export class ConfigurationManager {
      */
     public async showConfigurationErrors(errors: string[], warnings: string[] = []): Promise<void> {
         if (errors.length > 0) {
-            const message = `Code Coach configuration errors:\n${errors.join('\n')}`;
+            const message = `FlowPilot configuration errors:\n${errors.join('\n')}`;
             const action = await vscode.window.showErrorMessage(
                 message,
                 'Open Settings',
@@ -124,7 +124,7 @@ export class ConfigurationManager {
         }
 
         if (warnings.length > 0) {
-            const warningMessage = `Code Coach configuration warnings:\n${warnings.join('\n')}`;
+            const warningMessage = `FlowPilot configuration warnings:\n${warnings.join('\n')}`;
             vscode.window.showWarningMessage(warningMessage);
         }
     }
@@ -259,7 +259,7 @@ export class ConfigurationManager {
         const validation = this.validateConfiguration();
         
         if (!validation.isValid) {
-            console.log('Code Coach: Configuration validation failed after workspace change');
+            console.log('FlowPilot: Configuration validation failed after workspace change');
             // Don't show errors immediately on workspace change to avoid spam
             // They will be shown when user tries to use the extension
         }
@@ -268,7 +268,7 @@ export class ConfigurationManager {
         this.context.globalState.update('workspaceChanged', Date.now());
         
         // Log workspace change for debugging
-        console.log('Code Coach: Workspace folders changed, configuration re-validated');
+        console.log('FlowPilot: Workspace folders changed, configuration re-validated');
     }
 
     /**

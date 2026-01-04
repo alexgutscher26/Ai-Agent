@@ -1,5 +1,5 @@
 /**
- * API Client for communicating with the Code Coach backend service
+ * API Client for communicating with the FlowPilot backend service
  */
 
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
@@ -411,7 +411,7 @@ export class CodeCoachApiClient implements ApiClient {
             }
 
             if (axiosError.code === 'ENOTFOUND' || axiosError.code === 'ECONNRESET') {
-                return new Error(`Network error: Unable to connect to Code Coach service. Please check your internet connection and API endpoint configuration.`);
+                return new Error(`Network error: Unable to connect to FlowPilot service. Please check your internet connection and API endpoint configuration.`);
             }
 
             if (axiosError.response) {
@@ -424,28 +424,28 @@ export class CodeCoachApiClient implements ApiClient {
                         const badRequestMessage = (data as any)?.message || 'Invalid request format';
                         return new Error(`Bad request: ${badRequestMessage}. Please check your code selection and try again.`);
                     case 401:
-                        return new Error('Authentication failed: Please check your API key in Code Coach settings.');
+                        return new Error('Authentication failed: Please check your API key in FlowPilot settings.');
                     case 403:
                         return new Error('Access denied: Your API key may not have permission for this operation, or you may have exceeded your usage quota.');
                     case 404:
-                        return new Error('Service not found: The Code Coach API endpoint may be incorrect. Please check your settings.');
+                        return new Error('Service not found: The FlowPilot API endpoint may be incorrect. Please check your settings.');
                     case 413:
                         return new Error('Request too large: The selected code is too large to process. Please select a smaller code snippet.');
                     case 429:
                         return new Error('Rate limit exceeded: You are making requests too quickly. Please wait a moment before trying again.');
                     case 500:
-                        return new Error('Server error: The Code Coach service is experiencing issues. Please try again in a few minutes.');
+                        return new Error('Server error: The FlowPilot service is experiencing issues. Please try again in a few minutes.');
                     case 502:
                     case 503:
                     case 504:
-                        return new Error('Service unavailable: The Code Coach service is temporarily unavailable. Please try again later.');
+                        return new Error('Service unavailable: The FlowPilot service is temporarily unavailable. Please try again later.');
                     default:
                         const message = (data as any)?.message || (data as any)?.error || `HTTP ${status} error`;
-                        return new Error(`API error: ${message}. If this problem persists, please check the Code Coach service status.`);
+                        return new Error(`API error: ${message}. If this problem persists, please check the FlowPilot service status.`);
                 }
             } else if (axiosError.request) {
                 // Network error - no response received
-                return new Error('Network error: Unable to connect to Code Coach service. Please check your internet connection and firewall settings.');
+                return new Error('Network error: Unable to connect to FlowPilot service. Please check your internet connection and firewall settings.');
             }
         }
 
@@ -461,21 +461,21 @@ export class CodeCoachApiClient implements ApiClient {
         const fallbackMessages = {
             explainSelection: {
                 type: 'explain',
-                summary: 'Code Coach is currently unavailable. Please check your internet connection and API configuration.',
+                summary: 'FlowPilot is currently unavailable. Please check your internet connection and API configuration.',
                 lineByLine: [],
                 pitfalls: ['Unable to analyze code due to service unavailability'],
                 tryItYourself: 'Please try again when the service is available.'
             },
             reviewSelection: {
                 type: 'review',
-                summary: 'Code Coach is currently unavailable. Please check your internet connection and API configuration.',
+                summary: 'FlowPilot is currently unavailable. Please check your internet connection and API configuration.',
                 goodPoints: [],
                 improvementPoints: ['Unable to review code due to service unavailability'],
                 improvements: []
             },
             explainError: {
                 type: 'error',
-                errorMeaning: 'Code Coach is currently unavailable.',
+                errorMeaning: 'FlowPilot is currently unavailable.',
                 whyHere: 'Unable to analyze error due to service unavailability.',
                 howToFix: 'Please check your internet connection and API configuration, then try again.'
             }

@@ -91,7 +91,7 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
         this._state.history.push(explanation);
         this._updateWebview();
         
-        // Show the Code Coach view if it's not visible
+        // Show the FlowPilot view if it's not visible
         if (this._view) {
             this._view.show?.(true);
         }
@@ -109,7 +109,7 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
         this._state.history.push(review);
         this._updateWebview();
         
-        // Show the Code Coach view if it's not visible
+        // Show the FlowPilot view if it's not visible
         if (this._view) {
             this._view.show?.(true);
         }
@@ -127,7 +127,7 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
         this._state.history.push(error);
         this._updateWebview();
         
-        // Show the Code Coach view if it's not visible
+        // Show the FlowPilot view if it's not visible
         if (this._view) {
             this._view.show?.(true);
         }
@@ -171,7 +171,7 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
                 break;
             case 'error':
                 console.error('Webview error:', message.data);
-                vscode.window.showErrorMessage(`Code Coach webview error: ${message.data?.message || 'Unknown error'}`);
+                vscode.window.showErrorMessage(`FlowPilot webview error: ${message.data?.message || 'Unknown error'}`);
                 break;
         }
     }
@@ -278,14 +278,14 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
                 <link href="${styleResetUri}" rel="stylesheet">
                 <link href="${styleVSCodeUri}" rel="stylesheet">
                 <link href="${styleMainUri}" rel="stylesheet">
-                <title>Code Coach</title>
+                <title>FlowPilot</title>
             </head>
             <body class="${themeClass}" ${themeDataAttribute}>
                 <div class="container">
                     <header class="header">
                         <h1 class="title">
                             <span class="icon">🎓</span>
-                            Code Coach
+                            FlowPilot
                         </h1>
                         <p class="subtitle">Understanding your code</p>
                     </header>

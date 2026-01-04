@@ -13,7 +13,7 @@ export class StatusBarNotificationManager implements vscode.Disposable {
         timeout?: NodeJS.Timeout;
     } | undefined;
 
-    constructor(private configurationManager: any) {
+    constructor() {
         this.statusBarItem = vscode.window.createStatusBarItem(
             vscode.StatusBarAlignment.Right,
             100
@@ -51,7 +51,7 @@ export class StatusBarNotificationManager implements vscode.Disposable {
             return;
         }
 
-        const message = 'Having trouble with this error? Code Coach can explain it!';
+        const message = 'Having trouble with this error? FlowPilot can explain it!';
         const command: vscode.Command = {
             command: 'codeCoach.explainError',
             title: 'Explain Error',
@@ -69,7 +69,7 @@ export class StatusBarNotificationManager implements vscode.Disposable {
             return;
         }
 
-        const message = 'This error keeps appearing. Let Code Coach help you understand it!';
+        const message = 'This error keeps appearing. Let FlowPilot help you understand it!';
         const command: vscode.Command = {
             command: 'codeCoach.explainError',
             title: 'Explain Error',
@@ -151,7 +151,7 @@ export class StatusBarNotificationManager implements vscode.Disposable {
             return;
         }
 
-        const message = 'Welcome to Code Coach! Select Python code and right-click to get explanations.';
+        const message = 'Welcome to FlowPilot! Select Python code and right-click to get explanations.';
         const command: vscode.Command = {
             command: 'workbench.action.openSettings',
             title: 'Open Settings',
@@ -169,7 +169,7 @@ export class StatusBarNotificationManager implements vscode.Disposable {
             return;
         }
 
-        const message = 'Configure Code Coach API settings to start getting explanations.';
+        const message = 'Configure FlowPilot API settings to start getting explanations.';
         const command: vscode.Command = {
             command: 'workbench.action.openSettings',
             title: 'Open Settings',
