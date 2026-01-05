@@ -222,11 +222,13 @@ export class CommandManager {
                     // Track telemetry event
                     this.telemetry.trackExplanationRequest({
                         languageId: editor.document.languageId,
+                        fileExtension: this.getFileExtension(editor.document.fileName),
                         codeLength: code.length,
                         lineCount: code.split('\n').length,
                         selectionLength: editor.selection.isEmpty ? 0 : code.length,
                         triggerMethod: 'command',
                         userLevel: this.configManager.getUserLevel(),
+                        constructType: this.detectConstructType(code),
                         success: true
                     });
                 });
@@ -326,10 +328,12 @@ export class CommandManager {
                     // Track telemetry event
                     this.telemetry.trackReviewRequest({
                         languageId: editor.document.languageId,
+                        fileExtension: this.getFileExtension(editor.document.fileName),
                         codeLength: code.length,
                         lineCount: code.split('\n').length,
                         selectionLength: editor.selection.isEmpty ? 0 : code.length,
                         reviewType: request.reviewType,
+                        complexityNestingEstimate: this.estimateNestingLevel(code),
                         triggerMethod: 'command',
                         userLevel: this.configManager.getUserLevel(),
                         success: true
@@ -361,7 +365,7 @@ export class CommandManager {
      * Safety: 2.4, 3.5 - Read-only operation, no file modifications
      * Performance: 5.5 - Non-blocking operation
      */
-    private async explainError(): Promise<void> {
+    private async explainError(arg?: any, contextArg?: any): Promise<void> {
         return this.performanceMonitor.ensureNonBlocking('explainError', async () => {
             // Validate this is a safe read-only operation
             this.safetyGuard.validateOperation('explainError', { command: 'explainError' });
@@ -400,10 +404,32 @@ export class CommandManager {
                     const diagnostics = vscode.languages.getDiagnostics(editor.document.uri);
                     const currentPosition = editor.selection.active;
 
-                    // Find diagnostics at current cursor position
-                    const relevantDiagnostics = diagnostics.filter(diagnostic => 
-                        diagnostic.range.contains(currentPosition)
-                    );
+                    // Find diagnostics at current cursor position or within selection if present
+                    const selection = editor.selection;
+                    let relevantDiagnostics: vscode.Diagnostic[] = [];
+                    
+                    if (selection && !selection.isEmpty) {
+                        relevantDiagnostics = diagnostics.filter(diagnostic =>
+                            diagnostic.range.intersection(selection) !== undefined
+                        );
+                    } else {
+                        relevantDiagnostics = diagnostics.filter(diagnostic => 
+                            diagnostic.range.contains(currentPosition)
+                        );
+                    }
+
+                    // Fallback: if none exactly at position, try diagnostics on the same line
+                    if (relevantDiagnostics.length === 0) {
+                        relevantDiagnostics = diagnostics.filter(diagnostic =>
+                            diagnostic.range.start.line <= currentPosition.line &&
+                            diagnostic.range.end.line >= currentPosition.line
+                        );
+                    }
+
+                    // Fallback: if still none, use any diagnostic in the file
+                    if (relevantDiagnostics.length === 0 && diagnostics.length > 0) {
+                        relevantDiagnostics = diagnostics;
+                    }
 
                     if (relevantDiagnostics.length === 0) {
                         vscode.window.showWarningMessage('No errors found at cursor position');
@@ -444,12 +470,15 @@ export class CommandManager {
                     }
 
                     // Track telemetry event
+                    const triggerSource = contextArg?.source === 'proactive' ? 'proactive' : 'command';
                     this.telemetry.trackErrorExplanation({
                         languageId: editor.document.languageId,
+                        fileExtension: this.getFileExtension(editor.document.fileName),
                         errorType: diagnostic.message,
                         diagnosticSeverity: this.getSeverityString(diagnostic.severity),
                         codeLength: code.length,
-                        triggerMethod: 'command',
+                        triggerMethod: triggerSource,
+                        requestedHelp: true,
                         userLevel: this.configManager.getUserLevel(),
                         success: true
                     });
@@ -736,6 +765,34 @@ export class CommandManager {
         );
         
         return document.getText(contextRange);
+    }
+
+    private getFileExtension(fileName: string): string {
+        const idx = fileName.lastIndexOf('.');
+        if (idx === -1) return '';
+        return fileName.substring(idx + 1).toLowerCase();
+    }
+
+    private detectConstructType(code: string): 'function' | 'class' | 'loop' | 'conditional' | 'other' {
+        const trimmed = code.trim();
+        if (/\bdef\s+/.test(trimmed)) return 'function';
+        if (/\bclass\s+/.test(trimmed)) return 'class';
+        if (/\b(for|while)\s+/.test(trimmed)) return 'loop';
+        if (/\bif\s+/.test(trimmed)) return 'conditional';
+        return 'other';
+    }
+
+    private estimateNestingLevel(code: string): number {
+        const lines = code.split('\n');
+        let maxIndent = 0;
+        for (const line of lines) {
+            const match = line.match(/^(\s+)/);
+            if (match) {
+                const spaces = match[1]!.replace(/\t/g, '    ').length;
+                if (spaces > maxIndent) maxIndent = spaces;
+            }
+        }
+        return Math.floor(maxIndent / 4);
     }
 
     /**

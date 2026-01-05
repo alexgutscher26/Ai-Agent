@@ -55,7 +55,7 @@ export class StatusBarNotificationManager implements vscode.Disposable {
         const command: vscode.Command = {
             command: 'codeCoach.explainError',
             title: 'Explain Error',
-            arguments: [diagnostic]
+            arguments: [diagnostic, { source: 'proactive' }]
         };
 
         this.showNotification(message, command, 10000); // Auto-hide after 10 seconds
@@ -73,7 +73,7 @@ export class StatusBarNotificationManager implements vscode.Disposable {
         const command: vscode.Command = {
             command: 'codeCoach.explainError',
             title: 'Explain Error',
-            arguments: [diagnostic]
+            arguments: [diagnostic, { source: 'proactive' }]
         };
 
         this.showNotification(message, command, 15000); // Auto-hide after 15 seconds

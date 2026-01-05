@@ -20,3 +20,12 @@ print(undefined_variable)
 
 # This will cause a syntax error if uncommented
 # print("Missing closing quote
+
+# filename: intentional_error.py
+
+def divide(a, b):
+    return a / b
+
+result = divide(10, 0)
+print("Result is:", result)
+        

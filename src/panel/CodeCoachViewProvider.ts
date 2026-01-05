@@ -200,6 +200,23 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
             : 'Thanks for the feedback. We\'ll work to improve our explanations.';
         
         vscode.window.showInformationMessage(message);
+
+        // Track feedback with comment length
+        const featureUsed = this._state.currentExplanation?.type === 'explain' 
+            ? 'explain' as const
+            : this._state.currentExplanation?.type === 'review'
+                ? 'review' as const
+                : 'errorExplanation' as const;
+        const userLevel = this._configManager?.getUserLevel() || 'beginner';
+        const commentLength = feedback.comment ? Math.min(feedback.comment.length, 500) : 0;
+        if (this._telemetry) {
+            this._telemetry.trackFeedback({
+                helpful: feedback.helpful,
+                featureUsed,
+                userLevel,
+                feedbackCommentLength: commentLength
+            });
+        }
     }
 
     private _generateExplanationId(): string {

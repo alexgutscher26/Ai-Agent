@@ -2,7 +2,7 @@
   "name": "flowpilot-agent",
   "displayName": "FlowPilot Agent",
   "description": "Teaching-first AI FlowPilot for Python in VS Code",
-  "version": "1.2.1",
+  "version": "1.2.4",
   "publisher": "ChromaCraft",
   "engines": {
     "vscode": "^1.90.0"
@@ -19,7 +19,10 @@
     "teaching"
   ],
   "activationEvents": [
-    "onLanguage:python"
+    "onLanguage:python",
+    "onCommand:codeCoach.explainSelection",
+    "onCommand:codeCoach.reviewSelection",
+    "onCommand:codeCoach.explainError"
   ],
   "main": "./out/extension.js",
   "contributes": {

@@ -19,20 +19,24 @@ export interface PrivacyCompliantMetadata {
     // Language and file type information (safe to collect)
     languageId?: string;
     fileExtension?: string;
+    constructType?: 'function' | 'class' | 'loop' | 'conditional' | 'other';
     
     // Code structure information (no actual code content)
     codeLength?: number;
     lineCount?: number;
     selectionLength?: number;
+    complexityNestingEstimate?: number;
     
     // Error information (no sensitive details)
     errorType?: string;
     diagnosticSeverity?: string;
+    requestedHelp?: boolean;
     
     // User interaction patterns (anonymous)
     responseTime?: number;
     userLevel?: string;
     feedbackRating?: boolean;
+    feedbackCommentLength?: number;
     
     // Performance metrics
     apiResponseTime?: number;
@@ -80,11 +84,13 @@ export class Telemetry {
      */
     public trackExplanationRequest(metadata: {
         languageId: string;
+        fileExtension?: string;
         codeLength: number;
         lineCount: number;
         selectionLength: number;
         triggerMethod: 'command' | 'contextMenu' | 'codeAction';
         userLevel: string;
+        constructType?: PrivacyCompliantMetadata['constructType'];
         responseTime?: number;
         success?: boolean;
         apiResponseTime?: number;
@@ -95,11 +101,13 @@ export class Telemetry {
 
         const sanitizedMetadata = this.sanitizeMetadata({
             languageId: metadata.languageId,
+            fileExtension: metadata.fileExtension,
             codeLength: metadata.codeLength,
             lineCount: metadata.lineCount,
             selectionLength: metadata.selectionLength,
             triggerMethod: metadata.triggerMethod,
             userLevel: metadata.userLevel,
+            constructType: metadata.constructType,
             responseTime: metadata.responseTime,
             success: metadata.success,
             apiResponseTime: metadata.apiResponseTime,
@@ -114,12 +122,14 @@ export class Telemetry {
      */
     public trackReviewRequest(metadata: {
         languageId: string;
+        fileExtension?: string;
         codeLength: number;
         lineCount: number;
         selectionLength: number;
         reviewType: string;
         triggerMethod: 'command' | 'contextMenu';
         userLevel: string;
+        complexityNestingEstimate?: number;
         responseTime?: number;
         success?: boolean;
         apiResponseTime?: number;
@@ -130,11 +140,13 @@ export class Telemetry {
 
         const sanitizedMetadata = this.sanitizeMetadata({
             languageId: metadata.languageId,
+            fileExtension: metadata.fileExtension,
             codeLength: metadata.codeLength,
             lineCount: metadata.lineCount,
             selectionLength: metadata.selectionLength,
             triggerMethod: metadata.triggerMethod,
             userLevel: metadata.userLevel,
+            complexityNestingEstimate: metadata.complexityNestingEstimate,
             responseTime: metadata.responseTime,
             success: metadata.success,
             apiResponseTime: metadata.apiResponseTime,
@@ -150,10 +162,12 @@ export class Telemetry {
      */
     public trackErrorExplanation(metadata: {
         languageId: string;
+        fileExtension?: string;
         errorType: string;
         diagnosticSeverity: string;
         codeLength: number;
         triggerMethod: 'command' | 'contextMenu' | 'codeAction' | 'proactive';
+        requestedHelp?: boolean;
         userLevel: string;
         responseTime?: number;
         success?: boolean;
@@ -165,10 +179,12 @@ export class Telemetry {
 
         const sanitizedMetadata = this.sanitizeMetadata({
             languageId: metadata.languageId,
+            fileExtension: metadata.fileExtension,
             errorType: metadata.errorType,
             diagnosticSeverity: metadata.diagnosticSeverity,
             codeLength: metadata.codeLength,
             triggerMethod: metadata.triggerMethod,
+            requestedHelp: metadata.requestedHelp,
             userLevel: metadata.userLevel,
             responseTime: metadata.responseTime,
             success: metadata.success,
@@ -186,6 +202,7 @@ export class Telemetry {
         helpful: boolean;
         featureUsed: 'explain' | 'review' | 'errorExplanation';
         userLevel: string;
+        feedbackCommentLength?: number;
         responseTime?: number;
     }): void {
         if (!this.configManager.isTelemetryEnabled()) {
@@ -196,6 +213,7 @@ export class Telemetry {
             feedbackRating: feedback.helpful,
             featureUsed: feedback.featureUsed,
             userLevel: feedback.userLevel,
+            feedbackCommentLength: feedback.feedbackCommentLength,
             responseTime: feedback.responseTime
         });
 
@@ -287,9 +305,10 @@ export class Telemetry {
 
         // Allow only specific safe fields
         const allowedFields: (keyof PrivacyCompliantMetadata)[] = [
-            'languageId', 'fileExtension', 'codeLength', 'lineCount', 'selectionLength',
-            'errorType', 'diagnosticSeverity', 'responseTime', 'userLevel', 'feedbackRating',
-            'apiResponseTime', 'success', 'featureUsed', 'triggerMethod'
+            'languageId', 'fileExtension', 'constructType', 'codeLength', 'lineCount', 'selectionLength',
+            'complexityNestingEstimate', 'errorType', 'diagnosticSeverity', 'requestedHelp', 'responseTime',
+            'userLevel', 'feedbackRating', 'feedbackCommentLength', 'apiResponseTime', 'success',
+            'featureUsed', 'triggerMethod'
         ];
 
         for (const field of allowedFields) {
