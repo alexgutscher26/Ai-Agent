@@ -2,7 +2,7 @@
   "name": "flowpilot-agent",
   "displayName": "FlowPilot Agent",
   "description": "Teaching-first AI FlowPilot for Python in VS Code",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "publisher": "ChromaCraft",
   "engines": {
     "vscode": "^1.90.0"
