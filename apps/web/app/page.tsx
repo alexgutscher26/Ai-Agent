@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Check, ShieldCheck, GaugeCircle, LineChart, Sparkles, Quote, ArrowRight, Cog, MapPin, Type, Globe, ExternalLink } from "lucide-react"
+import { Check, ArrowRight, Cog, MapPin, Type, Globe, ExternalLink } from "lucide-react"
 
 function Nav() {
   return (
@@ -243,44 +242,76 @@ function HowItWorks() {
 
 function Pricing() {
   return (
-    <section id="pricing" className="container py-16">
-      <div className="mx-auto max-w-3xl text-center">
-        <h2 className="text-3xl font-semibold">Simple, transparent pricing</h2>
-        <p className="mt-2 text-muted-foreground">Monthly or yearly. Start free, upgrade when ready.</p>
-        <div className="mx-auto mt-6 inline-flex rounded-md border bg-muted p-1 text-sm">
-          <button className="rounded-sm bg-card px-3 py-1">Monthly</button>
-          <button className="rounded-sm px-3 py-1 text-muted-foreground">Yearly</button>
+    <section id="pricing" className="py-20">
+      <div className="mx-auto max-w-7xl px-4 md:px-10">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, transparent pricing</h2>
+          <p className="text-muted-foreground">Free for learners, powerful for professionals.</p>
         </div>
-      </div>
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
-        <Card className="border-dashed">
-          <CardHeader>
-            <CardTitle>Free Tier</CardTitle>
-            <CardDescription>Core features to get started.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm">
-            <div className="flex items-center gap-2"><Check className="h-4 w-4 text-green-600" /> Limited daily usage</div>
-            <div className="flex items-center gap-2"><Check className="h-4 w-4 text-green-600" /> Explanations and reviews</div>
-            <div className="flex items-center gap-2"><Check className="h-4 w-4 text-green-600" /> Privacy-friendly telemetry</div>
-          </CardContent>
-          <CardContent>
-            <Button variant="secondary" className="w-full">Download Free</Button>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Pro Coach</CardTitle>
-            <CardDescription>More history, faster responses, priority support.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm">
-            <div className="flex items-center gap-2"><Check className="h-4 w-4 text-green-600" /> Unlimited explanations</div>
-            <div className="flex items-center gap-2"><Check className="h-4 w-4 text-green-600" /> Team features</div>
-            <div className="flex items-center gap-2"><Check className="h-4 w-4 text-green-600" /> Billing portal</div>
-          </CardContent>
-          <CardContent>
-            <Button className="w-full">Get Pro</Button>
-          </CardContent>
-        </Card>
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-background flex flex-col h-full hover:shadow-lg transition-shadow">
+            <div className="mb-6">
+              <h3 className="text-xl font-bold">Free Tier</h3>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="text-4xl font-bold">$0</span>
+                <span className="text-muted-foreground">/ forever</span>
+              </div>
+              <p className="mt-4 text-sm text-muted-foreground">Perfect for beginners just starting their journey.</p>
+            </div>
+            <ul className="flex flex-col gap-4 mb-8 flex-1">
+              <li className="flex items-center gap-3 text-sm">
+                <Check className="h-5 w-5 text-green-500" />
+                Basic Syntax Checking
+              </li>
+              <li className="flex items-center gap-3 text-sm">
+                <Check className="h-5 w-5 text-green-500" />
+                10 AI Explanations / day
+              </li>
+              <li className="flex items-center gap-3 text-sm">
+                <Check className="h-5 w-5 text-green-500" />
+                Community Support
+              </li>
+            </ul>
+            <button className="w-full py-3 rounded-lg border-2 border-gray-200 dark:border-gray-700 font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              Download Free
+            </button>
+          </div>
+
+          <div className="p-8 rounded-2xl border-2 border-primary bg-white dark:bg-surface-dark shadow-xl relative flex flex-col h-full transform md:-translate-y-4">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+              Most Popular
+            </div>
+            <div className="mb-6">
+              <h3 className="text-xl font-bold">Pro Coach</h3>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="text-4xl font-bold">$9</span>
+                <span className="text-muted-foreground">/ month</span>
+              </div>
+              <p className="mt-4 text-sm text-muted-foreground">For serious learners who want to grow faster.</p>
+            </div>
+            <ul className="flex flex-col gap-4 mb-8 flex-1">
+              <li className="flex items-center gap-3 text-sm">
+                <Check className="h-5 w-5 text-primary" />
+                <strong>Real-time Refactoring Tips</strong>
+              </li>
+              <li className="flex items-center gap-3 text-sm">
+                <Check className="h-5 w-5 text-primary" />
+                Unlimited AI Explanations
+              </li>
+              <li className="flex items-center gap-3 text-sm">
+                <Check className="h-5 w-5 text-primary" />
+                Security Analysis
+              </li>
+              <li className="flex items-center gap-3 text-sm">
+                <Check className="h-5 w-5 text-primary" />
+                Custom Learning Path
+              </li>
+            </ul>
+            <button className="w-full py-3 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30">
+              Get Early Access
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   )
