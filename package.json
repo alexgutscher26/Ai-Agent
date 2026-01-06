@@ -2,7 +2,7 @@
   "name": "flowpilot-agent",
   "displayName": "FlowPilot Agent",
   "description": "Teaching-first AI FlowPilot for Python in VS Code",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "publisher": "ChromaCraft",
   "engines": {
     "vscode": "^1.90.0"
@@ -182,19 +182,37 @@
           "description": "Enable proactive suggestions when FlowPilot detects confusion",
           "order": 5
         },
+        "codeCoach.reviewFocus.performance": {
+          "type": "boolean",
+          "default": true,
+          "description": "Emphasize performance issues in reviews",
+          "order": 6
+        },
+        "codeCoach.reviewFocus.readability": {
+          "type": "boolean",
+          "default": true,
+          "description": "Emphasize readability issues in reviews",
+          "order": 7
+        },
+        "codeCoach.reviewFocus.style": {
+          "type": "boolean",
+          "default": true,
+          "description": "Emphasize style issues in reviews",
+          "order": 8
+        },
         "codeCoach.maxSnippetChars": {
           "type": "number",
           "default": 6000,
           "minimum": 500,
           "maximum": 20000,
           "description": "Maximum snippet size (in characters) sent to backend",
-          "order": 6
+          "order": 9
         },
         "codeCoach.demoMode": {
           "type": "boolean",
           "default": false,
           "description": "Enable demo mode with mock responses (no API key required)",
-          "order": 7
+          "order": 10
         }
       }
     }

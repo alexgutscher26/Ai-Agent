@@ -108,6 +108,43 @@ export class CommandManager {
         );
         this.disposables.push(codeActionProviderDisposable);
         this.context.subscriptions.push(codeActionProviderDisposable);
+
+        const hoverDisposable = vscode.languages.registerHoverProvider(
+            pythonSelector,
+            {
+                provideHover: (document, position) => {
+                    if (!this.configManager.shouldActivateForDocument(document)) return undefined;
+                    const diags = vscode.languages.getDiagnostics(document.uri).filter(d => d.range.contains(position));
+                    if (diags.length === 0) return undefined;
+                    const md = new vscode.MarkdownString('[Ask FlowPilot about this error](command:codeCoach.explainError)');
+                    md.isTrusted = true;
+                    return new vscode.Hover(md);
+                }
+            }
+        );
+        this.disposables.push(hoverDisposable);
+        this.context.subscriptions.push(hoverDisposable);
+    }
+
+    private async tryGetStackTrace(): Promise<string[] | undefined> {
+        try {
+            const session = vscode.debug.activeDebugSession;
+            if (!session) return undefined;
+            const threadsResp: any = await session.customRequest('threads', {});
+            const threads: any[] = threadsResp?.threads || [];
+            if (!threads.length) return undefined;
+            const threadId = threads[0]?.id;
+            if (!threadId) return undefined;
+            const stResp: any = await session.customRequest('stackTrace', { threadId, startFrame: 0, levels: 20 });
+            const frames: any[] = stResp?.stackFrames || [];
+            if (!frames.length) return undefined;
+            return frames.map(f => {
+                const src = f.source?.path || f.source?.name || 'unknown';
+                return `${f.name} (${src}:${f.line ?? '?'})`;
+            });
+        } catch {
+            return undefined;
+        }
     }
 
     private async openTutor(): Promise<void> {
@@ -350,11 +387,23 @@ export class CommandManager {
                     }
 
                     // Prepare API request for code quality analysis
+                    const focusPerformance = vscode.workspace.getConfiguration('codeCoach').get<boolean>('reviewFocus.performance', true);
+                    const focusReadability = vscode.workspace.getConfiguration('codeCoach').get<boolean>('reviewFocus.readability', true);
+                    const focusStyle = vscode.workspace.getConfiguration('codeCoach').get<boolean>('reviewFocus.style', true);
+                    const contextSig = this.getEnclosingFunctionSignature(editor, selection);
+                    const contextType = this.detectContextType(editor, selection);
                     const request: ReviewRequest = {
                         code: code,
                         languageId: editor.document.languageId,
                         filePath: editor.document.uri.fsPath,
-                        reviewType: 'quality' // Default to quality review, could be configurable
+                        reviewType: 'quality',
+                        userLevel: this.configManager.getUserLevel(),
+                        focusPerformance,
+                        focusReadability,
+                        focusStyle,
+                        contextSignature: contextSig || undefined,
+                        contextType,
+                        originalSnippet: code
                     };
 
                     progress.report({ message: "Getting code review from FlowPilot..." });
@@ -369,6 +418,13 @@ export class CommandManager {
                     // Create or show webview panel and display review (Requirements 3.2, 3.3)
                     if (this.viewProvider) {
                         this.viewProvider.showReview(review);
+                        // Send original snippet to webview for diff rendering
+                        (this.viewProvider as any)._sendMessageToWebview?.({
+                            type: 'reviewContext',
+                            data: {
+                                originalSnippet: code
+                            }
+                        });
                     } else {
                         vscode.window.showErrorMessage('FlowPilot view is not available. Please try reloading the window.');
                     }
@@ -405,6 +461,37 @@ export class CommandManager {
                 });
             }
         });
+    }
+
+    private getEnclosingFunctionSignature(editor: vscode.TextEditor, selection: vscode.Range): string | null {
+        const document = editor.document;
+        for (let line = selection.start.line; line >= 0; line--) {
+            const text = document.lineAt(line).text;
+            if (/^\s*def\s+\w+\s*\(.*\)\s*:/.test(text)) {
+                return text.trim();
+            }
+        }
+        return null;
+    }
+
+    private detectContextType(editor: vscode.TextEditor, selection: vscode.Range): 'function' | 'classMethod' | 'loop' | 'module' {
+        const document = editor.document;
+        const startLine = selection.start.line;
+        let inClass = false;
+        for (let line = startLine; line >= 0; line--) {
+            const text = document.lineAt(line).text;
+            if (/^\s*class\s+\w+/.test(text)) {
+                inClass = true;
+                break;
+            }
+            if (/^\s*def\s+\w+\s*\(.*\)\s*:/.test(text)) {
+                return inClass ? 'classMethod' : 'function';
+            }
+            if (/^\s*(for|while)\s+.*:/.test(text)) {
+                return 'loop';
+            }
+        }
+        return 'module';
     }
 
     /**
@@ -502,7 +589,8 @@ export class CommandManager {
                         errorMessage: diagnostic.message,
                         errorRange: diagnostic.range,
                         diagnosticCode: diagnostic.code?.toString(),
-                        languageId: editor.document.languageId
+                        languageId: editor.document.languageId,
+                        stackTrace: await this.tryGetStackTrace()
                     };
 
                     progress.report({ message: "Getting error explanation from FlowPilot..." });

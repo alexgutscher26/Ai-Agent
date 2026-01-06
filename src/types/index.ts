@@ -34,6 +34,12 @@ export interface ReviewRequest {
     filePath?: string;
     reviewType: 'quality' | 'style' | 'performance';
     userLevel?: string;
+    focusPerformance?: boolean;
+    focusReadability?: boolean;
+    focusStyle?: boolean;
+    contextSignature?: string;
+    contextType?: 'function' | 'classMethod' | 'loop' | 'module';
+    originalSnippet?: string;
 }
 
 export interface ErrorRequest {
@@ -43,6 +49,7 @@ export interface ErrorRequest {
     diagnosticCode?: string;
     languageId: string;
     userLevel?: string;
+    stackTrace?: string[];
 }
 
 // API Response interfaces

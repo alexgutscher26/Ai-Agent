@@ -17,7 +17,7 @@ import { ConfigurationManager } from '../config/ConfigurationManager';
 import { FileSafetyGuard } from '../safety/FileSafetyGuard';
 
 export interface WebviewMessage {
-    type: 'feedback' | 'ready' | 'error' | 'context' | 'scrollToLine';
+    type: 'feedback' | 'ready' | 'error' | 'context' | 'scrollToLine' | 'insertImprovedCode';
     data?: any;
 }
 
@@ -206,6 +206,9 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
                     }
                 }
                 break;
+            case 'insertImprovedCode':
+                vscode.window.showWarningMessage('Review changes; FlowPilot is a tutor, not an auto-fixer');
+                break;
         }
     }
 
@@ -387,6 +390,10 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
                                         <div class="operation-type card-title" id="operation-type"></div>
                                         <div class="file-info card-subtitle" id="file-info"></div>
                                     </div>
+                                    <div class="header-actions">
+                                        <span id="mode-badge" class="mode-badge" style="display:none;">Error Mode</span>
+                                        <button class="modern-button modern-button--secondary" id="copy-error-btn" style="display:none;">Copy Explanation</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -462,9 +469,34 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
                                     </div>
                                     <div class="card-body">
                                         <div class="improvements-content" id="improvements-content"></div>
+                                        <div class="review-warning" id="review-warning" style="margin-top:12px; display:none;">
+                                            <span>⚠️ Review changes; FlowPilot is a tutor, not an auto-fixer</span>
+                                        </div>
+                                        <div class="review-actions" id="review-actions" style="margin-top:12px; display:none;">
+                                            <button class="modern-button modern-button--secondary" id="copy-improved-btn">Copy Improved Version</button>
+                                            <button class="modern-button modern-button--primary" id="insert-improved-btn">Insert into file (experimental)</button>
+                                        </div>
                                     </div>
                                 </section>
 
+                                <section class="modern-card modern-card--code" id="diff-section" style="display: none;">
+                                    <div class="card-header">
+                                        <span class="card-icon">🧩</span>
+                                        <h3 class="card-title">Diff View</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="diff-container" id="diff-container" style="display:flex; gap:12px;">
+                                            <div class="diff-pane" id="diff-original" style="flex:1;">
+                                                <div class="pane-title">Original</div>
+                                                <pre class="code-block" id="diff-original-code"></pre>
+                                            </div>
+                                            <div class="diff-pane" id="diff-improved" style="flex:1;">
+                                                <div class="pane-title">Improved</div>
+                                                <pre class="code-block" id="diff-improved-code"></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
                                 <!-- Common sections -->
                                 <section class="modern-card modern-card--warning" id="pitfalls-section" style="display: none;">
                                     <div class="card-header">

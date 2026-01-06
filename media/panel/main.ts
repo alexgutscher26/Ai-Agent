@@ -39,6 +39,9 @@ window.addEventListener('message', event => {
             currentFileInfo = message.data || null;
             updateContextHeader(currentExplanation || {});
             break;
+        case 'reviewContext':
+            (window as any).__reviewOriginalSnippet = (message.data && message.data.originalSnippet) || '';
+            break;
         case 'error':
             showError(message.data);
             break;
@@ -96,6 +99,9 @@ function initializeEventListeners() {
     const notHelpfulBtn = document.getElementById('not-helpful-btn');
     const submitFeedbackBtn = document.getElementById('submit-feedback-btn');
     const cancelFeedbackBtn = document.getElementById('cancel-feedback-btn');
+    const copyBtn = document.getElementById('copy-error-btn');
+    const copyImprovedBtn = document.getElementById('copy-improved-btn');
+    const insertImprovedBtn = document.getElementById('insert-improved-btn');
 
     if (helpfulBtn) {
         helpfulBtn.addEventListener('click', () => handleFeedbackClick(true));
@@ -111,6 +117,63 @@ function initializeEventListeners() {
 
     if (cancelFeedbackBtn) {
         cancelFeedbackBtn.addEventListener('click', cancelFeedback);
+    }
+
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            if (!currentExplanation || currentExplanation.type !== 'error') return;
+            const text = [
+                currentExplanation.errorMeaning || '',
+                currentExplanation.whyHere ? `\n\nWhy it happened:\n${currentExplanation.whyHere}` : '',
+                currentExplanation.howToFix ? `\n\nHow to fix:\n${currentExplanation.howToFix}` : ''
+            ].join('');
+            const write = async () => {
+                try {
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        await navigator.clipboard.writeText(text);
+                    } else {
+                        const ta = document.createElement('textarea');
+                        ta.value = text;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(ta);
+                    }
+                } catch {}
+            };
+            write();
+        });
+    }
+
+    if (copyImprovedBtn) {
+        copyImprovedBtn.addEventListener('click', async () => {
+            if (!currentExplanation || currentExplanation.type !== 'review') return;
+            const improved = (currentExplanation.improvements && currentExplanation.improvements.length > 0) ? (currentExplanation.improvements[0].improvedCode || '') : '';
+            const text = improved || '';
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(text);
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                }
+            } catch {}
+        });
+    }
+
+    if (insertImprovedBtn) {
+        insertImprovedBtn.addEventListener('click', () => {
+            vscode.postMessage({
+                type: 'insertImprovedCode',
+                data: {
+                    improvedCode: (currentExplanation && currentExplanation.type === 'review' && currentExplanation.improvements && currentExplanation.improvements[0]?.improvedCode) || ''
+                }
+            });
+        });
     }
 }
 
@@ -156,6 +219,8 @@ function updateContent(data: any) {
 function updateContextHeader(data: any) {
     const operationTypeElement = document.getElementById('operation-type');
     const fileInfoElement = document.getElementById('file-info');
+    const modeBadge = document.getElementById('mode-badge');
+    const copyBtn = document.getElementById('copy-error-btn');
 
     if (operationTypeElement) {
         let operationText = '';
@@ -178,6 +243,22 @@ function updateContextHeader(data: any) {
             fileInfoElement.textContent = `${currentFileInfo.fileName} — ${currentFileInfo.relativePath}`;
         } else {
             fileInfoElement.textContent = '';
+        }
+    }
+
+    if (modeBadge) {
+        if (data.type === 'error') {
+            modeBadge.style.display = 'inline-block';
+        } else {
+            modeBadge.style.display = 'none';
+        }
+    }
+
+    if (copyBtn) {
+        if (data.type === 'error') {
+            (copyBtn as HTMLElement).style.display = 'inline-block';
+        } else {
+            (copyBtn as HTMLElement).style.display = 'none';
         }
     }
 }
@@ -230,6 +311,7 @@ function renderReview(data: any) {
     hideSection('error-fix-section');
     showSection('good-points-section');
     showSection('improvements-section');
+    showSection('diff-section');
 
     // Update summary
     updateElementContent('summary-content', data.summary);
@@ -250,6 +332,15 @@ function renderReview(data: any) {
 
     hideSection('pitfalls-section');
     hideSection('related-concepts-section');
+
+    const warning = document.getElementById('review-warning');
+    const actions = document.getElementById('review-actions');
+    if (warning) warning.style.display = 'block';
+    if (actions) actions.style.display = 'block';
+
+    const original = (window as any).__reviewOriginalSnippet || '';
+    const firstImproved = (data.improvements && data.improvements.length > 0 && data.improvements[0].improvedCode) ? data.improvements[0].improvedCode : '';
+    renderDiffView(original, firstImproved);
 }
 
 function renderError(data: any) {
@@ -352,6 +443,34 @@ function renderImprovements(improvements: any[]) {
 
         container.appendChild(improvementDiv);
     });
+}
+
+function renderDiffView(original: string, improved: string) {
+    const origEl = document.getElementById('diff-original-code');
+    const impEl = document.getElementById('diff-improved-code');
+    if (!origEl || !impEl) return;
+    const origLines = (original || '').split('\n');
+    const impLines = (improved || '').split('\n');
+    origEl.innerHTML = '';
+    impEl.innerHTML = '';
+    const maxLen = Math.max(origLines.length, impLines.length);
+    for (let i = 0; i < maxLen; i++) {
+        const o = origLines[i] || '';
+        const p = impLines[i] || '';
+        const oLine = document.createElement('div');
+        const pLine = document.createElement('div');
+        oLine.textContent = o;
+        pLine.textContent = p;
+        if (o !== p) {
+            oLine.className = 'diff-line diff-removed';
+            pLine.className = 'diff-line diff-added';
+        } else {
+            oLine.className = 'diff-line';
+            pLine.className = 'diff-line';
+        }
+        origEl.appendChild(oLine);
+        impEl.appendChild(pLine);
+    }
 }
 
 function renderList(containerId: string, items: string[], itemClass?: string) {
