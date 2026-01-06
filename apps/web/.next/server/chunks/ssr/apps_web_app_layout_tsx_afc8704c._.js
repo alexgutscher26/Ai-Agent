@@ -1,0 +1,3 @@
+module.exports=[28992,a=>{"use strict";var b=a.i(34777);function c({children:a}){return(0,b.jsx)("html",{lang:"en",children:(0,b.jsx)("body",{className:"min-h-screen bg-background text-foreground antialiased",children:a})})}a.s(["default",()=>c,"metadata",0,{title:"Code Coach",description:"Your AI Senior Developer, right inside VS Code."}])}];
+
+//# sourceMappingURL=apps_web_app_layout_tsx_afc8704c._.js.map

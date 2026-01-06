@@ -1,0 +1,2 @@
+:HL["/_next/static/chunks/86a3bfc45f8cc56a.css","style"]
+0:{"buildId":"hd3_Z41-TK_unJKQ4sMNV","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
