@@ -13,6 +13,7 @@ export interface CodeCoachConfig {
     userLevel: 'beginner' | 'intermediate';
     proactiveSuggestions: boolean;
     demoMode: boolean; // New: Enable demo mode for testing without API key
+    strictValidation?: boolean;
 }
 
 // API Request interfaces
@@ -35,6 +36,8 @@ export interface ReviewRequest {
     filePath?: string;
     reviewType: 'quality' | 'style' | 'performance';
     userLevel?: string;
+    promptVersion?: string;
+    promptId?: string;
     focusPerformance?: boolean;
     focusReadability?: boolean;
     focusStyle?: boolean;
@@ -50,6 +53,8 @@ export interface ErrorRequest {
     diagnosticCode?: string;
     languageId: string;
     userLevel?: string;
+    promptVersion?: string;
+    promptId?: string;
     stackTrace?: string[];
 }
 

@@ -4,7 +4,7 @@ import { CodeCoachApiClient, ApiClient } from '../api/CodeCoachApiClient';
 import { MockApiClient } from '../api/MockApiClient';
 import { CodeCoachViewProvider } from '../panel/CodeCoachViewProvider';
 import { CodeCoachCodeActionProvider } from './CodeActionProvider';
-import { ExplainRequest, ReviewRequest, ErrorRequest } from '../types';
+import { ExplainRequest, ReviewRequest, ErrorRequest, ExplanationResponse, ReviewResponse, ErrorResponse } from '../types';
 import { Telemetry } from '../telemetry/Telemetry';
 import { FileSafetyGuard } from '../safety/FileSafetyGuard';
 import { PerformanceMonitor } from '../performance/PerformanceMonitor';
@@ -275,7 +275,7 @@ export class CommandManager {
                         return idx >= 0 ? fn.substring(idx + 1) : fn;
                     })();
                     const relativePath = vscode.workspace.asRelativePath(editor.document.uri);
-                    const prompt = PromptTemplates.getExplainTemplate();
+                    const prompt = PromptTemplates.getTemplateForMode('explain');
                     const depth = vscode.workspace.getConfiguration('codeCoach').get<'short' | 'normal' | 'detailed'>('explanationDepth', 'normal');
                     const request: ExplainRequest = {
                         code: code,
@@ -294,9 +294,9 @@ export class CommandManager {
 
                     // Call API to get explanation with performance monitoring and timeout
                     const startMs = Date.now();
-                    const explanation = await this.performanceMonitor.withTimeout(
+                    const explanationRaw = await this.performanceMonitor.withTimeout(
                         'apiExplainSelection',
-                        () => this.apiClient!.explainSelection(request),
+                        () => this.apiClient!.runCoach('explain', request),
                         30000 // 30 second timeout
                     );
                     const apiMs = Date.now() - startMs;
@@ -304,6 +304,7 @@ export class CommandManager {
                     // Create or show webview panel and display explanation (Requirement 1.4)
                     if (this.viewProvider) {
                         this.viewProvider.setSelectionContext(fileName, relativePath, selection.start.line);
+                        const explanation = this.ensureExplanation(explanationRaw);
                         this.viewProvider.showExplanation(explanation);
                     } else {
                         vscode.window.showErrorMessage('FlowPilot view is not available. Please try reloading the window.');
@@ -412,12 +413,15 @@ export class CommandManager {
                     const focusStyle = vscode.workspace.getConfiguration('codeCoach').get<boolean>('reviewFocus.style', true);
                     const contextSig = this.getEnclosingFunctionSignature(editor, selection);
                     const contextType = this.detectContextType(editor, selection);
+                    const prompt = PromptTemplates.getTemplateForMode('review');
                     const request: ReviewRequest = {
                         code: code,
                         languageId: editor.document.languageId,
                         filePath: editor.document.uri.fsPath,
                         reviewType: 'quality',
                         userLevel: this.configManager.getUserLevel(),
+                        promptVersion: prompt.version,
+                        promptId: prompt.id,
                         focusPerformance,
                         focusReadability,
                         focusStyle,
@@ -430,15 +434,16 @@ export class CommandManager {
 
                     // Call API to get code review with performance monitoring and timeout
                     const startMs = Date.now();
-                    const review = await this.performanceMonitor.withTimeout(
+                    const reviewRaw = await this.performanceMonitor.withTimeout(
                         'apiReviewSelection',
-                        () => this.apiClient!.reviewSelection(request),
+                        () => this.apiClient!.runCoach('review', request),
                         30000 // 30 second timeout
                     );
                     const apiMs = Date.now() - startMs;
 
                     // Create or show webview panel and display review (Requirements 3.2, 3.3)
                     if (this.viewProvider) {
+                        const review = this.ensureReview(reviewRaw);
                         this.viewProvider.showReview(review);
                         // Send original snippet to webview for diff rendering
                         (this.viewProvider as any)._sendMessageToWebview?.({
@@ -621,12 +626,16 @@ export class CommandManager {
                     const code = editor.document.getText(surroundingRange);
 
                     // Prepare API request for error analysis
+                    const prompt = PromptTemplates.getTemplateForMode('error');
                     const request: ErrorRequest = {
                         code: code,
                         errorMessage: diagnostic.message,
                         errorRange: diagnostic.range,
                         diagnosticCode: diagnostic.code?.toString(),
                         languageId: editor.document.languageId,
+                        userLevel: this.configManager.getUserLevel(),
+                        promptVersion: prompt.version,
+                        promptId: prompt.id,
                         stackTrace: await this.tryGetStackTrace()
                     };
 
@@ -634,15 +643,16 @@ export class CommandManager {
 
                     // Call API to get error explanation with performance monitoring and timeout
                     const startMs = Date.now();
-                    const errorExplanation = await this.performanceMonitor.withTimeout(
+                    const errorRaw = await this.performanceMonitor.withTimeout(
                         'apiExplainError',
-                        () => this.apiClient!.explainError(request),
+                        () => this.apiClient!.runCoach('error', request),
                         30000 // 30 second timeout
                     );
                     const apiMs = Date.now() - startMs;
 
                     // Create or show webview panel and display error explanation (Requirement 2.2)
                     if (this.viewProvider) {
+                        const errorExplanation = this.ensureError(errorRaw);
                         this.viewProvider.showError(errorExplanation);
                     } else {
                         vscode.window.showErrorMessage('FlowPilot view is not available. Please try reloading the window.');
@@ -1088,6 +1098,48 @@ export class CommandManager {
             default:
                 return 'unknown';
         }
+    }
+
+    private isExplanationResponse(v: any): v is ExplanationResponse {
+        return v && v.type === 'explain' && typeof v.summary === 'string';
+    }
+    private isReviewResponse(v: any): v is ReviewResponse {
+        return v && v.type === 'review' && typeof v.summary === 'string' && Array.isArray(v.improvements);
+    }
+    private isErrorResponse(v: any): v is ErrorResponse {
+        return v && v.type === 'error' && typeof v.errorMeaning === 'string' && typeof v.howToFix === 'string';
+    }
+    private ensureExplanation(v: ExplanationResponse | ReviewResponse | ErrorResponse): ExplanationResponse {
+        if (this.isExplanationResponse(v)) return v;
+        const anyV: any = v || {};
+        return {
+            type: 'explain',
+            summary: anyV.summary || anyV.errorMeaning || '',
+            lineByLine: [],
+            pitfalls: [],
+            relatedConcepts: []
+        };
+    }
+    private ensureReview(v: ExplanationResponse | ReviewResponse | ErrorResponse): ReviewResponse {
+        if (this.isReviewResponse(v)) return v;
+        const anyV: any = v || {};
+        return {
+            type: 'review',
+            summary: anyV.summary || '',
+            goodPoints: [],
+            improvementPoints: [],
+            improvements: []
+        };
+    }
+    private ensureError(v: ExplanationResponse | ReviewResponse | ErrorResponse): ErrorResponse {
+        if (this.isErrorResponse(v)) return v;
+        const anyV: any = v || {};
+        return {
+            type: 'error',
+            errorMeaning: anyV.errorMeaning || anyV.summary || '',
+            whyHere: 'Unable to determine context.',
+            howToFix: 'Try again or check connectivity.'
+        };
     }
 
     /**

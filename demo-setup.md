@@ -82,7 +82,7 @@ When demo mode is enabled:
 ## Switching to Production
 
 When you're ready to use the real FlowPilot service:
-1. Get an API key from [FlowPilot Dashboard](https://dashboard.codecoach.dev)
+1. Get an API key from [FlowPilot Dashboard](https://dashboard.flowpilot.dev)
 2. Disable Demo Mode (`codeCoach.demoMode: false`)
 3. Set your API key (`codeCoach.apiKey`)
 4. Enjoy enhanced explanations powered by the full AI service!

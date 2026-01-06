@@ -128,7 +128,7 @@ function initializeEventListeners() {
 
     if (copyBtn) {
         copyBtn.addEventListener('click', () => {
-            if (!currentExplanation || currentExplanation.type !== 'error') return;
+            if (!currentExplanation || currentExplanation.type !== 'error') {return;}
             const text = [
                 currentExplanation.errorMeaning || '',
                 currentExplanation.whyHere ? `\n\nWhy it happened:\n${currentExplanation.whyHere}` : '',
@@ -154,7 +154,7 @@ function initializeEventListeners() {
 
     if (copyImprovedBtn) {
         copyImprovedBtn.addEventListener('click', async () => {
-            if (!currentExplanation || currentExplanation.type !== 'review') return;
+            if (!currentExplanation || currentExplanation.type !== 'review') {return;}
             const improved = (currentExplanation.improvements && currentExplanation.improvements.length > 0) ? (currentExplanation.improvements[0].improvedCode || '') : '';
             const text = improved || '';
             try {
@@ -281,7 +281,11 @@ function renderExplanation(data: any) {
     hideSection('improvements-section');
 
     // Update summary
-    updateElementContent('summary-content', applyJuniorTone(enforceMaxLength(data.summary || '', ((window as any).__flowpilotSettings?.summaryMax) || 600)));
+    renderExpandableText(
+        'summary-content',
+        applyJuniorTone(data.summary || ''),
+        ((window as any).__flowpilotSettings?.summaryMax) || 600
+    );
 
     // Update line-by-line explanations
     renderLineByLineExplanations((data.lineByLine || []).map((l: any) => ({
@@ -324,7 +328,11 @@ function renderReview(data: any) {
     showSection('diff-section');
 
     // Update summary
-    updateElementContent('summary-content', data.summary);
+    renderExpandableText(
+        'summary-content',
+        data.summary || '',
+        ((window as any).__flowpilotSettings?.summaryMax) || 600
+    );
 
     // Update good points
     renderList('good-points-content', data.goodPoints || [], 'good-point');
@@ -335,7 +343,7 @@ function renderReview(data: any) {
     // Update optional sections
     if (data.tryItYourself) {
         showSection('try-it-section');
-        updateElementContent('try-it-content', data.tryItYourself);
+        updateElementContent('try-it-content', enforceMaxLength(data.tryItYourself || '', ((window as any).__flowpilotSettings?.tryItMax) || 400));
     } else {
         hideSection('try-it-section');
     }
@@ -345,8 +353,8 @@ function renderReview(data: any) {
 
     const warning = document.getElementById('review-warning');
     const actions = document.getElementById('review-actions');
-    if (warning) warning.style.display = 'block';
-    if (actions) actions.style.display = 'block';
+    if (warning) {warning.style.display = 'block';}
+    if (actions) {actions.style.display = 'block';}
 
     const original = (window as any).__reviewOriginalSnippet || '';
     const firstImproved = (data.improvements && data.improvements.length > 0 && data.improvements[0].improvedCode) ? data.improvements[0].improvedCode : '';
@@ -364,9 +372,10 @@ function renderError(data: any) {
     hideSection('improvements-section');
 
     // Update error sections
-    updateElementContent('error-meaning-content', data.errorMeaning);
-    updateElementContent('error-context-content', data.whyHere);
-    updateElementContent('error-fix-content', data.howToFix);
+    const summaryMax = ((window as any).__flowpilotSettings?.summaryMax) || 600;
+    renderExpandableText('error-meaning-content', data.errorMeaning || '', summaryMax);
+    renderExpandableText('error-context-content', data.whyHere || '', summaryMax);
+    renderExpandableText('error-fix-content', data.howToFix || '', summaryMax);
 
     // Update optional sections
     if (data.tryItYourself) {
@@ -388,7 +397,7 @@ function renderError(data: any) {
 
 function renderLineByLineExplanations(lineExplanations: any[]) {
     const container = document.getElementById('line-explanations');
-    if (!container) return;
+    if (!container) {return;}
 
     container.innerHTML = '';
 
@@ -425,7 +434,7 @@ function renderLineByLineExplanations(lineExplanations: any[]) {
 
 function renderImprovements(improvements: any[]) {
     const container = document.getElementById('improvements-content');
-    if (!container) return;
+    if (!container) {return;}
 
     container.innerHTML = '';
 
@@ -458,7 +467,7 @@ function renderImprovements(improvements: any[]) {
 function renderDiffView(original: string, improved: string) {
     const origEl = document.getElementById('diff-original-code');
     const impEl = document.getElementById('diff-improved-code');
-    if (!origEl || !impEl) return;
+    if (!origEl || !impEl) {return;}
     const origLines = (original || '').split('\n');
     const impLines = (improved || '').split('\n');
     origEl.innerHTML = '';
@@ -485,11 +494,11 @@ function renderDiffView(original: string, improved: string) {
 
 function renderList(containerId: string, items: string[], itemClass?: string) {
     const container = document.getElementById(containerId);
-    if (!container) return;
+    if (!container) {return;}
 
     container.innerHTML = '';
 
-    if (items.length === 0) return;
+    if (items.length === 0) {return;}
 
     const ul = document.createElement('ul');
     items.forEach(item => {
@@ -505,17 +514,43 @@ function renderList(containerId: string, items: string[], itemClass?: string) {
 }
 
 function enforceMaxLength(text: string, max: number): string {
-    if (!text) return '';
-    if (text.length <= max) return text;
+    if (!text) {return '';}
+    if (text.length <= max) {return text;}
     return text.substring(0, Math.max(0, max - 3)) + '...';
 }
 
+function renderExpandableText(containerId: string, text: string, max: number) {
+    const container = document.getElementById(containerId);
+    if (!container) {return;}
+    const trimmed = (text || '').trim();
+    if (trimmed.length <= max) {
+        container.textContent = trimmed;
+        return;
+    }
+    const shortText = enforceMaxLength(trimmed, max);
+    container.innerHTML = '';
+    const span = document.createElement('span');
+    span.textContent = shortText;
+    const btn = document.createElement('button');
+    btn.className = 'modern-button modern-button--secondary';
+    btn.style.marginLeft = '8px';
+    btn.textContent = 'Show more';
+    let expanded = false;
+    btn.addEventListener('click', () => {
+        expanded = !expanded;
+        span.textContent = expanded ? trimmed : shortText;
+        btn.textContent = expanded ? 'Show less' : 'Show more';
+    });
+    container.appendChild(span);
+    container.appendChild(btn);
+}
+
 function applyJuniorTone(text: string): string {
-    if (!text) return '';
+    if (!text) {return '';}
     const prefix = 'In simpler terms: ';
     // Avoid double prefix
     const trimmed = text.trim();
-    if (trimmed.toLowerCase().startsWith('in simpler terms')) return trimmed;
+    if (trimmed.toLowerCase().startsWith('in simpler terms')) {return trimmed;}
     return prefix + trimmed;
 }
 
@@ -529,7 +564,7 @@ const conceptLinks: Record<string, string> = {
 
 function renderConceptChips(containerId: string, concepts: string[]) {
     const container = document.getElementById(containerId);
-    if (!container) return;
+    if (!container) {return;}
     container.innerHTML = '';
     const frag = document.createDocumentFragment();
     concepts.forEach(name => {
@@ -548,12 +583,21 @@ function renderConceptChips(containerId: string, concepts: string[]) {
 function updateReflectionVisibility() {
     const enabled = !!((window as any).__flowpilotSettings?.reflectionEnabled);
     const section = document.getElementById('reflection-section');
-    if (section) section.style.display = enabled ? 'block' : 'none';
+    if (section) {
+        const shouldShow = enabled ? 'block' : 'none';
+        const wasHidden = section.style.display === 'none' || section.style.display === '';
+        section.style.display = shouldShow;
+        if (enabled && wasHidden) {
+            try {
+                vscode.postMessage({ type: 'reflectionView' });
+            } catch {}
+        }
+    }
 }
 
 function showIntroOverlay() {
     const content = document.getElementById('content');
-    if (!content) return;
+    if (!content) {return;}
     const overlay = document.createElement('div');
     overlay.className = 'modern-card modern-card--info';
     overlay.innerHTML = `
@@ -836,7 +880,7 @@ function animateContentExit(element: HTMLElement, callback?: () => void) {
     element.style.transform = 'translateY(-8px)';
     
     setTimeout(() => {
-        if (callback) callback();
+        if (callback) {callback();}
     }, 250);
 }
 
@@ -923,7 +967,7 @@ function updateContentWithAnimation(data: any) {
 }
 
 function handleFeedbackClick(helpful: boolean) {
-    if (feedbackSubmitted) return;
+    if (feedbackSubmitted) {return;}
 
     const feedbackComment = document.getElementById('feedback-comment');
     if (feedbackComment) {
@@ -954,12 +998,12 @@ function handleFeedbackClick(helpful: boolean) {
 }
 
 function submitFeedback() {
-    if (feedbackSubmitted) return;
+    if (feedbackSubmitted) {return;}
 
     const feedbackComment = document.getElementById('feedback-comment');
     const textarea = document.getElementById('feedback-text') as HTMLTextAreaElement;
     
-    if (!feedbackComment || !textarea) return;
+    if (!feedbackComment || !textarea) {return;}
 
     const helpful = (feedbackComment as any).helpfulChoice;
     const comment = textarea.value.trim();

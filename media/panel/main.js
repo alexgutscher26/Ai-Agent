@@ -316,7 +316,7 @@ function renderError(data) {
 function renderLineByLineExplanations(lineExplanations) {
     const container = document.getElementById('line-explanations');
     if (!container)
-        return;
+        {return;}
     container.innerHTML = '';
     lineExplanations.forEach((line, index) => {
         const lineDiv = document.createElement('div');
@@ -339,7 +339,7 @@ function renderLineByLineExplanations(lineExplanations) {
 function renderImprovements(improvements) {
     const container = document.getElementById('improvements-content');
     if (!container)
-        return;
+        {return;}
     container.innerHTML = '';
     improvements.forEach((improvement, index) => {
         const improvementDiv = document.createElement('div');
@@ -364,10 +364,10 @@ function renderImprovements(improvements) {
 function renderList(containerId, items, itemClass) {
     const container = document.getElementById(containerId);
     if (!container)
-        return;
+        {return;}
     container.innerHTML = '';
     if (items.length === 0)
-        return;
+        {return;}
     const ul = document.createElement('ul');
     items.forEach(item => {
         const li = document.createElement('li');
@@ -403,7 +403,7 @@ function updateElementContent(elementId, content) {
     }
 }
 function processConcepts(text) {
-    if (!text || typeof text !== 'string') return text || '';
+    if (!text || typeof text !== 'string') {return text || '';}
     const terms = Object.keys(conceptLibrary);
     const pattern = new RegExp('\\b(' + terms.map(t => t.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')).join('|') + ')\\b', 'gi');
     return text.replace(pattern, (match) => {
@@ -429,14 +429,14 @@ function initializeConceptEvents() {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             const pop = document.getElementById('concept-popover');
-            if (pop) pop.style.display = 'none';
+            if (pop) {pop.style.display = 'none';}
         }
     });
 }
 function showConceptPopover(term, x, y) {
     const data = conceptLibrary[term];
     const pop = document.getElementById('concept-popover');
-    if (!data || !pop) return;
+    if (!data || !pop) {return;}
     const variant = data[userLevel] || data['beginner'];
     const examplesHtml = variant.examples.slice(0, 3).map(ex => `<code>${escapeHtml(ex)}</code>`).join('');
     const gotchasHtml = '<ul>' + variant.gotchas.slice(0, 3).map(g => `<li>${escapeHtml(g)}</li>`).join('') + '</ul>';
@@ -668,7 +668,7 @@ function animateContentExit(element, callback) {
     element.style.transform = 'translateY(-8px)';
     setTimeout(() => {
         if (callback)
-            callback();
+            {callback();}
     }, 250);
 }
 function createFloatingAnimation(element) {
@@ -740,7 +740,7 @@ function updateContentWithAnimation(data) {
 }
 function handleFeedbackClick(helpful) {
     if (feedbackSubmitted)
-        return;
+        {return;}
     const feedbackComment = document.getElementById('feedback-comment');
     if (feedbackComment) {
         // Add entrance animation to feedback comment section
@@ -766,11 +766,11 @@ function handleFeedbackClick(helpful) {
 }
 function submitFeedback() {
     if (feedbackSubmitted)
-        return;
+        {return;}
     const feedbackComment = document.getElementById('feedback-comment');
     const textarea = document.getElementById('feedback-text');
     if (!feedbackComment || !textarea)
-        return;
+        {return;}
     const helpful = feedbackComment.helpfulChoice;
     const comment = textarea.value.trim();
     // Add loading animation to submit button
@@ -1052,7 +1052,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Enhanced feedback handling with animations
 function handleFeedbackClickWithAnimation(helpful) {
-    if (feedbackSubmitted) return;
+    if (feedbackSubmitted) {return;}
 
     const feedbackComment = document.getElementById('feedback-comment');
     if (feedbackComment) {
@@ -1083,12 +1083,12 @@ function handleFeedbackClickWithAnimation(helpful) {
 }
 
 function submitFeedbackWithAnimation() {
-    if (feedbackSubmitted) return;
+    if (feedbackSubmitted) {return;}
 
     const feedbackComment = document.getElementById('feedback-comment');
     const textarea = document.getElementById('feedback-text');
     
-    if (!feedbackComment || !textarea) return;
+    if (!feedbackComment || !textarea) {return;}
 
     const helpful = feedbackComment.helpfulChoice;
     const comment = textarea.value.trim();

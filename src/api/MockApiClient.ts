@@ -87,6 +87,18 @@ export class MockApiClient implements ApiClient {
         console.log('[Demo Mode] Telemetry event:', event.type, event.metadata);
     }
 
+    async runCoach(
+        mode: 'explain' | 'review' | 'error',
+        request: ExplainRequest | ReviewRequest | ErrorRequest
+    ): Promise<ExplanationResponse | ReviewResponse | ErrorResponse> {
+        if (mode === 'explain') {
+            return this.explainSelection(request as ExplainRequest);
+        }
+        if (mode === 'review') {
+            return this.reviewSelection(request as ReviewRequest);
+        }
+        return this.explainError(request as ErrorRequest);
+    }
     /**
      * Update configuration (for compatibility)
      */
@@ -232,11 +244,11 @@ export class MockApiClient implements ApiClient {
     private generateRelatedConcepts(code: string): string[] {
         const concepts: string[] = [];
         
-        if (code.includes('def ')) concepts.push('Functions', 'Parameters', 'Return values', 'Scope');
-        if (code.includes('class ')) concepts.push('Object-oriented programming', 'Inheritance', 'Methods', 'Attributes');
-        if (code.includes('for ') || code.includes('while ')) concepts.push('Iteration', 'Collections', 'Control flow');
-        if (code.includes('if ')) concepts.push('Boolean logic', 'Conditional statements', 'Comparison operators');
-        if (code.includes('import ')) concepts.push('Modules', 'Packages', 'Namespaces');
+        if (code.includes('def ')) {concepts.push('Functions', 'Parameters', 'Return values', 'Scope');}
+        if (code.includes('class ')) {concepts.push('Object-oriented programming', 'Inheritance', 'Methods', 'Attributes');}
+        if (code.includes('for ') || code.includes('while ')) {concepts.push('Iteration', 'Collections', 'Control flow');}
+        if (code.includes('if ')) {concepts.push('Boolean logic', 'Conditional statements', 'Comparison operators');}
+        if (code.includes('import ')) {concepts.push('Modules', 'Packages', 'Namespaces');}
         
         return concepts.length > 0 ? concepts : ['Python syntax', 'Code structure', 'Best practices'];
     }

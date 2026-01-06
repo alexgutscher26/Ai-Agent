@@ -20,6 +20,10 @@ export interface ApiClient {
     reviewSelection(request: ReviewRequest): Promise<ReviewResponse>;
     explainError(request: ErrorRequest): Promise<ErrorResponse>;
     logEvent(event: TelemetryEvent): Promise<void>;
+    runCoach(
+        mode: 'explain' | 'review' | 'error',
+        request: ExplainRequest | ReviewRequest | ErrorRequest
+    ): Promise<ExplanationResponse | ReviewResponse | ErrorResponse>;
 }
 
 interface RetryConfig {
@@ -35,7 +39,7 @@ export class CodeCoachApiClient implements ApiClient {
     private retryConfig: RetryConfig;
 
     constructor(config: CodeCoachConfig) {
-        this.config = config;
+        this.config = { ...config, strictValidation: config.strictValidation ?? true };
         this.retryConfig = {
             maxRetries: 3,
             baseDelay: 1000, // 1 second
@@ -82,16 +86,22 @@ export class CodeCoachApiClient implements ApiClient {
      */
     async explainSelection(request: ExplainRequest): Promise<ExplanationResponse> {
         return this.executeWithRetry(async () => {
-            const response: AxiosResponse<ExplanationResponse> = await this.httpClient.post(
+            const response: AxiosResponse<any> = await this.httpClient.post(
                 '/api/v1/explain',
                 {
                     ...request,
                     userLevel: this.config.userLevel
                 }
             );
-
-            this.validateExplanationResponse(response.data);
-            return response.data;
+            try {
+                this.validateExplanationResponse(response.data);
+                return response.data as ExplanationResponse;
+            } catch (e: any) {
+                if (this.config.strictValidation) {
+                    throw e instanceof Error ? e : new Error('Invalid explanation response format');
+                }
+                return this.buildFallbackExplanation(response.data);
+            }
         }, 'explainSelection');
     }
 
@@ -100,16 +110,22 @@ export class CodeCoachApiClient implements ApiClient {
      */
     async reviewSelection(request: ReviewRequest): Promise<ReviewResponse> {
         return this.executeWithRetry(async () => {
-            const response: AxiosResponse<ReviewResponse> = await this.httpClient.post(
+            const response: AxiosResponse<any> = await this.httpClient.post(
                 '/api/v1/review',
                 {
                     ...request,
                     userLevel: this.config.userLevel
                 }
             );
-
-            this.validateReviewResponse(response.data);
-            return response.data;
+            try {
+                this.validateReviewResponse(response.data);
+                return response.data as ReviewResponse;
+            } catch (e: any) {
+                if (this.config.strictValidation) {
+                    throw e instanceof Error ? e : new Error('Invalid review response format');
+                }
+                return this.buildFallbackReview(response.data);
+            }
         }, 'reviewSelection');
     }
 
@@ -133,14 +149,19 @@ export class CodeCoachApiClient implements ApiClient {
                 },
                 userLevel: this.config.userLevel
             };
-
-            const response: AxiosResponse<ErrorResponse> = await this.httpClient.post(
+            const response: AxiosResponse<any> = await this.httpClient.post(
                 '/api/v1/explain-error',
                 serializedRequest
             );
-
-            this.validateErrorResponse(response.data);
-            return response.data;
+            try {
+                this.validateErrorResponse(response.data);
+                return response.data as ErrorResponse;
+            } catch (e: any) {
+                if (this.config.strictValidation) {
+                    throw e instanceof Error ? e : new Error('Invalid error response format');
+                }
+                return this.buildFallbackError(response.data);
+            }
         }, 'explainError');
     }
 
@@ -160,6 +181,19 @@ export class CodeCoachApiClient implements ApiClient {
             // Log error but don't throw
             console.warn('Failed to send telemetry event:', this.sanitizeErrorForLogging(error));
         }
+    }
+
+    async runCoach(
+        mode: 'explain' | 'review' | 'error',
+        request: ExplainRequest | ReviewRequest | ErrorRequest
+    ): Promise<ExplanationResponse | ReviewResponse | ErrorResponse> {
+        if (mode === 'explain') {
+            return this.explainSelection(request as ExplainRequest);
+        }
+        if (mode === 'review') {
+            return this.reviewSelection(request as ReviewRequest);
+        }
+        return this.explainError(request as ErrorRequest);
     }
 
     /**
@@ -399,6 +433,48 @@ export class CodeCoachApiClient implements ApiClient {
         }
     }
 
+    private buildFallbackExplanation(raw: any): ExplanationResponse {
+        const text = this.safeStringify(raw);
+        return {
+            type: 'explain',
+            summary: text.substring(0, 2000),
+            lineByLine: [],
+            pitfalls: [],
+            tryItYourself: undefined,
+            relatedConcepts: []
+        };
+    }
+
+    private buildFallbackReview(raw: any): ReviewResponse {
+        const text = this.safeStringify(raw);
+        return {
+            type: 'review',
+            summary: text.substring(0, 2000),
+            goodPoints: [],
+            improvementPoints: [],
+            improvements: []
+        };
+    }
+
+    private buildFallbackError(raw: any): ErrorResponse {
+        const text = this.safeStringify(raw);
+        return {
+            type: 'error',
+            errorMeaning: text.substring(0, 2000),
+            whyHere: 'Unable to parse server response into expected schema.',
+            howToFix: 'Review the message above. If this persists, try again later.'
+        };
+    }
+
+    private safeStringify(value: any): string {
+        if (typeof value === 'string') {return value;}
+        try {
+            return JSON.stringify(value, null, 2);
+        } catch {
+            return 'Unstructured response received from server.';
+        }
+    }
+
     /**
      * Handles API errors and converts them to user-friendly messages
      */
@@ -498,7 +574,8 @@ export function createApiClient(): CodeCoachApiClient {
         telemetryEnabled: config.get<boolean>('telemetryEnabled', true),
         userLevel: config.get<'beginner' | 'intermediate'>('userLevel', 'beginner'),
         proactiveSuggestions: config.get<boolean>('proactiveSuggestions', true),
-        demoMode: config.get<boolean>('demoMode', false)
+        demoMode: config.get<boolean>('demoMode', false),
+        strictValidation: config.get<boolean>('strictValidation', false)
     };
 
     return new CodeCoachApiClient(clientConfig);

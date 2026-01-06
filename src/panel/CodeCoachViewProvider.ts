@@ -17,7 +17,7 @@ import { ConfigurationManager } from '../config/ConfigurationManager';
 import { FileSafetyGuard } from '../safety/FileSafetyGuard';
 
 export interface WebviewMessage {
-    type: 'feedback' | 'ready' | 'error' | 'context' | 'scrollToLine' | 'insertImprovedCode' | 'conceptClick' | 'settings' | 'intro';
+    type: 'feedback' | 'ready' | 'error' | 'context' | 'scrollToLine' | 'insertImprovedCode' | 'conceptClick' | 'settings' | 'intro' | 'reflectionView';
     data?: any;
 }
 
@@ -226,6 +226,12 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
                     });
                 }
                 break;
+            case 'reflectionView':
+                if (this._telemetry) {
+                    const userLevel = this._configManager?.getUserLevel() || 'beginner';
+                    this._telemetry.trackReflectionView(userLevel);
+                }
+                break;
         }
     }
 
@@ -350,6 +356,10 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
                 tryItMax
             }
         });
+        if (reflectionEnabled && this._state.currentExplanation && this._telemetry) {
+            const userLevel = this._configManager?.getUserLevel() || 'beginner';
+            this._telemetry.trackReflectionView(userLevel);
+        }
     }
 
     public showIntro(): void {

@@ -278,6 +278,12 @@
           "description": "Max characters for Try It section",
           "order": 17
         },
+        "codeCoach.strictValidation": {
+          "type": "boolean",
+          "default": false,
+          "description": "Strictly enforce response schema (dev/testing). If disabled, UI falls back to plain-text.",
+          "order": 20
+        },
         "codeCoach.maxSnippetChars": {
           "type": "number",
           "default": 6000,
