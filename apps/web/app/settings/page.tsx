@@ -41,6 +41,7 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false)
   const [theme, setTheme] = useState<"light" | "dark" | "system">("system")
   const email = session?.user?.email || ""
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null)
 
   useEffect(() => {
     if (!isPending && !session) {
@@ -89,11 +90,19 @@ export default function SettingsPage() {
     setSaving(true)
     try {
       const name = [fname, lname].filter(Boolean).join(" ").trim()
-      await fetch("/api/user/profile", {
+      const res = await fetch("/api/user/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name, bio, image: imageUrl, theme })
       })
+      if (!res.ok) {
+        throw new Error("Failed")
+      }
+      setToast({ message: "Settings saved", type: "success" })
+      setTimeout(() => setToast(null), 3000)
+    } catch {
+      setToast({ message: "Failed to save settings", type: "error" })
+      setTimeout(() => setToast(null), 4000)
     } finally {
       setSaving(false)
     }
@@ -460,6 +469,16 @@ export default function SettingsPage() {
             </div>
           </div>
         </main>
+        {toast && (
+          <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-lg border border-muted/40 bg-background px-4 py-2 shadow-lg">
+            {toast.type === "success" ? (
+              <CheckCircle className="text-green-600 dark:text-green-400" size={18} />
+            ) : (
+              <AlertTriangle className="text-red-600 dark:text-red-400" size={18} />
+            )}
+            <span className="text-sm">{toast.message}</span>
+          </div>
+        )}
       </div>
     </div>
   )

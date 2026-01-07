@@ -59,3 +59,8 @@ body {
 .hero-gradient {
   background-image: radial-gradient(1200px 400px at top center, rgba(59,130,246,.15), transparent 40%);
 }
+
+/* Hide native file input inside UploadButton to avoid duplicate UI */
+label[data-ut-element="button"] input[type="file"] {
+  display: none !important;
+}
