@@ -45,7 +45,7 @@ export default function SkillsPage() {
             <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground">
               <Code2 size={18} />
             </div>
-            <h1 className="text-lg font-bold tracking-tight">Code Coach</h1>
+            <h1 className="text-lg font-bold tracking-tight">FlowPilot</h1>
           </div>
           <nav className="flex-1 flex flex-col px-4 gap-1 overflow-y-auto">
             <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/dashboard">
@@ -390,7 +390,7 @@ export default function SkillsPage() {
                 </div>
               </div>
               <footer className="mt-auto py-4 text-center text-xs text-muted-foreground bg-background">
-                <p>© 2023 Code Coach Inc. All rights reserved.</p>
+                <p>© 2023 FlowPilot Inc. All rights reserved.</p>
               </footer>
             </div>
           </div>

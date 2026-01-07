@@ -1,5 +1,5 @@
 "use client"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { authClient } from "@/lib/auth-client"
@@ -24,16 +24,59 @@ import {
   AlertTriangle,
   CheckCircle
 } from "lucide-react"
+import { UploadButton } from "@uploadthing/react"
+import type { OurFileRouter } from "@/lib/uploadthing"
 
 export default function SettingsPage() {
   const router = useRouter()
   const { data: session, isPending } = authClient.useSession()
 
+  const userName = session?.user?.name || "Alex Developer"
+  const firstName = userName.split(" ")[0] || "Alex"
+  const lastName = userName.split(" ").slice(1).join(" ") || "Developer"
+  const [fname, setFname] = useState(firstName)
+  const [lname, setLname] = useState(lastName)
+  const [bio, setBio] = useState<string>("Frontend enthusiast, currently mastering React and Tailwind CSS.")
+  const [imageUrl, setImageUrl] = useState<string | null>(session?.user?.image || null)
+  const [saving, setSaving] = useState(false)
+  const [theme, setTheme] = useState<"light" | "dark" | "system">("system")
+  const email = session?.user?.email || ""
+
   useEffect(() => {
     if (!isPending && !session) {
       router.replace("/login")
+      return
     }
-  }, [isPending, session, router])
+    if (!isPending && session) {
+      const run = async () => {
+        try {
+          const res = await fetch(`/api/user/profile?email=${encodeURIComponent(email)}`)
+          const data = await res.json()
+          const user = data?.user
+          if (user?.name) {
+            const parts = String(user.name).split(" ")
+            setFname(parts[0] || "")
+            setLname(parts.slice(1).join(" ") || "")
+          }
+          if (user?.bio) setBio(user.bio)
+          if (user?.image) setImageUrl(user.image)
+          if (user?.theme) setTheme(user.theme as any)
+        } catch {}
+      }
+      run()
+    }
+  }, [isPending, session, router, email])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("fp_theme", theme)
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+      const effective = theme === "system" ? (prefersDark ? "dark" : "light") : theme
+      const root = document.documentElement
+      if (effective === "dark") root.classList.add("dark")
+      else root.classList.remove("dark")
+    } catch {}
+  }, [theme])
 
   if (isPending) {
     return <div className="container py-12">Loading...</div>
@@ -42,9 +85,19 @@ export default function SettingsPage() {
     return null
   }
 
-  const userName = session.user.name || "Alex Developer"
-  const firstName = userName.split(" ")[0] || "Alex"
-  const lastName = userName.split(" ").slice(1).join(" ") || "Developer"
+  const onSave = async () => {
+    setSaving(true)
+    try {
+      const name = [fname, lname].filter(Boolean).join(" ").trim()
+      await fetch("/api/user/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, name, bio, image: imageUrl, theme })
+      })
+    } finally {
+      setSaving(false)
+    }
+  }
 
   return (
     <div className="bg-background min-h-screen text-foreground">
@@ -54,7 +107,7 @@ export default function SettingsPage() {
             <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground">
               <Code2 size={18} />
             </div>
-            <h1 className="text-lg font-bold tracking-tight">Code Coach</h1>
+            <h1 className="text-lg font-bold tracking-tight">FlowPilot</h1>
           </div>
           <nav className="flex-1 flex flex-col px-4 gap-1 overflow-y-auto">
             <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/dashboard">
@@ -149,8 +202,8 @@ export default function SettingsPage() {
                   <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
                   <p className="text-muted-foreground mt-1">Manage your account settings and preferences.</p>
                 </div>
-                <button className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-sm font-medium shadow-sm transition-colors">
-                  Save Changes
+                <button onClick={onSave} className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-sm font-medium shadow-sm transition-colors">
+                  {saving ? "Saving..." : "Save Changes"}
                 </button>
               </div>
 
@@ -168,21 +221,38 @@ export default function SettingsPage() {
                     <div className="relative group cursor-pointer w-24 h-24">
                       <div
                         className="h-24 w-24 rounded-full bg-muted overflow-hidden ring-4 ring-background"
-                        style={{ backgroundImage: `url('${session.user.image || ""}')`, backgroundSize: "cover" }}
+                        style={{ backgroundImage: `url('${imageUrl || ""}')`, backgroundSize: "cover" }}
                       />
                       <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <Search className="text-white" size={18} />
                       </div>
                     </div>
+                    <div className="mt-3">
+                      <UploadButton<OurFileRouter, "avatarUploader">
+                        endpoint="avatarUploader"
+                        onClientUploadComplete={res => {
+                          const url = res?.[0]?.url || null
+                          if (url) {
+                            setImageUrl(url)
+                            fetch("/api/user/profile", {
+                              method: "PUT",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({ email, image: url })
+                            }).catch(() => {})
+                          }
+                        }}
+                        onUploadError={() => {}}
+                      />
+                    </div>
                   </div>
                   <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="col-span-1">
                       <label className="block text-sm font-medium mb-1.5">First Name</label>
-                      <input className="w-full px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" type="text" defaultValue={firstName} />
+                      <input className="w-full px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" type="text" value={fname} onChange={e => setFname(e.target.value)} />
                     </div>
                     <div className="col-span-1">
                       <label className="block text-sm font-medium mb-1.5">Last Name</label>
-                      <input className="w-full px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" type="text" defaultValue={lastName} />
+                      <input className="w-full px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" type="text" value={lname} onChange={e => setLname(e.target.value)} />
                     </div>
                     <div className="col-span-1 md:col-span-2">
                       <label className="block text-sm font-medium mb-1.5">Email Address</label>
@@ -190,12 +260,12 @@ export default function SettingsPage() {
                         <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-muted-foreground">
                           <Search size={18} />
                         </span>
-                        <input className="w-full pl-10 px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" type="email" defaultValue={session.user.email || ""} />
+                        <input className="w-full pl-10 px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" type="email" value={email} readOnly />
                       </div>
                     </div>
                     <div className="col-span-1 md:col-span-2">
                       <label className="block text-sm font-medium mb-1.5">Bio</label>
-                      <textarea className="w-full px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" rows={3} defaultValue="Frontend enthusiast, currently mastering React and Tailwind CSS." />
+                      <textarea className="w-full px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" rows={3} value={bio} onChange={e => setBio(e.target.value)} />
                     </div>
                   </div>
                 </div>
@@ -212,7 +282,7 @@ export default function SettingsPage() {
                 <div className="p-6">
                   <label className="block text-sm font-medium mb-4">Interface Theme</label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <button className="flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-muted/40 hover:border-muted bg-muted transition-all">
+                    <button onClick={() => setTheme("light")} className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 ${theme === "light" ? "border-primary bg-primary/5" : "border-muted/40 hover:border-muted bg-muted"} transition-all`}>
                       <div className="h-20 w-full bg-card rounded-lg border border-muted/40 shadow-sm flex flex-col overflow-hidden">
                         <div className="h-3 w-full bg-muted border-b border-muted/40"></div>
                         <div className="flex-1 p-2">
@@ -220,12 +290,14 @@ export default function SettingsPage() {
                           <div className="h-2 w-10 bg-muted rounded"></div>
                         </div>
                       </div>
-                      <span className="text-sm font-medium">Light</span>
+                      <span className={`text-sm font-medium ${theme === "light" ? "text-primary font-bold" : ""}`}>Light</span>
                     </button>
-                    <button className="relative flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-primary bg-primary/5 transition-all">
-                      <div className="absolute top-2 right-2 text-primary">
-                        <CheckCircle className="text-primary" size={18} />
-                      </div>
+                    <button onClick={() => setTheme("system")} className={`relative flex flex-col items-center gap-3 p-4 rounded-xl border-2 ${theme === "system" ? "border-primary bg-primary/5" : "border-muted/40 hover:border-muted bg-muted"} transition-all`}>
+                      {theme === "system" && (
+                        <div className="absolute top-2 right-2 text-primary">
+                          <CheckCircle className="text-primary" size={18} />
+                        </div>
+                      )}
                       <div className="h-20 w-full bg-foreground/90 rounded-lg border border-foreground/50 shadow-sm flex flex-col overflow-hidden">
                         <div className="h-3 w-full bg-foreground/80 border-b border-foreground/60"></div>
                         <div className="flex-1 p-2">
@@ -233,9 +305,9 @@ export default function SettingsPage() {
                           <div className="h-2 w-10 bg-foreground/70 rounded"></div>
                         </div>
                       </div>
-                      <span className="text-sm font-bold text-primary">System</span>
+                      <span className={`text-sm ${theme === "system" ? "font-bold text-primary" : "font-medium"}`}>System</span>
                     </button>
-                    <button className="flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-muted/40 hover:border-muted bg-muted transition-all">
+                    <button onClick={() => setTheme("dark")} className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 ${theme === "dark" ? "border-primary bg-primary/5" : "border-muted/40 hover:border-muted bg-muted"} transition-all`}>
                       <div className="h-20 w-full bg-[#0f172a] rounded-lg border border-muted/40 shadow-sm flex flex-col overflow-hidden">
                         <div className="h-3 w-full bg-muted border-b border-muted/40"></div>
                         <div className="flex-1 p-2">
@@ -243,7 +315,7 @@ export default function SettingsPage() {
                           <div className="h-2 w-10 bg-muted rounded"></div>
                         </div>
                       </div>
-                      <span className="text-sm font-medium">Dark</span>
+                      <span className={`text-sm font-medium ${theme === "dark" ? "text-primary font-bold" : ""}`}>Dark</span>
                     </button>
                   </div>
                 </div>

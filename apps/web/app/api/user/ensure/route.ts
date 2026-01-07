@@ -8,16 +8,16 @@ export async function POST(req: Request) {
     if (!id || !email) {
       return NextResponse.json({ ok: false, error: "missing id or email" }, { status: 400 })
     }
+    const normEmail = String(email).trim().toLowerCase()
     await prisma.user.upsert({
-      where: { id },
+      where: { email: normEmail },
       update: {
-        email,
         name: name || null,
         image: image || null
       },
       create: {
         id,
-        email,
+        email: normEmail,
         name: name || null,
         image: image || null
       }

@@ -50,7 +50,7 @@ export default function HelpPage() {
             <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground">
               <Code2 size={18} />
             </div>
-            <h1 className="text-lg font-bold tracking-tight">Code Coach</h1>
+            <h1 className="text-lg font-bold tracking-tight">FlowPilot</h1>
           </div>
           <nav className="flex-1 flex flex-col px-4 gap-1 overflow-y-auto">
             <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/dashboard">
@@ -143,7 +143,7 @@ export default function HelpPage() {
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
                   <h1 className="text-2xl font-bold tracking-tight">Help Center & Feedback</h1>
-                  <p className="text-muted-foreground mt-1">Find answers, get support, and help us improve Code Coach.</p>
+                  <p className="text-muted-foreground mt-1">Find answers, get support, and help us improve FlowPilot.</p>
                 </div>
                 <div className="flex gap-3">
                   <button className="flex items-center gap-2 px-4 py-2 bg-card border border-muted/40 hover:bg-muted text-foreground rounded-lg text-sm font-medium transition-colors">
@@ -202,18 +202,18 @@ export default function HelpPage() {
                     <div>
                       <details className="group p-5 border-b border-muted/30 cursor-pointer">
                         <summary className="flex justify-between items-center font-medium list-none">
-                          <span>How does Code Coach analyze my code?</span>
+                          <span>How does FlowPilot analyze my code?</span>
                           <span className="transition-transform duration-300 group-open:rotate-180">
                             <ExternalLink className="text-muted-foreground" size={16} />
                           </span>
                         </summary>
                         <div className="text-muted-foreground mt-3 text-sm leading-relaxed pr-8">
-                          Code Coach runs locally for static analysis. Some snippets may be sent securely for AI insights and are not stored.
+                          FlowPilot runs locally for static analysis. Some snippets may be sent securely for AI insights and are not stored.
                         </div>
                       </details>
                       <details className="group p-5 border-b border-muted/30 cursor-pointer">
                         <summary className="flex justify-between items-center font-medium list-none">
-                          <span>Can I use Code Coach offline?</span>
+                          <span>Can I use FlowPilot offline?</span>
                           <span className="transition-transform duration-300 group-open:rotate-180">
                             <ExternalLink className="text-muted-foreground" size={16} />
                           </span>
@@ -300,7 +300,7 @@ export default function HelpPage() {
                         </button>
                       </div>
                       <p className="text-xs text-center text-muted-foreground mt-4">
-                        By submitting, you agree to share your feedback with the Code Coach team.
+                        By submitting, you agree to share your feedback with the FlowPilot team.
                       </p>
                     </div>
                   </section>

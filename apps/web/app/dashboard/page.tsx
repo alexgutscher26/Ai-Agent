@@ -62,7 +62,7 @@ export default function DashboardPage() {
             <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground">
               <Code2 size={18} />
             </div>
-            <h1 className="text-lg font-bold tracking-tight">Code Coach</h1>
+            <h1 className="text-lg font-bold tracking-tight">FlowPilot</h1>
           </div>
           <nav className="flex-1 flex flex-col px-4 gap-1 overflow-y-auto">
             <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium" href="#">
@@ -387,7 +387,7 @@ export default function DashboardPage() {
                 </button>
               </div>
               <footer className="text-center text-xs text-muted-foreground pb-4">
-                <p>© 2023 Code Coach Inc. All rights reserved.</p>
+                <p>© 2023 FlowPilot Inc. All rights reserved.</p>
               </footer>
             </div>
           </div>
