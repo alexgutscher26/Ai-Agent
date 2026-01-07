@@ -21,7 +21,7 @@ export default function LoginPage() {
           await authClient.signIn.email({
             email: normEmail,
             password,
-            callbackURL: "/dashboard"
+            callbackURL: "/dashboard",
           })
         } catch (err: any) {
           const msg = err?.message || ""
@@ -36,7 +36,7 @@ export default function LoginPage() {
                 email: normEmail,
                 password,
                 name: normEmail.split("@")[0],
-                callbackURL: "/dashboard"
+                callbackURL: "/dashboard",
               })
             } catch (signupErr: any) {
               setError(signupErr?.message || "Unable to create account")
@@ -50,7 +50,7 @@ export default function LoginPage() {
           email: normEmail,
           password,
           name: normEmail.split("@")[0],
-          callbackURL: "/dashboard"
+          callbackURL: "/dashboard",
         })
       }
     } finally {
@@ -62,10 +62,20 @@ export default function LoginPage() {
       <h1 className="text-2xl font-bold mb-6">Sign in</h1>
       {error && <div className="mb-4 text-sm text-red-600">{error}</div>}
       <div className="flex flex-col gap-3 mb-6">
-        <Button onClick={() => authClient.signIn.social({ provider: "github", callbackURL: "/dashboard" })} className="w-full h-11">
+        <Button
+          onClick={() =>
+            authClient.signIn.social({ provider: "github", callbackURL: "/dashboard" })
+          }
+          className="w-full h-11"
+        >
           <Github className="mr-2 h-4 w-4" /> Continue with GitHub
         </Button>
-        <Button onClick={() => authClient.signIn.social({ provider: "google", callbackURL: "/dashboard" })} className="w-full h-11">
+        <Button
+          onClick={() =>
+            authClient.signIn.social({ provider: "google", callbackURL: "/dashboard" })
+          }
+          className="w-full h-11"
+        >
           <Chrome className="mr-2 h-4 w-4" /> Continue with Google
         </Button>
       </div>
@@ -76,7 +86,7 @@ export default function LoginPage() {
             type="email"
             placeholder="Email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             className="flex-1 rounded-md border bg-background px-3 py-2 text-sm"
             required
           />
@@ -87,19 +97,29 @@ export default function LoginPage() {
             type="password"
             placeholder="Password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             className="flex-1 rounded-md border bg-background px-3 py-2 text-sm"
             required
           />
         </div>
         <Button type="submit" className="w-full h-11" disabled={loading}>
-          {loading ? (mode === "signin" ? "Signing in..." : "Creating account...") : (mode === "signin" ? "Sign in with Email" : "Create account")}
+          {loading
+            ? mode === "signin"
+              ? "Signing in..."
+              : "Creating account..."
+            : mode === "signin"
+              ? "Sign in with Email"
+              : "Create account"}
         </Button>
         <div className="text-xs text-muted-foreground text-center">
           {mode === "signin" ? (
-            <button type="button" className="underline" onClick={() => setMode("signup")}>Create account</button>
+            <button type="button" className="underline" onClick={() => setMode("signup")}>
+              Create account
+            </button>
           ) : (
-            <button type="button" className="underline" onClick={() => setMode("signin")}>Have an account? Sign in</button>
+            <button type="button" className="underline" onClick={() => setMode("signin")}>
+              Have an account? Sign in
+            </button>
           )}
         </div>
       </form>

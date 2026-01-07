@@ -1,5 +1,14 @@
 import { Button } from "@/components/ui/button"
-import { Check, ArrowRight, Cog, MapPin, Type, Globe, ExternalLink, ChevronDown } from "lucide-react"
+import {
+  Check,
+  ArrowRight,
+  Cog,
+  MapPin,
+  Type,
+  Globe,
+  ExternalLink,
+  ChevronDown,
+} from "lucide-react"
 
 function Nav() {
   return (
@@ -9,11 +18,19 @@ function Nav() {
           <span className="text-lg font-semibold">FlowPilot</span>
         </div>
         <div className="hidden items-center gap-8 md:flex">
-          <a className="text-sm text-muted-foreground hover:text-foreground" href="#features">Features</a>
-          <a className="text-sm text-muted-foreground hover:text-foreground" href="#how">How it works</a>
-          <a className="text-sm text-muted-foreground hover:text-foreground" href="#pricing">Pricing</a>
+          <a className="text-sm text-muted-foreground hover:text-foreground" href="#features">
+            Features
+          </a>
+          <a className="text-sm text-muted-foreground hover:text-foreground" href="#how">
+            How it works
+          </a>
+          <a className="text-sm text-muted-foreground hover:text-foreground" href="#pricing">
+            Pricing
+          </a>
         </div>
-        <Button asChild><a href="/login">Sign in</a></Button>
+        <Button asChild>
+          <a href="/login">Sign in</a>
+        </Button>
       </div>
     </div>
   )
@@ -34,7 +51,8 @@ function Hero() {
             </span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
-            Stop getting stuck on tutorials. Get instant feedback, refactoring tips, and mentorship directly in your IDE while you code.
+            Stop getting stuck on tutorials. Get instant feedback, refactoring tips, and mentorship
+            directly in your IDE while you code.
           </p>
           <div className="mx-auto mt-8 flex max-w-xl items-center justify-between rounded-xl border bg-card p-2 shadow-sm">
             <input
@@ -63,17 +81,32 @@ function Hero() {
             <div className="absolute inset-0 top-8 flex">
               <div className="w-16 h-full border-r border-gray-700 bg-[#1e293b] hidden sm:block"></div>
               <div className="flex-1 p-8 font-mono text-sm text-blue-300 opacity-80 leading-loose">
-                {"import "} <span className="text-purple-400">React</span> {" from "} <span className="text-green-400">'react'</span>;<br />
+                {"import "} <span className="text-purple-400">React</span> {" from "}{" "}
+                <span className="text-green-400">'react'</span>;<br />
                 <br />
-                <span className="text-purple-400">const</span> <span className="text-yellow-300">App</span> {" = () => {"}<br />
-                &nbsp;&nbsp;<span className="text-gray-400">// FlowPilot Suggestion: Consider memoizing this value</span><br />
-                &nbsp;&nbsp;<span className="text-purple-400">const</span> <span className="text-blue-200">value</span> {" = "}{"expensiveCalculation();"}<br />
-                &nbsp;&nbsp;{"return "} <span className="text-blue-200">&lt;div&gt;</span>{"Hello World"}<span className="text-blue-200">&lt;/div&gt;</span>;<br />
+                <span className="text-purple-400">const</span>{" "}
+                <span className="text-yellow-300">App</span> {" = () => {"}
+                <br />
+                &nbsp;&nbsp;
+                <span className="text-gray-400">
+                  // FlowPilot Suggestion: Consider memoizing this value
+                </span>
+                <br />
+                &nbsp;&nbsp;<span className="text-purple-400">const</span>{" "}
+                <span className="text-blue-200">value</span> {" = "}
+                {"expensiveCalculation();"}
+                <br />
+                &nbsp;&nbsp;{"return "} <span className="text-blue-200">&lt;div&gt;</span>
+                {"Hello World"}
+                <span className="text-blue-200">&lt;/div&gt;</span>;<br />
                 {"}"}
               </div>
               <div className="w-80 h-full border-l border-gray-700 bg-[#1e293b] p-4 hidden md:flex flex-col gap-4">
                 <div className="bg-blue-900/20 border border-blue-500/30 p-3 rounded text-xs text-blue-200">
-                  <strong>FlowPilot:</strong> {"You're re-calculating `value` on every render. Use `useMemo` here to improve performance."}
+                  <strong>FlowPilot:</strong>{" "}
+                  {
+                    "You're re-calculating `value` on every render. Use `useMemo` here to improve performance."
+                  }
                 </div>
                 <div className="h-2 w-3/4 bg-gray-700 rounded opacity-20"></div>
                 <div className="h-2 w-1/2 bg-gray-700 rounded opacity-20"></div>
@@ -95,9 +128,12 @@ function FeatureBlocks() {
             <div className="h-12 w-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary mb-2">
               <Cog className="h-6 w-6" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight">Catch bad habits before they stick.</h2>
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+              Catch bad habits before they stick.
+            </h2>
             <p className="text-lg leading-relaxed text-muted-foreground">
-              Don't wait for a code review that might never come. FlowPilot analyzes your syntax and patterns in real-time, nudging you towards industry best practices as you type.
+              Don't wait for a code review that might never come. FlowPilot analyzes your syntax and
+              patterns in real-time, nudging you towards industry best practices as you type.
             </p>
             <ul className="flex flex-col gap-3 mt-2">
               <li className="flex items-center gap-3">
@@ -120,7 +156,9 @@ function FeatureBlocks() {
                   <div className="absolute inset-x-8 top-12 h-4 bg-red-400/20 rounded"></div>
                   <div className="bg-white dark:bg-gray-800 p-4 rounded shadow-lg absolute right-12 top-20 w-48 text-xs z-10">
                     <div className="font-bold text-red-500 mb-1">Warning</div>
-                    <div className="text-gray-600 dark:text-gray-300">Possible infinite loop detected in this block.</div>
+                    <div className="text-gray-600 dark:text-gray-300">
+                      Possible infinite loop detected in this block.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -133,12 +171,16 @@ function FeatureBlocks() {
             <div className="h-12 w-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 mb-2">
               <MapPin className="h-6 w-6" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight">Understand the 'Why', not just the 'How'.</h2>
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+              Understand the 'Why', not just the 'How'.
+            </h2>
             <p className="text-lg leading-relaxed text-muted-foreground">
-              Copy‑pasting from Stack Overflow teaches you nothing. Highlight any block of code to get a plain‑English explanation of what it does and why it works that way.
+              Copy‑pasting from Stack Overflow teaches you nothing. Highlight any block of code to
+              get a plain‑English explanation of what it does and why it works that way.
             </p>
             <button className="text-primary font-bold flex items-center gap-2 hover:gap-3 transition-all mt-2 group">
-              See explainer demo <ArrowRight className="text-sm group-hover:translate-x-1 transition-transform h-4 w-4" />
+              See explainer demo{" "}
+              <ArrowRight className="text-sm group-hover:translate-x-1 transition-transform h-4 w-4" />
             </button>
           </div>
           <div className="w-full md:w-1/2">
@@ -166,9 +208,12 @@ function FeatureBlocks() {
             <div className="h-12 w-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 mb-2">
               <Type className="h-6 w-6" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight">Refactor like a Senior Engineer.</h2>
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+              Refactor like a Senior Engineer.
+            </h2>
             <p className="text-lg leading-relaxed text-muted-foreground">
-              Identify "code smells" instantly. FlowPilot suggests cleaner, more efficient ways to write your functions, helping you learn design patterns naturally.
+              Identify "code smells" instantly. FlowPilot suggests cleaner, more efficient ways to
+              write your functions, helping you learn design patterns naturally.
             </p>
           </div>
           <div className="w-full md:w-1/2">
@@ -201,7 +246,9 @@ function HowItWorks() {
       <div className="mx-auto max-w-7xl px-4 md:px-10">
         <div className="text-center mb-16 max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">How FlowPilot works</h2>
-          <p className="text-muted-foreground">Get setup in less than 2 minutes. No complicated configuration required.</p>
+          <p className="text-muted-foreground">
+            Get setup in less than 2 minutes. No complicated configuration required.
+          </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8 relative">
           <div className="hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-gray-200 via-primary/30 to-gray-200 dark:from-gray-700 dark:to-gray-700 z-0"></div>
@@ -211,7 +258,8 @@ function HowItWorks() {
             </div>
             <h3 className="text-xl font-bold mt-2">Install Extension</h3>
             <p className="text-sm leading-relaxed px-4 text-muted-foreground">
-              Find "FlowPilot" in the VS Code marketplace and click install. It's lightweight and fast.
+              Find "FlowPilot" in the VS Code marketplace and click install. It's lightweight and
+              fast.
             </p>
           </div>
           <div className="relative z-10 flex flex-col items-center text-center gap-4">
@@ -229,7 +277,8 @@ function HowItWorks() {
             </div>
             <h3 className="text-xl font-bold mt-2">Start Coding</h3>
             <p className="text-sm leading-relaxed px-4 text-muted-foreground">
-              Open any file. The coach will immediately start analyzing your context and offering help.
+              Open any file. The coach will immediately start analyzing your context and offering
+              help.
             </p>
           </div>
         </div>
@@ -254,7 +303,9 @@ function Pricing() {
                 <span className="text-4xl font-bold">$0</span>
                 <span className="text-muted-foreground">/ forever</span>
               </div>
-              <p className="mt-4 text-sm text-muted-foreground">Perfect for beginners just starting their journey.</p>
+              <p className="mt-4 text-sm text-muted-foreground">
+                Perfect for beginners just starting their journey.
+              </p>
             </div>
             <ul className="flex flex-col gap-4 mb-8 flex-1">
               <li className="flex items-center gap-3 text-sm">
@@ -285,7 +336,9 @@ function Pricing() {
                 <span className="text-4xl font-bold">$9</span>
                 <span className="text-muted-foreground">/ month</span>
               </div>
-              <p className="mt-4 text-sm text-muted-foreground">For serious learners who want to grow faster.</p>
+              <p className="mt-4 text-sm text-muted-foreground">
+                For serious learners who want to grow faster.
+              </p>
             </div>
             <ul className="flex flex-col gap-4 mb-8 flex-1">
               <li className="flex items-center gap-3 text-sm">
@@ -319,7 +372,9 @@ function FAQ() {
   return (
     <section className="py-20">
       <div className="mx-auto max-w-3xl px-4 md:px-10">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">Frequently Asked Questions</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">
+          Frequently Asked Questions
+        </h2>
         <div className="flex flex-col gap-4">
           <details className="group bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
             <summary className="flex items-center justify-between p-5 cursor-pointer list-none font-semibold">
@@ -327,7 +382,10 @@ function FAQ() {
               <ChevronDown className="h-5 w-5 transition-transform duration-300 group-open:rotate-180" />
             </summary>
             <div className="px-5 pb-5 leading-relaxed text-sm text-muted-foreground">
-              No, and it's not trying to. FlowPilot is designed to unblock you instantly when a human mentor isn't available (like at 2 AM). It handles the "how" and "what", so you can spend your valuable mentor time discussing high-level architecture and career advice.
+              No, and it's not trying to. FlowPilot is designed to unblock you instantly when a
+              human mentor isn't available (like at 2 AM). It handles the "how" and "what", so you
+              can spend your valuable mentor time discussing high-level architecture and career
+              advice.
             </div>
           </details>
           <details className="group bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
@@ -336,7 +394,8 @@ function FAQ() {
               <ChevronDown className="h-5 w-5 transition-transform duration-300 group-open:rotate-180" />
             </summary>
             <div className="px-5 pb-5 leading-relaxed text-sm text-muted-foreground">
-              Currently, we are optimized for JavaScript, TypeScript, Python, and React. We are actively working on adding support for Java, Go, and Ruby in the coming months.
+              Currently, we are optimized for JavaScript, TypeScript, Python, and React. We are
+              actively working on adding support for Java, Go, and Ruby in the coming months.
             </div>
           </details>
           <details className="group bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden transition-all duration-300">
@@ -345,7 +404,8 @@ function FAQ() {
               <ChevronDown className="h-5 w-5 transition-transform duration-300 group-open:rotate-180" />
             </summary>
             <div className="px-5 pb-5 leading-relaxed text-sm text-muted-foreground">
-              Absolutely. We process snippets locally where possible, and any code sent to the cloud for analysis is encrypted in transit and never stored permanently on our servers.
+              Absolutely. We process snippets locally where possible, and any code sent to the cloud
+              for analysis is encrypted in transit and never stored permanently on our servers.
             </div>
           </details>
         </div>
@@ -366,11 +426,15 @@ function BuildingInPublic() {
             </div>
             <h3 className="text-2xl font-bold">We're indie devs solving our own problem.</h3>
             <p className="text-muted-foreground">
-              FlowPilot was born because we couldn't afford mentorship when we were learning. We share our revenue numbers, roadmap, and challenges openly.
+              FlowPilot was born because we couldn't afford mentorship when we were learning. We
+              share our revenue numbers, roadmap, and challenges openly.
             </p>
           </div>
           <div className="shrink-0">
-            <a className="inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium transition-colors" href="#">
+            <a
+              className="inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              href="#"
+            >
               <span>Follow on X</span>
               <ExternalLink className="h-4 w-4" />
             </a>
@@ -411,10 +475,18 @@ export default function Page() {
           <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t text-sm text-muted-foreground">
             <p>© 2026 FlowPilot. All rights reserved.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
-              <a className="hover:text-primary transition-colors" href="#">Privacy</a>
-              <a className="hover:text-primary transition-colors" href="#">Terms</a>
-              <a className="hover:text-primary transition-colors" href="#">Twitter</a>
-              <a className="hover:text-primary transition-colors" href="#">GitHub</a>
+              <a className="hover:text-primary transition-colors" href="#">
+                Privacy
+              </a>
+              <a className="hover:text-primary transition-colors" href="#">
+                Terms
+              </a>
+              <a className="hover:text-primary transition-colors" href="#">
+                Twitter
+              </a>
+              <a className="hover:text-primary transition-colors" href="#">
+                GitHub
+              </a>
             </div>
           </div>
         </div>

@@ -22,7 +22,7 @@ import {
   Send,
   Users,
   Map as MapIcon,
-  LifeBuoy
+  LifeBuoy,
 } from "lucide-react"
 
 export default function HelpPage() {
@@ -53,28 +53,46 @@ export default function HelpPage() {
             <h1 className="text-lg font-bold tracking-tight">FlowPilot</h1>
           </div>
           <nav className="flex-1 flex flex-col px-4 gap-1 overflow-y-auto">
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/dashboard">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/dashboard"
+            >
               <LayoutDashboard size={18} />
               <span>Dashboard</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/sessions">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/sessions"
+            >
               <History size={18} />
               <span>My Sessions</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/skills">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/skills"
+            >
               <BarChart3 size={18} />
               <span>Skills</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/roadmap">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/roadmap"
+            >
               <Map size={18} />
               <span>Roadmap</span>
             </Link>
             <div className="my-4 border-t border-muted/40" />
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/settings">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/settings"
+            >
               <Settings size={18} />
               <span>Settings</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium transition-colors" href="/help">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium transition-colors"
+              href="/help"
+            >
               <HelpCircle size={18} />
               <span>Help & Feedback</span>
             </Link>
@@ -83,7 +101,9 @@ export default function HelpPage() {
             <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl p-4 text-white relative overflow-hidden">
               <div className="relative z-10">
                 <p className="font-bold text-sm mb-1">Go Pro</p>
-                <p className="text-xs text-indigo-100 mb-3">Unlock advanced analytics and AI insights.</p>
+                <p className="text-xs text-indigo-100 mb-3">
+                  Unlock advanced analytics and AI insights.
+                </p>
                 <button className="bg-white/20 hover:bg-white/30 text-white text-xs font-semibold py-1.5 px-3 rounded transition-colors">
                   Upgrade
                 </button>
@@ -99,7 +119,9 @@ export default function HelpPage() {
             </button>
             <div className="flex items-center gap-6 flex-1">
               <nav className="hidden md:flex text-sm font-medium text-muted-foreground">
-                <a className="hover:text-primary transition-colors" href="#">Home</a>
+                <a className="hover:text-primary transition-colors" href="#">
+                  Home
+                </a>
                 <span className="mx-2">/</span>
                 <span>Help & Feedback</span>
               </nav>
@@ -126,7 +148,10 @@ export default function HelpPage() {
                 </div>
                 <div
                   className="h-10 w-10 rounded-full bg-muted overflow-hidden ring-2 ring-background cursor-pointer"
-                  style={{ backgroundImage: `url('${session.user.image || ""}')`, backgroundSize: "cover" }}
+                  style={{
+                    backgroundImage: `url('${session.user.image || ""}')`,
+                    backgroundSize: "cover",
+                  }}
                 />
                 <button
                   className="text-xs font-semibold px-3 py-1.5 rounded bg-muted hover:bg-muted/70"
@@ -143,7 +168,9 @@ export default function HelpPage() {
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
                   <h1 className="text-2xl font-bold tracking-tight">Help Center & Feedback</h1>
-                  <p className="text-muted-foreground mt-1">Find answers, get support, and help us improve FlowPilot.</p>
+                  <p className="text-muted-foreground mt-1">
+                    Find answers, get support, and help us improve FlowPilot.
+                  </p>
                 </div>
                 <div className="flex gap-3">
                   <button className="flex items-center gap-2 px-4 py-2 bg-card border border-muted/40 hover:bg-muted text-foreground rounded-lg text-sm font-medium transition-colors">
@@ -158,32 +185,47 @@ export default function HelpPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <a className="group flex flex-col p-6 bg-card rounded-xl border border-muted/40 hover:border-primary/50 transition-all shadow-sm" href="#">
+                <a
+                  className="group flex flex-col p-6 bg-card rounded-xl border border-muted/40 hover:border-primary/50 transition-all shadow-sm"
+                  href="#"
+                >
                   <div className="h-10 w-10 rounded-lg bg-blue-100 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <BookOpen />
                   </div>
                   <h3 className="text-base font-semibold mb-2">Documentation</h3>
-                  <p className="text-sm text-muted-foreground mb-4 flex-1">Explore detailed guides, API references, and configuration options.</p>
+                  <p className="text-sm text-muted-foreground mb-4 flex-1">
+                    Explore detailed guides, API references, and configuration options.
+                  </p>
                   <span className="text-sm font-medium text-primary flex items-center gap-1">
                     Read Docs <ExternalLink size={16} />
                   </span>
                 </a>
-                <a className="group flex flex-col p-6 bg-card rounded-xl border border-muted/40 hover:border-purple-500/50 transition-all shadow-sm" href="#">
+                <a
+                  className="group flex flex-col p-6 bg-card rounded-xl border border-muted/40 hover:border-purple-500/50 transition-all shadow-sm"
+                  href="#"
+                >
                   <div className="h-10 w-10 rounded-lg bg-purple-100 dark:bg-purple-900/20 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <Users />
                   </div>
                   <h3 className="text-base font-semibold mb-2">Community</h3>
-                  <p className="text-sm text-muted-foreground mb-4 flex-1">Join our Discord server to chat with other developers and the team.</p>
+                  <p className="text-sm text-muted-foreground mb-4 flex-1">
+                    Join our Discord server to chat with other developers and the team.
+                  </p>
                   <span className="text-sm font-medium text-purple-600 flex items-center gap-1">
                     Join Discord <ExternalLink size={16} />
                   </span>
                 </a>
-                <a className="group flex flex-col p-6 bg-card rounded-xl border border-muted/40 hover:border-green-500/50 transition-all shadow-sm" href="#">
+                <a
+                  className="group flex flex-col p-6 bg-card rounded-xl border border-muted/40 hover:border-green-500/50 transition-all shadow-sm"
+                  href="#"
+                >
                   <div className="h-10 w-10 rounded-lg bg-green-100 dark:bg-green-900/20 text-green-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <MapIcon />
                   </div>
                   <h3 className="text-base font-semibold mb-2">Public Roadmap</h3>
-                  <p className="text-sm text-muted-foreground mb-4 flex-1">See what we're working on and vote for the features you want next.</p>
+                  <p className="text-sm text-muted-foreground mb-4 flex-1">
+                    See what we're working on and vote for the features you want next.
+                  </p>
                   <span className="text-sm font-medium text-green-600 flex items-center gap-1">
                     View Roadmap <ExternalLink size={16} />
                   </span>
@@ -208,7 +250,8 @@ export default function HelpPage() {
                           </span>
                         </summary>
                         <div className="text-muted-foreground mt-3 text-sm leading-relaxed pr-8">
-                          FlowPilot runs locally for static analysis. Some snippets may be sent securely for AI insights and are not stored.
+                          FlowPilot runs locally for static analysis. Some snippets may be sent
+                          securely for AI insights and are not stored.
                         </div>
                       </details>
                       <details className="group p-5 border-b border-muted/30 cursor-pointer">
@@ -219,7 +262,8 @@ export default function HelpPage() {
                           </span>
                         </summary>
                         <div className="text-muted-foreground mt-3 text-sm leading-relaxed pr-8">
-                          Basic linting works offline; AI coaching and roadmap features require internet connectivity.
+                          Basic linting works offline; AI coaching and roadmap features require
+                          internet connectivity.
                         </div>
                       </details>
                       <details className="group p-5 border-b border-muted/30 cursor-pointer">
@@ -230,7 +274,8 @@ export default function HelpPage() {
                           </span>
                         </summary>
                         <div className="text-muted-foreground mt-3 text-sm leading-relaxed pr-8">
-                          Full support: JS/TS/Python/Java. Beta: Go/Rust/C# with more coming based on votes.
+                          Full support: JS/TS/Python/Java. Beta: Go/Rust/C# with more coming based
+                          on votes.
                         </div>
                       </details>
                       <details className="group p-5 cursor-pointer">
@@ -248,13 +293,18 @@ export default function HelpPage() {
                   </section>
 
                   <div className="bg-blue-50 dark:bg-blue-900/10 rounded-xl p-6 border border-blue-100 dark:border-blue-900/30 flex items-start gap-4">
-                  <div className="bg-blue-100 dark:bg-blue-900/40 p-2 rounded-lg text-blue-600 dark:text-blue-400 flex-shrink-0">
+                    <div className="bg-blue-100 dark:bg-blue-900/40 p-2 rounded-lg text-blue-600 dark:text-blue-400 flex-shrink-0">
                       <LifeBuoy />
                     </div>
                     <div>
                       <h4 className="font-semibold">Still need help?</h4>
-                      <p className="text-sm text-muted-foreground mt-1 mb-3">Our support team is available Mon–Fri to assist you.</p>
-                      <a className="text-sm font-medium text-primary hover:text-primary/80 transition-colors" href="mailto:support@codecoach.dev">
+                      <p className="text-sm text-muted-foreground mt-1 mb-3">
+                        Our support team is available Mon–Fri to assist you.
+                      </p>
+                      <a
+                        className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                        href="mailto:support@codecoach.dev"
+                      >
                         Contact Support →
                       </a>
                     </div>
@@ -268,7 +318,9 @@ export default function HelpPage() {
                         <Mail className="text-muted-foreground" size={18} />
                         <h2 className="text-lg font-semibold">Send Feedback</h2>
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">Found a bug or have a feature request?</p>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Found a bug or have a feature request?
+                      </p>
                     </div>
                     <div className="p-6 space-y-4">
                       <div>
@@ -287,11 +339,19 @@ export default function HelpPage() {
                       </div>
                       <div>
                         <label className="block text-sm font-medium mb-1.5">Subject</label>
-                        <input className="w-full px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder-muted-foreground sm:text-sm" placeholder="Brief summary of your feedback" type="text" />
+                        <input
+                          className="w-full px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder-muted-foreground sm:text-sm"
+                          placeholder="Brief summary of your feedback"
+                          type="text"
+                        />
                       </div>
                       <div>
                         <label className="block text-sm font-medium mb-1.5">Message</label>
-                        <textarea className="w-full px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder-muted-foreground sm:text-sm" placeholder="Describe your issue or idea in detail..." rows={4} />
+                        <textarea
+                          className="w-full px-3 py-2 border border-muted/40 rounded-lg bg-card text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder-muted-foreground sm:text-sm"
+                          placeholder="Describe your issue or idea in detail..."
+                          rows={4}
+                        />
                       </div>
                       <div className="pt-2">
                         <button className="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-sm font-medium shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">

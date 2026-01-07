@@ -40,4 +40,3 @@ export default function ThemeClient() {
   }, [])
   return null
 }
-

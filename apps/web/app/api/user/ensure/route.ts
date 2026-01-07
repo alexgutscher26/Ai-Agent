@@ -13,14 +13,14 @@ export async function POST(req: Request) {
       where: { email: normEmail },
       update: {
         name: name || null,
-        image: image || null
+        image: image || null,
       },
       create: {
         id,
         email: normEmail,
         name: name || null,
-        image: image || null
-      }
+        image: image || null,
+      },
     })
     return NextResponse.json({ ok: true })
   } catch (e: any) {

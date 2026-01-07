@@ -21,7 +21,7 @@ import {
   Star,
   Code2,
   Sparkles,
-  Database
+  Database,
 } from "lucide-react"
 
 export default function SkillsPage() {
@@ -48,28 +48,46 @@ export default function SkillsPage() {
             <h1 className="text-lg font-bold tracking-tight">FlowPilot</h1>
           </div>
           <nav className="flex-1 flex flex-col px-4 gap-1 overflow-y-auto">
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/dashboard">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/dashboard"
+            >
               <LayoutDashboard size={18} />
               <span>Dashboard</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/sessions">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/sessions"
+            >
               <History size={18} />
               <span>My Sessions</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium" href="/skills">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium"
+              href="/skills"
+            >
               <BarChart3 size={18} />
               <span>Skills</span>
             </Link>
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="#">
+            <a
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="#"
+            >
               <Map size={18} />
               <span>Roadmap</span>
             </a>
             <div className="my-4 border-t border-muted/40" />
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="#">
+            <a
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="#"
+            >
               <Settings size={18} />
               <span>Settings</span>
             </a>
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="#">
+            <a
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="#"
+            >
               <HelpCircle size={18} />
               <span>Help & Feedback</span>
             </a>
@@ -78,7 +96,9 @@ export default function SkillsPage() {
             <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl p-4 text-white relative overflow-hidden">
               <div className="relative z-10">
                 <p className="font-bold text-sm mb-1">Go Pro</p>
-                <p className="text-xs text-indigo-100 mb-3">Unlock advanced analytics and AI insights.</p>
+                <p className="text-xs text-indigo-100 mb-3">
+                  Unlock advanced analytics and AI insights.
+                </p>
                 <button className="bg-white/20 hover:bg-white/30 text-white text-xs font-semibold py-1.5 px-3 rounded transition-colors">
                   Upgrade
                 </button>
@@ -96,7 +116,9 @@ export default function SkillsPage() {
             </button>
             <div className="flex items-center gap-6 flex-1">
               <nav className="hidden md:flex text-sm font-medium text-muted-foreground">
-                <a className="hover:text-primary transition-colors" href="#">Home</a>
+                <a className="hover:text-primary transition-colors" href="#">
+                  Home
+                </a>
                 <span className="mx-2">/</span>
                 <span>Skills</span>
               </nav>
@@ -123,7 +145,10 @@ export default function SkillsPage() {
                 </div>
                 <div
                   className="h-10 w-10 rounded-full bg-muted overflow-hidden ring-2 ring-background cursor-pointer"
-                  style={{ backgroundImage: `url('${session.user.image || ""}')`, backgroundSize: "cover" }}
+                  style={{
+                    backgroundImage: `url('${session.user.image || ""}')`,
+                    backgroundSize: "cover",
+                  }}
                 />
                 <button
                   className="text-xs font-semibold px-3 py-1.5 rounded bg-muted hover:bg-muted/70"
@@ -139,7 +164,9 @@ export default function SkillsPage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h1 className="text-2xl font-bold tracking-tight">Skills & Mastery</h1>
-                  <p className="text-muted-foreground mt-1">Visualize your knowledge growth and active learning patterns.</p>
+                  <p className="text-muted-foreground mt-1">
+                    Visualize your knowledge growth and active learning patterns.
+                  </p>
                 </div>
                 <div className="flex gap-3">
                   <button className="inline-flex items-center gap-2 px-4 py-2 bg-card border border-muted/40 rounded-lg text-sm font-medium hover:bg-muted transition-colors">
@@ -160,7 +187,9 @@ export default function SkillsPage() {
                         <TrendingUp className="text-primary" />
                         Learning Momentum
                       </h3>
-                      <p className="text-xs text-muted-foreground mt-1">14 active days in the last 30 days</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        14 active days in the last 30 days
+                      </p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="flex h-2 w-2 rounded-full bg-muted" />
@@ -198,7 +227,7 @@ export default function SkillsPage() {
                       "placeholder",
                       "placeholder",
                       "placeholder",
-                      "placeholder"
+                      "placeholder",
                     ].map((cls, i) => {
                       const today = i === 18
                       if (cls === "placeholder") {
@@ -245,7 +274,8 @@ export default function SkillsPage() {
                       <h3 className="font-bold text-lg">Recommended Focus</h3>
                     </div>
                     <p className="text-indigo-100 text-sm mb-6 leading-relaxed">
-                      We've noticed you're looking up <strong>React Hooks</strong> frequently. Solidify your knowledge with a quick review.
+                      We've noticed you're looking up <strong>React Hooks</strong> frequently.
+                      Solidify your knowledge with a quick review.
                     </p>
                     <div className="space-y-3">
                       <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex items-start gap-3 border border-white/10 hover:bg-white/20 transition-colors cursor-pointer">
@@ -295,8 +325,12 @@ export default function SkillsPage() {
                       High Confidence
                     </span>
                   </div>
-                  <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">TypeScript</h3>
-                  <p className="text-xs text-muted-foreground mb-4">42 explanations • 15 sessions</p>
+                  <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">
+                    TypeScript
+                  </h3>
+                  <p className="text-xs text-muted-foreground mb-4">
+                    42 explanations • 15 sessions
+                  </p>
                   <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden">
                     <div className="bg-primary h-full rounded-full" style={{ width: "85%" }} />
                   </div>
@@ -314,7 +348,9 @@ export default function SkillsPage() {
                       Learning
                     </span>
                   </div>
-                  <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">React</h3>
+                  <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">
+                    React
+                  </h3>
                   <p className="text-xs text-muted-foreground mb-4">28 explanations • 8 sessions</p>
                   <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden">
                     <div className="bg-yellow-500 h-full rounded-full" style={{ width: "45%" }} />
@@ -333,8 +369,12 @@ export default function SkillsPage() {
                       High Confidence
                     </span>
                   </div>
-                  <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">Python</h3>
-                  <p className="text-xs text-muted-foreground mb-4">35 explanations • 12 sessions</p>
+                  <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">
+                    Python
+                  </h3>
+                  <p className="text-xs text-muted-foreground mb-4">
+                    35 explanations • 12 sessions
+                  </p>
                   <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden">
                     <div className="bg-primary h-full rounded-full" style={{ width: "78%" }} />
                   </div>
@@ -352,7 +392,9 @@ export default function SkillsPage() {
                       Needs Practice
                     </span>
                   </div>
-                  <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">Java</h3>
+                  <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">
+                    Java
+                  </h3>
                   <p className="text-xs text-muted-foreground mb-4">12 explanations • 3 sessions</p>
                   <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden">
                     <div className="bg-orange-400 h-full rounded-full" style={{ width: "30%" }} />
@@ -386,7 +428,9 @@ export default function SkillsPage() {
                     <Plus className="text-primary" />
                   </div>
                   <h3 className="font-semibold text-sm">Explore New Skill</h3>
-                  <p className="text-xs text-muted-foreground mt-1 px-4">Browse our library to start learning something new</p>
+                  <p className="text-xs text-muted-foreground mt-1 px-4">
+                    Browse our library to start learning something new
+                  </p>
                 </div>
               </div>
               <footer className="mt-auto py-4 text-center text-xs text-muted-foreground bg-background">

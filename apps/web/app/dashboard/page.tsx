@@ -22,7 +22,7 @@ import {
   FileCode,
   TrendingUp,
   ChevronRight,
-  Lightbulb
+  Lightbulb,
 } from "lucide-react"
 
 export default function DashboardPage() {
@@ -39,12 +39,12 @@ export default function DashboardPage() {
         id: (session.user as any).id || session.user.email,
         email: session.user.email,
         name: session.user.name || null,
-        image: session.user.image || null
+        image: session.user.image || null,
       }
       fetch("/api/user/ensure", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       }).catch(() => {})
     }
   }, [isPending, session])
@@ -65,28 +65,46 @@ export default function DashboardPage() {
             <h1 className="text-lg font-bold tracking-tight">FlowPilot</h1>
           </div>
           <nav className="flex-1 flex flex-col px-4 gap-1 overflow-y-auto">
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium" href="#">
+            <a
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium"
+              href="#"
+            >
               <LayoutDashboard size={18} />
               <span>Dashboard</span>
             </a>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/sessions">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/sessions"
+            >
               <History size={18} />
               <span>My Sessions</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/skills">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/skills"
+            >
               <BarChart3 size={18} />
               <span>Skills</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/roadmap">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/roadmap"
+            >
               <Map size={18} />
               <span>Roadmap</span>
             </Link>
             <div className="my-4 border-t border-muted/40" />
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/settings">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/settings"
+            >
               <Settings size={18} />
               <span>Settings</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/help">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/help"
+            >
               <HelpCircle size={18} />
               <span>Help & Feedback</span>
             </Link>
@@ -95,7 +113,9 @@ export default function DashboardPage() {
             <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl p-4 text-white relative overflow-hidden">
               <div className="relative z-10">
                 <p className="font-bold text-sm mb-1">Go Pro</p>
-                <p className="text-xs text-indigo-100 mb-3">Unlock advanced analytics and AI insights.</p>
+                <p className="text-xs text-indigo-100 mb-3">
+                  Unlock advanced analytics and AI insights.
+                </p>
                 <button className="bg-white/20 hover:bg-white/30 text-white text-xs font-semibold py-1.5 px-3 rounded transition-colors">
                   Upgrade
                 </button>
@@ -113,7 +133,9 @@ export default function DashboardPage() {
             </button>
             <div className="flex items-center gap-6 flex-1">
               <nav className="hidden md:flex text-sm font-medium text-muted-foreground">
-                <a className="hover:text-primary transition-colors" href="#">Home</a>
+                <a className="hover:text-primary transition-colors" href="#">
+                  Home
+                </a>
                 <span className="mx-2">/</span>
                 <span>Dashboard</span>
               </nav>
@@ -140,7 +162,10 @@ export default function DashboardPage() {
                 </div>
                 <div
                   className="h-10 w-10 rounded-full bg-muted overflow-hidden ring-2 ring-background cursor-pointer"
-                  style={{ backgroundImage: `url('${session.user.image || ""}')`, backgroundSize: "cover" }}
+                  style={{
+                    backgroundImage: `url('${session.user.image || ""}')`,
+                    backgroundSize: "cover",
+                  }}
                 />
                 <button
                   className="text-xs font-semibold px-3 py-1.5 rounded bg-muted hover:bg-muted/70"
@@ -158,8 +183,7 @@ export default function DashboardPage() {
                 <div className="flex flex-col md:flex-row items-center p-6 md:p-8 gap-8">
                   <div className="flex-1 space-y-4 relative z-10">
                     <div className="inline-flex items-center px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold uppercase tracking-wide">
-                      <Flame className="mr-1" size={14} />
-                      5 Day Streak
+                      <Flame className="mr-1" size={14} />5 Day Streak
                     </div>
                     <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
                       Welcome back, {session.user.name || session.user.email}!
@@ -184,7 +208,9 @@ export default function DashboardPage() {
                     <div className="bg-muted rounded-xl p-4 border border-muted/40">
                       <div className="flex justify-between items-center mb-4">
                         <h3 className="font-semibold">Daily Goal</h3>
-                        <span className="text-xs font-medium text-muted-foreground">85% Complete</span>
+                        <span className="text-xs font-medium text-muted-foreground">
+                          85% Complete
+                        </span>
                       </div>
                       <div className="relative h-4 bg-muted rounded-full overflow-hidden">
                         <div className="absolute top-0 left-0 h-full bg-primary w-[85%] rounded-full" />
@@ -211,7 +237,9 @@ export default function DashboardPage() {
                 <div className="bg-card p-6 rounded-xl border border-muted/40 shadow-sm hover:shadow-md transition-shadow">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">Hours Coded (Week)</p>
+                      <p className="text-sm font-medium text-muted-foreground">
+                        Hours Coded (Week)
+                      </p>
                       <p className="text-3xl font-bold mt-2">12.5h</p>
                     </div>
                     <div className="p-2 bg-primary/10 rounded-lg text-primary">
@@ -264,7 +292,9 @@ export default function DashboardPage() {
                 <div className="lg:col-span-2 bg-card rounded-xl border border-muted/40 shadow-sm flex flex-col">
                   <div className="p-6 border-b border-muted/40 flex justify-between items-center">
                     <h2 className="text-lg font-bold">Skill Proficiency</h2>
-                    <button className="text-sm text-primary hover:text-primary/80 font-medium">View Detail</button>
+                    <button className="text-sm text-primary hover:text-primary/80 font-medium">
+                      View Detail
+                    </button>
                   </div>
                   <div className="p-6 flex-1 flex flex-col justify-center gap-6">
                     <div>
@@ -291,7 +321,10 @@ export default function DashboardPage() {
                         <span className="text-sm font-bold">64%</span>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2.5">
-                        <div className="bg-orange-400 h-2.5 rounded-full" style={{ width: "64%" }} />
+                        <div
+                          className="bg-orange-400 h-2.5 rounded-full"
+                          style={{ width: "64%" }}
+                        />
                       </div>
                     </div>
                     <div>
@@ -316,8 +349,12 @@ export default function DashboardPage() {
                           <span className="font-bold text-xs">TS</span>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold truncate group-hover:text-primary transition-colors">Refactoring auth.ts</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">Authentication Module • 2h ago</p>
+                          <p className="text-sm font-semibold truncate group-hover:text-primary transition-colors">
+                            Refactoring auth.ts
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            Authentication Module • 2h ago
+                          </p>
                         </div>
                         <div className="flex items-center text-muted-foreground group-hover:text-primary">
                           <ChevronRight size={18} />
@@ -330,8 +367,12 @@ export default function DashboardPage() {
                           <span className="font-bold text-xs">JS</span>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold truncate group-hover:text-primary transition-colors">Debugging cart_logic.js</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">E-commerce Flow • 5h ago</p>
+                          <p className="text-sm font-semibold truncate group-hover:text-primary transition-colors">
+                            Debugging cart_logic.js
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            E-commerce Flow • 5h ago
+                          </p>
                         </div>
                         <div className="flex items-center text-muted-foreground group-hover:text-primary">
                           <ChevronRight size={18} />
@@ -344,8 +385,12 @@ export default function DashboardPage() {
                           <span className="font-bold text-xs">PY</span>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold truncate group-hover:text-primary transition-colors">API Optimization</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">Backend Services • Yesterday</p>
+                          <p className="text-sm font-semibold truncate group-hover:text-primary transition-colors">
+                            API Optimization
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            Backend Services • Yesterday
+                          </p>
                         </div>
                         <div className="flex items-center text-muted-foreground group-hover:text-primary">
                           <ChevronRight size={18} />
@@ -358,8 +403,12 @@ export default function DashboardPage() {
                           <span className="font-bold text-xs">CS</span>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold truncate group-hover:text-primary transition-colors">Unit Testing</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">Test Suite • 2 days ago</p>
+                          <p className="text-sm font-semibold truncate group-hover:text-primary transition-colors">
+                            Unit Testing
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            Test Suite • 2 days ago
+                          </p>
                         </div>
                         <div className="flex items-center text-muted-foreground group-hover:text-primary">
                           <ChevronRight size={18} />
@@ -380,7 +429,10 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex-1 text-center sm:text-left">
                   <h3 className="font-bold text-lg mb-1">Tip of the Day</h3>
-                  <p className="text-slate-300 text-sm">Use optional chaining (?.) to simplify accessing nested object properties. It makes your code cleaner and prevents runtime errors.</p>
+                  <p className="text-slate-300 text-sm">
+                    Use optional chaining (?.) to simplify accessing nested object properties. It
+                    makes your code cleaner and prevents runtime errors.
+                  </p>
                 </div>
                 <button className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap">
                   Learn More

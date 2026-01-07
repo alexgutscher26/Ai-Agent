@@ -16,7 +16,7 @@ import {
   Code2,
   ExternalLink,
   MessageSquare,
-  Sparkles
+  Sparkles,
 } from "lucide-react"
 
 export default function RoadmapPage() {
@@ -47,28 +47,46 @@ export default function RoadmapPage() {
             <h1 className="text-lg font-bold tracking-tight">FlowPilot</h1>
           </div>
           <nav className="flex-1 flex flex-col px-4 gap-1 overflow-y-auto">
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/dashboard">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/dashboard"
+            >
               <LayoutDashboard size={18} />
               <span>Dashboard</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/sessions">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/sessions"
+            >
               <History size={18} />
               <span>My Sessions</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/skills">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/skills"
+            >
               <BarChart3 size={18} />
               <span>Skills</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium transition-colors" href="/roadmap">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium transition-colors"
+              href="/roadmap"
+            >
               <Map size={18} />
               <span>Roadmap</span>
             </Link>
             <div className="my-4 border-t border-muted/40" />
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="#">
+            <a
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="#"
+            >
               <Settings size={18} />
               <span>Settings</span>
             </a>
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="#">
+            <a
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="#"
+            >
               <HelpCircle size={18} />
               <span>Help & Feedback</span>
             </a>
@@ -82,7 +100,9 @@ export default function RoadmapPage() {
             </button>
             <div className="flex items-center gap-6 flex-1">
               <nav className="hidden md:flex text-sm font-medium text-muted-foreground">
-                <a className="hover:text-primary transition-colors" href="#">Home</a>
+                <a className="hover:text-primary transition-colors" href="#">
+                  Home
+                </a>
                 <span className="mx-2">/</span>
                 <span>Roadmap</span>
               </nav>
@@ -109,7 +129,10 @@ export default function RoadmapPage() {
                 </div>
                 <div
                   className="h-10 w-10 rounded-full bg-muted overflow-hidden ring-2 ring-background cursor-pointer"
-                  style={{ backgroundImage: `url('${session.user.image || ""}')`, backgroundSize: "cover" }}
+                  style={{
+                    backgroundImage: `url('${session.user.image || ""}')`,
+                    backgroundSize: "cover",
+                  }}
                 />
                 <button
                   className="text-xs font-semibold px-3 py-1.5 rounded bg-muted hover:bg-muted/70"
@@ -132,8 +155,12 @@ export default function RoadmapPage() {
                     </span>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
-                    We believe in building in public. Here’s what we’re working on, what’s coming next, and what we’re considering for the future. Have an idea?
-                    <a className="text-primary hover:underline font-medium ml-1" href="#">Let us know</a>.
+                    We believe in building in public. Here’s what we’re working on, what’s coming
+                    next, and what we’re considering for the future. Have an idea?
+                    <a className="text-primary hover:underline font-medium ml-1" href="#">
+                      Let us know
+                    </a>
+                    .
                   </p>
                 </div>
                 <div className="flex gap-3 flex-shrink-0">
@@ -164,11 +191,17 @@ export default function RoadmapPage() {
                       <span className="px-2 py-1 rounded bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-[10px] font-bold uppercase tracking-wide">
                         Feature
                       </span>
-                      <ExternalLink className="text-muted-foreground group-hover:text-primary transition-colors" size={18} />
+                      <ExternalLink
+                        className="text-muted-foreground group-hover:text-primary transition-colors"
+                        size={18}
+                      />
                     </div>
-                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">Context-Aware Suggestions</h3>
+                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">
+                      Context-Aware Suggestions
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Using active file context to suggest more relevant learning resources directly in the sidebar, filtering out noise from unrelated frameworks.
+                      Using active file context to suggest more relevant learning resources directly
+                      in the sidebar, filtering out noise from unrelated frameworks.
                     </p>
                     <div className="flex items-center justify-between pt-3 border-t border-muted/40">
                       <div className="flex items-center gap-2 text-muted-foreground">
@@ -189,9 +222,12 @@ export default function RoadmapPage() {
                         Improvement
                       </span>
                     </div>
-                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">Dark Mode Refinement</h3>
+                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">
+                      Dark Mode Refinement
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Fixing contrast issues in the dashboard charts and improving syntax highlighting themes for dark mode users.
+                      Fixing contrast issues in the dashboard charts and improving syntax
+                      highlighting themes for dark mode users.
                     </p>
                     <div className="flex items-center justify-between pt-3 border-t border-muted/40">
                       <div className="flex items-center gap-2 text-muted-foreground">
@@ -218,9 +254,12 @@ export default function RoadmapPage() {
                         Feature
                       </span>
                     </div>
-                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">Team Analytics Dashboard</h3>
+                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">
+                      Team Analytics Dashboard
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      View aggregate learning stats for your entire team. Identify knowledge gaps and trending topics across the organization.
+                      View aggregate learning stats for your entire team. Identify knowledge gaps
+                      and trending topics across the organization.
                     </p>
                     <div className="flex items-center justify-between pt-3 border-t border-muted/40">
                       <div className="flex items-center gap-2 text-muted-foreground">
@@ -238,9 +277,12 @@ export default function RoadmapPage() {
                         Integration
                       </span>
                     </div>
-                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">Jira Integration</h3>
+                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">
+                      Jira Integration
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Link learning sessions to Jira tickets to track research time and skill acquisition related to specific tasks.
+                      Link learning sessions to Jira tickets to track research time and skill
+                      acquisition related to specific tasks.
                     </p>
                     <div className="flex items-center justify-between pt-3 border-t border-muted/40">
                       <div className="flex items-center gap-2 text-muted-foreground">
@@ -254,9 +296,12 @@ export default function RoadmapPage() {
                         Feature
                       </span>
                     </div>
-                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">Custom Learning Paths</h3>
+                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">
+                      Custom Learning Paths
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Create and share custom lists of skills and topics for onboarding new team members.
+                      Create and share custom lists of skills and topics for onboarding new team
+                      members.
                     </p>
                     <div className="flex items-center justify-between pt-3 border-t border-muted/40">
                       <div className="flex items-center gap-2 text-muted-foreground">
@@ -285,9 +330,12 @@ export default function RoadmapPage() {
                         Platform
                       </span>
                     </div>
-                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">Mobile Companion App</h3>
+                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">
+                      Mobile Companion App
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Review flashcards and short explanations on the go. Sync progress perfectly with your desktop extension.
+                      Review flashcards and short explanations on the go. Sync progress perfectly
+                      with your desktop extension.
                     </p>
                     <div className="flex items-center justify-between pt-3 border-t border-muted/40">
                       <div className="flex items-center gap-2 text-muted-foreground">
@@ -308,9 +356,12 @@ export default function RoadmapPage() {
                         AI
                       </span>
                     </div>
-                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">Interactive AI Pair Programmer</h3>
+                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">
+                      Interactive AI Pair Programmer
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      An AI that not only explains code but actively quizzes you on the logic you just wrote to ensure comprehension.
+                      An AI that not only explains code but actively quizzes you on the logic you
+                      just wrote to ensure comprehension.
                     </p>
                     <div className="flex items-center justify-between pt-3 border-t border-muted/40">
                       <div className="flex items-center gap-2 text-muted-foreground">
@@ -325,9 +376,12 @@ export default function RoadmapPage() {
                         Export
                       </span>
                     </div>
-                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">Certification Export</h3>
+                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">
+                      Certification Export
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Generate PDF certificates for skills you've mastered to share on LinkedIn or with your employer.
+                      Generate PDF certificates for skills you've mastered to share on LinkedIn or
+                      with your employer.
                     </p>
                     <div className="flex items-center justify-between pt-3 border-t border-muted/40">
                       <div className="flex items-center gap-2 text-muted-foreground">

@@ -22,7 +22,7 @@ import {
   GraduationCap,
   Gauge,
   Shield,
-  TrendingUp
+  TrendingUp,
 } from "lucide-react"
 
 export default function SessionsPage() {
@@ -49,28 +49,46 @@ export default function SessionsPage() {
             <h1 className="text-lg font-bold tracking-tight">FlowPilot</h1>
           </div>
           <nav className="flex-1 flex flex-col px-4 gap-1 overflow-y-auto">
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/dashboard">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/dashboard"
+            >
               <LayoutDashboard size={18} />
               <span>Dashboard</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium" href="/sessions">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium"
+              href="/sessions"
+            >
               <History size={18} />
               <span>My Sessions</span>
             </Link>
-            <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="/skills">
+            <Link
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="/skills"
+            >
               <BarChart3 size={18} />
               <span>Skills</span>
             </Link>
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="#">
+            <a
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="#"
+            >
               <Map size={18} />
               <span>Roadmap</span>
             </a>
             <div className="my-4 border-t border-muted/40" />
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="#">
+            <a
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="#"
+            >
               <Settings size={18} />
               <span>Settings</span>
             </a>
-            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" href="#">
+            <a
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              href="#"
+            >
               <HelpCircle size={18} />
               <span>Help & Feedback</span>
             </a>
@@ -79,7 +97,9 @@ export default function SessionsPage() {
             <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl p-4 text-white relative overflow-hidden">
               <div className="relative z-10">
                 <p className="font-bold text-sm mb-1">Go Pro</p>
-                <p className="text-xs text-indigo-100 mb-3">Unlock advanced analytics and AI insights.</p>
+                <p className="text-xs text-indigo-100 mb-3">
+                  Unlock advanced analytics and AI insights.
+                </p>
                 <button className="bg-white/20 hover:bg-white/30 text-white text-xs font-semibold py-1.5 px-3 rounded transition-colors">
                   Upgrade
                 </button>
@@ -97,7 +117,9 @@ export default function SessionsPage() {
             </button>
             <div className="flex items-center gap-6 flex-1">
               <nav className="hidden md:flex text-sm font-medium text-muted-foreground">
-                <a className="hover:text-primary transition-colors" href="#">Home</a>
+                <a className="hover:text-primary transition-colors" href="#">
+                  Home
+                </a>
                 <span className="mx-2">/</span>
                 <span>My Sessions</span>
               </nav>
@@ -124,7 +146,10 @@ export default function SessionsPage() {
                 </div>
                 <div
                   className="h-10 w-10 rounded-full bg-muted overflow-hidden ring-2 ring-background cursor-pointer"
-                  style={{ backgroundImage: `url('${session.user.image || ""}')`, backgroundSize: "cover" }}
+                  style={{
+                    backgroundImage: `url('${session.user.image || ""}')`,
+                    backgroundSize: "cover",
+                  }}
                 />
                 <button
                   className="text-xs font-semibold px-3 py-1.5 rounded bg-muted hover:bg-muted/70"
@@ -140,7 +165,9 @@ export default function SessionsPage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h1 className="text-2xl font-bold tracking-tight">Session History</h1>
-                  <p className="text-muted-foreground mt-1">Review your past coding interactions, insights, and analysis.</p>
+                  <p className="text-muted-foreground mt-1">
+                    Review your past coding interactions, insights, and analysis.
+                  </p>
                 </div>
                 <div className="flex gap-3">
                   <button className="inline-flex items-center gap-2 px-4 py-2 bg-card border border-muted/40 rounded-lg text-sm font-medium hover:bg-muted transition-colors">
@@ -216,8 +243,12 @@ export default function SessionsPage() {
                               <Code2 />
                             </div>
                             <div>
-                              <p className="font-medium group-hover:text-primary transition-colors">Refactoring Auth Middleware</p>
-                              <p className="text-xs text-muted-foreground">auth_service.ts • 124 lines</p>
+                              <p className="font-medium group-hover:text-primary transition-colors">
+                                Refactoring Auth Middleware
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                auth_service.ts • 124 lines
+                              </p>
                             </div>
                           </div>
                         </td>
@@ -229,7 +260,9 @@ export default function SessionsPage() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
-                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-blue-600">TS</span>
+                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-blue-600">
+                              TS
+                            </span>
                             <span>TypeScript</span>
                           </div>
                         </td>
@@ -249,8 +282,12 @@ export default function SessionsPage() {
                               <Bug />
                             </div>
                             <div>
-                              <p className="font-medium group-hover:text-primary transition-colors">Null Pointer Analysis</p>
-                              <p className="text-xs text-muted-foreground">payment_controller.java • Error trace</p>
+                              <p className="font-medium group-hover:text-primary transition-colors">
+                                Null Pointer Analysis
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                payment_controller.java • Error trace
+                              </p>
                             </div>
                           </div>
                         </td>
@@ -262,7 +299,9 @@ export default function SessionsPage() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
-                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-orange-600">JV</span>
+                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-orange-600">
+                              JV
+                            </span>
                             <span>Java</span>
                           </div>
                         </td>
@@ -282,8 +321,12 @@ export default function SessionsPage() {
                               <GraduationCap />
                             </div>
                             <div>
-                              <p className="font-medium group-hover:text-primary transition-colors">Understanding useEffect Dependencies</p>
-                              <p className="text-xs text-muted-foreground">React Hook concept explanation</p>
+                              <p className="font-medium group-hover:text-primary transition-colors">
+                                Understanding useEffect Dependencies
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                React Hook concept explanation
+                              </p>
                             </div>
                           </div>
                         </td>
@@ -295,7 +338,9 @@ export default function SessionsPage() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
-                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-yellow-500">JS</span>
+                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-yellow-500">
+                              JS
+                            </span>
                             <span>JavaScript</span>
                           </div>
                         </td>
@@ -315,8 +360,12 @@ export default function SessionsPage() {
                               <Gauge />
                             </div>
                             <div>
-                              <p className="font-medium group-hover:text-primary transition-colors">SQL Query Optimization</p>
-                              <p className="text-xs text-muted-foreground">user_stats_agg.sql • Performance check</p>
+                              <p className="font-medium group-hover:text-primary transition-colors">
+                                SQL Query Optimization
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                user_stats_agg.sql • Performance check
+                              </p>
                             </div>
                           </div>
                         </td>
@@ -328,7 +377,9 @@ export default function SessionsPage() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
-                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-slate-600">SQL</span>
+                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-slate-600">
+                              SQL
+                            </span>
                             <span>SQL</span>
                           </div>
                         </td>
@@ -348,8 +399,12 @@ export default function SessionsPage() {
                               <Shield />
                             </div>
                             <div>
-                              <p className="font-medium group-hover:text-primary transition-colors">Security Audit: Login Flow</p>
-                              <p className="text-xs text-muted-foreground">login_api.py • Vulnerability scan</p>
+                              <p className="font-medium group-hover:text-primary transition-colors">
+                                Security Audit: Login Flow
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                login_api.py • Vulnerability scan
+                              </p>
                             </div>
                           </div>
                         </td>
@@ -361,7 +416,9 @@ export default function SessionsPage() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
-                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-yellow-600">PY</span>
+                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-yellow-600">
+                              PY
+                            </span>
                             <span>Python</span>
                           </div>
                         </td>
@@ -381,8 +438,12 @@ export default function SessionsPage() {
                               <Code2 />
                             </div>
                             <div>
-                              <p className="font-medium group-hover:text-primary transition-colors">DRY Refactor on Utils</p>
-                              <p className="text-xs text-muted-foreground">utils/formatters.ts • 45 lines</p>
+                              <p className="font-medium group-hover:text-primary transition-colors">
+                                DRY Refactor on Utils
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                utils/formatters.ts • 45 lines
+                              </p>
                             </div>
                           </div>
                         </td>
@@ -394,7 +455,9 @@ export default function SessionsPage() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
-                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-blue-600">TS</span>
+                            <span className="w-6 h-6 flex items-center justify-center rounded bg-muted text-[10px] font-bold text-blue-600">
+                              TS
+                            </span>
                             <span>TypeScript</span>
                           </div>
                         </td>
@@ -412,11 +475,16 @@ export default function SessionsPage() {
                 </div>
                 <div className="px-6 py-4 border-t border-muted/40 bg-muted flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">
-                    Showing <span className="font-medium text-foreground">1-6</span> of <span className="font-medium text-foreground">42</span> results
+                    Showing <span className="font-medium text-foreground">1-6</span> of{" "}
+                    <span className="font-medium text-foreground">42</span> results
                   </span>
                   <div className="flex gap-2">
-                    <button className="px-3 py-1 text-sm border border-muted/40 rounded-md text-muted-foreground cursor-not-allowed opacity-50">Previous</button>
-                    <button className="px-3 py-1 text-sm border border-muted/40 rounded-md hover:bg-card hover:text-primary transition-colors">Next</button>
+                    <button className="px-3 py-1 text-sm border border-muted/40 rounded-md text-muted-foreground cursor-not-allowed opacity-50">
+                      Previous
+                    </button>
+                    <button className="px-3 py-1 text-sm border border-muted/40 rounded-md hover:bg-card hover:text-primary transition-colors">
+                      Next
+                    </button>
                   </div>
                 </div>
               </div>

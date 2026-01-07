@@ -4,7 +4,7 @@ import ThemeClient from "@/components/ThemeClient"
 
 export const metadata: Metadata = {
   title: "FlowPilot",
-  description: "Your AI Senior Developer, right inside VS Code."
+  description: "Your AI Senior Developer, right inside VS Code.",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
