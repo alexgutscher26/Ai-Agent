@@ -29,7 +29,8 @@ export class ConfigurationManager {
             telemetryEnabled,
             userLevel: config.get<'beginner' | 'intermediate'>('userLevel', 'beginner'),
             proactiveSuggestions: config.get<boolean>('proactiveSuggestions', true),
-            demoMode: config.get<boolean>('demoMode', false)
+            demoMode: config.get<boolean>('demoMode', false),
+            dashboardUrl: config.get<string>('dashboardUrl', 'http://localhost:3000/dashboard')
         };
     }
 

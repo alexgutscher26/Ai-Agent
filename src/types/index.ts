@@ -14,6 +14,7 @@ export interface CodeCoachConfig {
     proactiveSuggestions: boolean;
     demoMode: boolean; // New: Enable demo mode for testing without API key
     strictValidation?: boolean;
+    dashboardUrl?: string;
 }
 
 // API Request interfaces

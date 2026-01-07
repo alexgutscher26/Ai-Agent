@@ -17,7 +17,7 @@ import { ConfigurationManager } from '../config/ConfigurationManager';
 import { FileSafetyGuard } from '../safety/FileSafetyGuard';
 
 export interface WebviewMessage {
-    type: 'feedback' | 'ready' | 'error' | 'context' | 'scrollToLine' | 'insertImprovedCode' | 'conceptClick' | 'settings' | 'intro' | 'reflectionView';
+    type: 'feedback' | 'ready' | 'error' | 'context' | 'scrollToLine' | 'insertImprovedCode' | 'conceptClick' | 'settings' | 'intro' | 'reflectionView' | 'openDashboard';
     data?: any;
 }
 
@@ -172,6 +172,16 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
         switch (message.type) {
             case 'feedback':
                 this._handleFeedback(message.data);
+                break;
+            case 'openDashboard':
+                {
+                    const url = this._configManager?.getConfiguration().dashboardUrl || 'http://localhost:3000/dashboard';
+                    try {
+                        vscode.env.openExternal(vscode.Uri.parse(url));
+                    } catch (e) {
+                        vscode.window.showErrorMessage('Failed to open dashboard URL');
+                    }
+                }
                 break;
             case 'ready':
                 // Webview is ready, send current state if available
@@ -429,6 +439,9 @@ export class CodeCoachViewProvider implements vscode.WebviewViewProvider {
                             </div>
                             <div class="card-footer">
                                 <p class="tip">💡 Right-click for quick access!</p>
+                                <div class="actions">
+                                    <button id="open-dashboard-btn" class="modern-button modern-button--primary">Open Dashboard</button>
+                                </div>
                             </div>
                         </div>
 

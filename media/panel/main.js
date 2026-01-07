@@ -153,6 +153,7 @@ function initializeEventListeners() {
     const notHelpfulBtn = document.getElementById('not-helpful-btn');
     const submitFeedbackBtn = document.getElementById('submit-feedback-btn');
     const cancelFeedbackBtn = document.getElementById('cancel-feedback-btn');
+    const openDashboardBtn = document.getElementById('open-dashboard-btn');
     if (helpfulBtn) {
         helpfulBtn.addEventListener('click', () => handleFeedbackClick(true));
     }
@@ -164,6 +165,11 @@ function initializeEventListeners() {
     }
     if (cancelFeedbackBtn) {
         cancelFeedbackBtn.addEventListener('click', cancelFeedback);
+    }
+    if (openDashboardBtn) {
+        openDashboardBtn.addEventListener('click', () => {
+            vscode.postMessage({ type: 'openDashboard' });
+        });
     }
 }
 function updateContent(data) {
