@@ -136,13 +136,6 @@ export default function DashboardPage() {
                 <a className="hover:text-primary transition-colors" href="#">
                   Home
                 </a>
-                <span className="mx-2">/</span>
-                <span>Dashboard</span>
-              </nav>
-              <div className="relative w-full max-w-md hidden md:block">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="text-muted-foreground" size={18} />
-                </div>
                 <input
                   className="block w-full pl-10 pr-3 py-2 border-none rounded-lg leading-5 bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 sm:text-sm transition-all"
                   placeholder="Search sessions, snippets, or docs..."
