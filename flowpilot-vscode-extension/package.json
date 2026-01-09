@@ -1,0 +1,102 @@
+{
+  "name": "flowpilot",
+  "displayName": "FlowPilot - AI Coding Coach",
+  "description": "Your AI coding coach that helps you write better code with real-time explanations and suggestions",
+  "version": "0.3.1",
+  "publisher": "flowpilot",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Education",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "ai",
+    "coding",
+    "coach",
+    "education",
+    "learning",
+    "code explanation"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "flowpilot",
+          "title": "FlowPilot",
+          "icon": "icon.png"
+        }
+      ]
+    },
+    "views": {
+      "flowpilot": [
+        {
+          "type": "webview",
+          "id": "flowpilotPanel",
+          "name": "FlowPilot Coach"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "flowpilot.test",
+        "title": "FlowPilot: Test"
+      },
+      {
+        "command": "flowpilot.openPanel",
+        "title": "FlowPilot: Open Panel",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "flowpilot.reviewFile",
+        "title": "FlowPilot: Review Entire File",
+        "icon": "$(search)"
+      },
+      {
+        "command": "flowpilot.explainSelection",
+        "title": "FlowPilot: Explain Selected Code",
+        "icon": "$(light-bulb)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "flowpilot.explainSelection",
+          "when": "editorHasSelection",
+          "group": "flowpilot"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "flowpilot.reviewFile",
+          "when": "view == flowpilotPanel",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}

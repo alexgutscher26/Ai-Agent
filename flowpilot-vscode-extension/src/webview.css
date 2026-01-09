@@ -1,0 +1,445 @@
+/* FlowPilot VSCode Extension Styles */
+/* Based on the HTML mockup design */
+
+:root {
+    --vscode-bg: var(--vscode-editor-background, #1e1e1e);
+    --vscode-sidebar: var(--vscode-sideBar-background, #252526);
+    --vscode-panel-bg: var(--vscode-sideBar-background, #252526);
+    --vscode-border: var(--vscode-panel-border, #3e3e42);
+    --vscode-text-primary: var(--vscode-foreground, #cccccc);
+    --vscode-text-secondary: var(--vscode-descriptionForeground, #bbbbbb);
+    --vscode-text-muted: var(--vscode-disabledForeground, #858585);
+    --primary: #1b5cff;
+    --primary-hover: #154fe0;
+    --card-bg: color-mix(in srgb, var(--vscode-panel-bg) 70%, var(--vscode-bg));
+    --button-bg: color-mix(in srgb, var(--vscode-panel-bg) 75%, white 10%);
+    --button-hover: color-mix(in srgb, var(--vscode-panel-bg) 70%, white 14%);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+    background-color: var(--vscode-panel-bg);
+    color: var(--vscode-text-primary);
+    font-size: 13px;
+    line-height: 1.5;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.flowpilot-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.fp-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    color: currentColor;
+}
+
+.fp-icon-svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.fp-icon-primary {
+    color: var(--primary);
+}
+
+.fp-icon-accent {
+    color: color-mix(in srgb, var(--primary) 70%, white 10%);
+}
+
+/* Panel Header */
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 16px 14px;
+    border-bottom: 1px solid var(--vscode-border);
+    background-color: var(--vscode-panel-bg);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-title {
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.2px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.icon-button {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--vscode-text-secondary);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.icon-button:hover {
+    color: var(--vscode-text-primary);
+    background-color: color-mix(in srgb, var(--vscode-panel-bg) 70%, white 10%);
+}
+
+.icon-button .fp-icon-svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Panel Content */
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Main CTA Button */
+.cta-button {
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.15s ease;
+}
+
+.cta-button:hover {
+    background-color: var(--primary-hover);
+}
+
+.cta-button .fp-icon-svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Explanation Card */
+.explanation-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--vscode-border);
+    border-radius: 12px;
+    padding: 18px 16px 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.explanation-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--primary);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.line-badge {
+    background-color: var(--button-bg);
+    color: var(--vscode-text-secondary);
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.card-description {
+    color: var(--vscode-text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+
+.explanation-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.explanation-step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.step-number {
+    background-color: var(--button-bg);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-family: var(--vscode-editor-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.step-content {
+    color: var(--vscode-text-secondary);
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.step-content strong {
+    color: var(--vscode-text-primary);
+    font-weight: 500;
+}
+
+.step-content code {
+    background-color: rgba(19, 91, 236, 0.1);
+    color: var(--primary);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: var(--vscode-editor-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+    font-size: 12px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--vscode-border);
+}
+
+.action-button {
+    flex: 1;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.action-button:hover {
+    background-color: var(--button-hover);
+}
+
+/* Chat Messages */
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+}
+
+.chat-message {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.message-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.message-avatar .fp-icon-svg {
+    color: white;
+    width: 22px;
+    height: 22px;
+}
+
+.message-content {
+    background-color: var(--card-bg);
+    border: 1px solid var(--vscode-border);
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--vscode-text-secondary);
+    flex: 1;
+}
+
+.chat-message.user {
+    justify-content: flex-end;
+}
+
+.chat-message.user .message-content {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    flex: initial;
+    max-width: 82%;
+}
+
+.chat-message.ai .message-content {
+    border-top-left-radius: 0;
+}
+
+/* Chat Input */
+.chat-input-container {
+    padding: 16px;
+    border-top: 1px solid var(--vscode-border);
+    background-color: var(--vscode-panel-bg);
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.chat-input {
+    width: 100%;
+    background-color: #3c3c3c;
+    border: 1px solid var(--vscode-border);
+    border-radius: 12px;
+    padding: 14px 48px 14px 14px;
+    font-size: 14px;
+    color: var(--vscode-text-primary);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(19, 91, 236, 0.2);
+}
+
+.chat-input::placeholder {
+    color: var(--vscode-text-muted);
+}
+
+.send-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 8px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.send-button:hover {
+    color: var(--vscode-text-primary);
+    background-color: color-mix(in srgb, var(--vscode-panel-bg) 70%, white 10%);
+}
+
+.send-button .fp-icon-svg {
+    width: 22px;
+    height: 22px;
+}
+
+.input-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--vscode-text-muted);
+}
+
+.history-link {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.history-link:hover {
+    color: var(--vscode-text-primary);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #424242;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4f4f4f;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
