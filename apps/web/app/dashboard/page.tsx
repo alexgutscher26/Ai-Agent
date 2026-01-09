@@ -141,7 +141,7 @@ export default function DashboardPage() {
                   placeholder="Search sessions, snippets, or docs..."
                   type="text"
                 />
-              </div>
+              </nav>
             </div>
             <div className="flex items-center gap-4 ml-4">
               <button className="relative p-2 text-muted-foreground hover:text-foreground rounded-full hover:bg-muted transition-colors">

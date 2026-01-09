@@ -1,0 +1,2 @@
+what to do next since we need to connect extension to dashboard using an api key system that the user will put their api key in extension settings or do we implement the core functionity of the extension also note the main feature in the dashbord is the sessions witch is sessions should group “one learning episode in the editor” so you can give users meaningful insights (and sane analytics) without creepy replay-level tracking.
+so what do you think?
