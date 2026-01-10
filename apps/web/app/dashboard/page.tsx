@@ -25,6 +25,8 @@ import {
   Lightbulb,
 } from "lucide-react"
 import { RecentSessions } from "@/components/dashboard/RecentSessions"
+import { TipOfTheDay } from "@/components/dashboard/TipOfTheDay"
+
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -334,21 +336,7 @@ export default function DashboardPage() {
                 </div>
                 <RecentSessions />
               </div>
-              <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-xl p-6 shadow-lg text-white flex flex-col sm:flex-row gap-6 items-center">
-                <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                  <Lightbulb className="text-yellow-300" />
-                </div>
-                <div className="flex-1 text-center sm:text-left">
-                  <h3 className="font-bold text-lg mb-1">Tip of the Day</h3>
-                  <p className="text-slate-300 text-sm">
-                    Use optional chaining (?.) to simplify accessing nested object properties. It
-                    makes your code cleaner and prevents runtime errors.
-                  </p>
-                </div>
-                <button className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap">
-                  Learn More
-                </button>
-              </div>
+              <TipOfTheDay />
               <footer className="text-center text-xs text-muted-foreground pb-4">
                 <p>© 2023 FlowPilot Inc. All rights reserved.</p>
               </footer>

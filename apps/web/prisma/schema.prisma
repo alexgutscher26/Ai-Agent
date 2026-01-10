@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -21,6 +22,7 @@ model User {
   accounts       Account[]
   apiKeys        ApiKey[]
   codingSessions CodingSession[]
+  tips           Tip[]
   @@map("user")
 }
 
@@ -90,4 +92,15 @@ model CodingSession {
   endedAt         DateTime?
   
   @@map("coding_session")
+}
+
+model Tip {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("tip")
 }
