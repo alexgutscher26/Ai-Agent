@@ -2,7 +2,7 @@
   "name": "flowpilot",
   "displayName": "FlowPilot - AI Coding Coach",
   "description": "Your AI coding coach that helps you write better code with real-time explanations and suggestions",
-  "version": "0.5.1",
+  "version": "0.6.4",
   "publisher": "flowpilot",
   "icon": "icon.png",
   "repository": {
@@ -23,10 +23,13 @@
     "coach",
     "education",
     "learning",
-    "code explanation"
+    "code explanation",
+    "debugging",
+    "error explanation"
   ],
   "activationEvents": [
     "onCommand:flowpilot.explainSelection",
+    "onCommand:flowpilot.explainError",
     "onCommand:flowpilot.reviewFile",
     "onCommand:flowpilot.openPanel",
     "onView:flowpilotPanel"
@@ -70,6 +73,11 @@
         "command": "flowpilot.explainSelection",
         "title": "FlowPilot: Explain Selected Code",
         "icon": "$(light-bulb)"
+      },
+      {
+        "command": "flowpilot.explainError",
+        "title": "FlowPilot: Explain Error",
+        "icon": "$(bug)"
       }
     ],
     "menus": {
@@ -77,6 +85,11 @@
         {
           "command": "flowpilot.explainSelection",
           "when": "editorHasSelection",
+          "group": "flowpilot"
+        },
+        {
+          "command": "flowpilot.explainError",
+          "when": "editorLangId", 
           "group": "flowpilot"
         }
       ],

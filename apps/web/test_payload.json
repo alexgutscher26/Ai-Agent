@@ -1,0 +1,12 @@
+{
+    "errors": [
+        {
+            "message": "test error",
+            "line": 1,
+            "severity": "error"
+        }
+    ],
+    "codeSnippet": "print(x)",
+    "fileName": "test.py",
+    "languageId": "python"
+}

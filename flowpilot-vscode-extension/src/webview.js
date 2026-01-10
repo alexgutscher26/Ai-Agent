@@ -184,6 +184,47 @@
                 }
                 break;
 
+            case 'showErrorExplanation':
+                const errorData = message.explanation;
+
+                // Create error explanation message with structured sections
+                const errorMessageDiv = document.createElement('div');
+                errorMessageDiv.className = 'chat-message ai error-explanation';
+
+                let errorHtml = '<div class="message-avatar"><span class="fp-icon">' + robotIcon + '</span></div>';
+                errorHtml += '<div class="message-content">';
+
+                // Plain English section
+                if (errorData.plainEnglish) {
+                    errorHtml += `<div class="error-section"><strong>🔴 What this means:</strong><p>${errorData.plainEnglish}</p></div>`;
+                }
+
+                // Why it happens section
+                if (errorData.whyItHappens) {
+                    errorHtml += `<div class="error-section"><strong>❓ Why it happens:</strong><p>${errorData.whyItHappens}</p></div>`;
+                }
+
+                // How to fix section
+                if (errorData.howToFix && errorData.howToFix.length > 0) {
+                    errorHtml += '<div class="error-section"><strong>✅ How to fix:</strong><ol>';
+                    errorData.howToFix.forEach(step => {
+                        errorHtml += `<li>${step}</li>`;
+                    });
+                    errorHtml += '</ol></div>';
+                }
+
+                // Prevention section
+                if (errorData.prevention) {
+                    errorHtml += `<div class="error-section"><strong>🛡️ Prevention:</strong><p>${errorData.prevention}</p></div>`;
+                }
+
+                errorHtml += '</div>';
+                errorMessageDiv.innerHTML = errorHtml;
+
+                chatMessages.appendChild(errorMessageDiv);
+                scrollToBottom();
+                break;
+
             case 'explainCode':
                 addMessage(`I'll explain this code...`, 'ai');
                 break;

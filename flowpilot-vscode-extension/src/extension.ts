@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { getExplainContext } from './context';
+import { getErrorContext } from './errorContext';
 // Dynamic import reference for type usage only if needed, or rely on inference
 import type { FlowPilotProvider as FlowPilotProviderType } from './flowPilotProvider';
 
@@ -60,6 +61,38 @@ export async function activate(context: vscode.ExtensionContext) {
                 } catch (error) {
                     console.error('FlowPilot: Error in explainSelection command:', error);
                     vscode.window.showErrorMessage('FlowPilot: Error analyzing code. Check output for details.');
+                }
+            })
+        );
+
+        context.subscriptions.push(
+            vscode.commands.registerCommand('flowpilot.explainError', async () => {
+                try {
+                    console.log('FlowPilot: explainError command triggered');
+                    const editor = vscode.window.activeTextEditor;
+
+                    if (!editor) {
+                        vscode.window.showWarningMessage('Please open a file to explain errors.');
+                        return;
+                    }
+
+                    const errorContext = getErrorContext(editor);
+
+                    if (!errorContext || errorContext.errors.length === 0) {
+                        vscode.window.showInformationMessage('No errors found! 🎉');
+                        return;
+                    }
+
+                    // Open the FlowPilot panel first
+                    await vscode.commands.executeCommand('workbench.view.extension.flowpilot');
+
+                    // Send error context to webview provider which will call the backend
+                    provider.explainError(errorContext);
+
+                    vscode.window.showInformationMessage('FlowPilot is analyzing your error...');
+                } catch (error) {
+                    console.error('FlowPilot: Error in explainError command:', error);
+                    vscode.window.showErrorMessage('FlowPilot: Error analyzing error. Check output for details.');
                 }
             })
         );

@@ -183,6 +183,118 @@ export class FlowPilotProvider implements vscode.WebviewViewProvider {
         }
     }
 
+    public async explainError(context: any) {
+        if (this._view) {
+            // Show loading state
+            this._view.webview.postMessage({
+                type: 'streamingStart'
+            });
+
+            try {
+                // Call the backend API with streaming
+                const response = await fetch('http://localhost:3000/api/explain-error', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(context)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // node-fetch v2 returns a Node.js stream
+                const body = response.body;
+                if (!body) {
+                    throw new Error('No response body');
+                }
+
+                let buffer = '';
+                let accumulatedContent = '';
+
+                // Process the stream using Node.js stream events
+                body.on('data', (chunk: Buffer) => {
+                    buffer += chunk.toString('utf8');
+
+                    // Process complete SSE messages
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop() || ''; // Keep incomplete line in buffer
+
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const data = line.slice(6); // Remove 'data: ' prefix
+
+                            try {
+                                const parsed = JSON.parse(data);
+
+                                if (parsed.done) {
+                                    // Final message - parse and display error explanation
+                                    accumulatedContent = parsed.content;
+
+                                    try {
+                                        const errorExplanation = JSON.parse(accumulatedContent);
+
+                                        // Send the structured error explanation to the webview
+                                        if (this._view) {
+                                            this._view.webview.postMessage({
+                                                type: 'showErrorExplanation',
+                                                explanation: errorExplanation
+                                            });
+                                        }
+                                    } catch (parseError) {
+                                        console.error('Failed to parse error explanation JSON:', parseError);
+                                        if (this._view) {
+                                            this._view.webview.postMessage({
+                                                type: 'aiResponse',
+                                                text: 'Sorry, I received an invalid response from the AI. Please try again.'
+                                            });
+                                        }
+                                    }
+                                } else if (parsed.accumulated) {
+                                    // Streaming chunk - send progress update
+                                    accumulatedContent = parsed.accumulated;
+                                    if (this._view) {
+                                        this._view.webview.postMessage({
+                                            type: 'streamingChunk',
+                                            content: parsed.accumulated
+                                        });
+                                    }
+                                }
+                            } catch (e) {
+                                // Ignore malformed JSON chunks
+                                console.warn('Failed to parse SSE data:', e);
+                            }
+                        }
+                    }
+                });
+
+                body.on('error', (error: Error) => {
+                    console.error('Stream error:', error);
+                    if (this._view) {
+                        this._view.webview.postMessage({
+                            type: 'aiResponse',
+                            text: 'Sorry, I encountered an error while streaming the response.'
+                        });
+                    }
+                });
+
+                // Wait for stream to complete
+                await new Promise<void>((resolve, reject) => {
+                    body.on('end', () => resolve());
+                    body.on('error', (error: Error) => reject(error));
+                });
+
+            } catch (error) {
+                console.error('Error explaining error:', error);
+                this._view.webview.postMessage({
+                    type: 'aiResponse',
+                    text: 'Sorry, I encountered an error while communicating with the backend. Please check if the server is running.'
+                });
+            }
+        }
+    }
+
     private handleUserMessage(text: string) {
         // Simulate AI response
         setTimeout(() => {
