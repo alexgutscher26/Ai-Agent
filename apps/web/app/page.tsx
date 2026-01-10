@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button"
 import {
   Check,
@@ -118,6 +119,8 @@ function Hero() {
     </section>
   )
 }
+
+
 
 function FeatureBlocks() {
   return (

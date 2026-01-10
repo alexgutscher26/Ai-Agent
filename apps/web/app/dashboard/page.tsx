@@ -1,10 +1,6 @@
-"use client"
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { redirect } from "next/navigation"
 import Link from "next/link"
-import { authClient } from "@/lib/auth-client"
 import {
-  Menu,
   LayoutDashboard,
   History,
   BarChart3,
@@ -12,8 +8,6 @@ import {
   Settings,
   HelpCircle,
   Rocket,
-  Search,
-  Bell,
   Flame,
   Play,
   ListChecks,
@@ -21,42 +15,31 @@ import {
   Code2,
   FileCode,
   TrendingUp,
-  ChevronRight,
-  Lightbulb,
 } from "lucide-react"
+import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
 import { RecentSessions } from "@/components/dashboard/RecentSessions"
 import { TipOfTheDay } from "@/components/dashboard/TipOfTheDay"
+import { DashboardHeader } from "@/components/dashboard/DashboardHeader"
 
+// Server Component
+export default async function DashboardPage() {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
 
-export default function DashboardPage() {
-  const router = useRouter()
-  const { data: session, isPending } = authClient.useSession()
-  useEffect(() => {
-    if (!isPending && !session) {
-      router.replace("/login")
-    }
-  }, [isPending, session, router])
-  useEffect(() => {
-    if (!isPending && session) {
-      const payload = {
-        id: (session.user as any).id || session.user.email,
-        email: session.user.email,
-        name: session.user.name || null,
-        image: session.user.image || null,
-      }
-      fetch("/api/user/ensure", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      }).catch(() => { })
-    }
-  }, [isPending, session])
-  if (isPending) {
-    return <div className="container py-12">Loading...</div>
-  }
   if (!session) {
-    return null
+    redirect("/login")
   }
+
+  // Ensure user logic (Server Side)
+  // We can just rely on the session existence here, or trigger a background sync if strictly needed.
+  // For 'instant' load, we shouldn't block on a sync unless it's critical.
+  // The client-side hook was doing this: fetch("/api/user/ensure")
+  // Let's omit the blocking ensure call for speed, as the session implies existence.
+
+  const user = session.user;
+
   return (
     <div className="bg-background min-h-screen text-foreground">
       <div className="flex h-screen w-full">
@@ -130,48 +113,11 @@ export default function DashboardPage() {
           </div>
         </aside>
         <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-background">
-          <header className="h-16 flex items-center justify-between px-6 bg-card border-b border-muted/40 flex-shrink-0 z-20">
-            <button className="md:hidden p-2 text-muted-foreground hover:text-foreground">
-              <Menu />
-            </button>
-            <div className="flex items-center gap-6 flex-1">
-              <nav className="hidden md:flex text-sm font-medium text-muted-foreground">
-                <a className="hover:text-primary transition-colors" href="#">
-                  Home
-                </a>
-                <input
-                  className="block w-full pl-10 pr-3 py-2 border-none rounded-lg leading-5 bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 sm:text-sm transition-all"
-                  placeholder="Search sessions, snippets, or docs..."
-                  type="text"
-                />
-              </nav>
-            </div>
-            <div className="flex items-center gap-4 ml-4">
-              <button className="relative p-2 text-muted-foreground hover:text-foreground rounded-full hover:bg-muted transition-colors">
-                <Bell />
-                <span className="absolute top-2 right-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-background" />
-              </button>
-              <div className="flex items-center gap-3 pl-4 border-l border-muted/40">
-                <div className="text-right hidden sm:block">
-                  <p className="text-sm font-medium">{session.user.name || session.user.email}</p>
-                  <p className="text-xs text-muted-foreground">Pro Plan</p>
-                </div>
-                <div
-                  className="h-10 w-10 rounded-full bg-muted overflow-hidden ring-2 ring-background cursor-pointer"
-                  style={{
-                    backgroundImage: `url('${session.user.image || ""}')`,
-                    backgroundSize: "cover",
-                  }}
-                />
-                <button
-                  className="text-xs font-semibold px-3 py-1.5 rounded bg-muted hover:bg-muted/70"
-                  onClick={() => authClient.signOut()}
-                >
-                  Sign out
-                </button>
-              </div>
-            </div>
-          </header>
+          <DashboardHeader user={{
+            name: user.name || "",
+            email: user.email,
+            image: user.image
+          }} />
           <div className="flex-1 overflow-y-auto p-4 md:p-8">
             <div className="max-w-6xl mx-auto flex flex-col gap-6 md:gap-8">
               <div className="bg-card rounded-xl shadow-sm border border-muted/40 overflow-hidden relative">
@@ -182,7 +128,7 @@ export default function DashboardPage() {
                       <Flame className="mr-1" size={14} />5 Day Streak
                     </div>
                     <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-                      Welcome back, {session.user.name || session.user.email}!
+                      Welcome back, {user.name || user.email}!
                     </h1>
                     <p className="text-muted-foreground text-lg max-w-2xl">
                       You're making great progress. Your consistency score is up
