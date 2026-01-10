@@ -96,6 +96,48 @@ export async function activate(context: vscode.ExtensionContext) {
                 }
             })
         );
+
+        context.subscriptions.push(
+            vscode.commands.registerCommand('flowpilot.reviewSnippet', async () => {
+                try {
+                    console.log('FlowPilot: reviewSnippet command triggered');
+                    const explainContext = getExplainContext();
+                    if (explainContext && explainContext.code) {
+                        // Ensure panel is open
+                        await vscode.commands.executeCommand('workbench.view.extension.flowpilot');
+                        // Send to provider
+                        provider.reviewSnippet(explainContext);
+                        vscode.window.showInformationMessage('FlowPilot is reviewing your snippet...');
+                    } else {
+                        vscode.window.showWarningMessage('Please select some code to review.');
+                    }
+                } catch (error) {
+                    console.error('FlowPilot: Error in reviewSnippet command:', error);
+                    vscode.window.showErrorMessage('FlowPilot: Error reviewing snippet.');
+                }
+            })
+        );
+
+        // Status Bar Nudge Logic
+        const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+        context.subscriptions.push(statusBarItem);
+        let nudgeTimeout: NodeJS.Timeout | undefined;
+
+        context.subscriptions.push(
+            vscode.window.onDidChangeTextEditorSelection(e => {
+                if (nudgeTimeout) clearTimeout(nudgeTimeout);
+                statusBarItem.hide();
+
+                if (e.selections.length > 0 && !e.selections[0].isEmpty) {
+                    nudgeTimeout = setTimeout(() => {
+                        statusBarItem.text = `$(lightbulb) Review this snippet?`;
+                        statusBarItem.command = 'flowpilot.reviewSnippet';
+                        statusBarItem.tooltip = 'Get an AI review of your selected code';
+                        statusBarItem.show();
+                    }, 10000); // 10 seconds
+                }
+            })
+        );
         console.log('FlowPilot: Activation completed successfully.');
     } catch (error) {
         console.error('FlowPilot: Extension activation failed:', error);

@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import fetch from 'node-fetch';
+import { trackExplain } from './sessionManager';
 
 export class FlowPilotProvider implements vscode.WebviewViewProvider {
     public static readonly viewType = 'flowpilotPanel';
@@ -72,6 +73,9 @@ export class FlowPilotProvider implements vscode.WebviewViewProvider {
     }
 
     public async explainCode(context: any) {
+        // Track selection explanation
+        trackExplain('selection');
+
         if (this._view) {
             // Show loading state
             this._view.webview.postMessage({
@@ -184,6 +188,9 @@ export class FlowPilotProvider implements vscode.WebviewViewProvider {
     }
 
     public async explainError(context: any) {
+        // Track error explanation
+        trackExplain('error');
+
         if (this._view) {
             // Show loading state
             this._view.webview.postMessage({
@@ -313,6 +320,45 @@ export class FlowPilotProvider implements vscode.WebviewViewProvider {
 
     private addDocstring() {
         vscode.window.showInformationMessage('Docstring added to your function.');
+    }
+
+    public async reviewSnippet(context: any) {
+        // Track review
+        trackExplain('review');
+
+        if (this._view) {
+            this._view.webview.postMessage({
+                type: 'streamingStart' // Reuse this for now to show loading
+            });
+            this._view.webview.postMessage({
+                type: 'aiResponse',
+                text: 'Reviewing your snippet...'
+            });
+
+            try {
+                const response = await fetch('http://localhost:3000/api/review-snippet', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(context)
+                });
+
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const reviewData = await response.json();
+
+                this._view.webview.postMessage({
+                    type: 'showReview',
+                    review: reviewData
+                });
+
+            } catch (error) {
+                console.error('Error reviewing snippet:', error);
+                this._view.webview.postMessage({
+                    type: 'aiResponse',
+                    text: 'Sorry, I encountered an error while reviewing the snippet.'
+                });
+            }
+        }
     }
 
     private _getHtmlForWebview(webview: vscode.Webview) {

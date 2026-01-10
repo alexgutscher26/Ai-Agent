@@ -228,6 +228,46 @@
             case 'explainCode':
                 addMessage(`I'll explain this code...`, 'ai');
                 break;
+
+            case 'showReview':
+                const review = message.review;
+
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = 'chat-message ai review-card';
+
+                let reviewHtml = `
+                    <div class="message-content">
+                        <div class="review-header">
+                            <h3>Code Review</h3>
+                            <div class="review-score ${review.score >= 7 ? 'high' : review.score >= 4 ? 'medium' : 'low'}">
+                                ${review.score}/10
+                            </div>
+                        </div>
+                        <div class="review-section">
+                            <strong>✅ Does:</strong>
+                            <p>${review.does}</p>
+                        </div>
+                        <div class="review-section">
+                             <strong>⚠️ Issues:</strong>
+                             <ul>
+                                ${review.issues.map(issue => `<li>${issue}</li>`).join('')}
+                             </ul>
+                        </div>
+                        <div class="review-section">
+                            <strong>✨ Better Version:</strong>
+                            <p>${review.whyBetter}</p>
+                            <pre><code>${review.improvedCode}</code></pre>
+                        </div>
+                    </div>
+                `;
+
+                // Add avatar
+                reviewHtml = `<div class="message-avatar"><span class="fp-icon">${robotIcon}</span></div>` + reviewHtml;
+
+                reviewDiv.innerHTML = reviewHtml;
+                chatMessages.appendChild(reviewDiv);
+                scrollToBottom();
+                break;
         }
     });
 
